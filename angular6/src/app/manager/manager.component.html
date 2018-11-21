@@ -1,0 +1,39 @@
+
+ <div class="area"></div>
+<nav class="main-menu">
+  <ul>
+    <li>
+      <a href="http://justinfarrow.com">
+        <i class="fa fa-user fa-2x"></i>
+        <a class="nav-text" [routerLink]="['/manager/addUser']">add user</a>
+      </a>
+    </li>
+    <li class="has-subnav">
+      <a href="#">
+        <i class="fa fa-book fa-2x"></i>
+        <a class="nav-text" [routerLink]="['/manager/allUsers']">all user</a>
+      </a>
+    </li>
+    <li class="has-subnav">
+      <a href="#">
+        <i class="fa fa-book fa-2x"></i>
+        <a class="nav-text" [routerLink]="['/manager/addProject']">addProject</a>
+      </a>
+    </li>
+    <li class="has-subnav">
+      <a href="#">
+        <i class="fa fa-book fa-2x"></i>
+        <a class="nav-text" [routerLink]="['/manager/allProjects']">allProjects</a>
+      </a>
+    </li>
+ 
+  </ul>
+</nav> 
+
+
+
+
+<body style="margin-left:100px">
+
+  <router-outlet></router-outlet>
+</body>

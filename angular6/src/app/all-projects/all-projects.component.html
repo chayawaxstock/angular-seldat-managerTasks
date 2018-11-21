@@ -1,0 +1,4 @@
+
+<div *ngFor="let project of projects">
+  <app-project-template [project]="project" (deleteProject)='deleteProject($event)'></app-project-template>
+</div>

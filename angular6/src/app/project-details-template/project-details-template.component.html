@@ -1,0 +1,24 @@
+<div class="cd-faq-items">
+    <ul id="info" class="cd-faq-group">
+
+        <li>
+            <div><strong>name</strong>{{project.projectName}}</div>
+        </li>
+        <li>
+            <div><strong>customer</strong>{{project.customer}}</div>
+        </li>
+        <li>
+            <div><strong>num hours</strong>{{project.numHours}}</div>
+        </li>
+        <li>
+            <div><strong>date begin</strong>{{project.dateBegin}}</div>
+        </li>
+        <li>
+            <div><strong>date end</strong>{{project.dateEnd}}</div>
+        </li>
+    </ul>
+         <div class="cd-faq-trigger" id={{project.projectId}} (click)="showMoreDetails(project.projectId)">    </div> 
+         <div *ngIf="toggle"> 
+            <app-project-worker-details-template *ngFor="let item of workersForProject" [workerProject]="item"></app-project-worker-details-template>
+        </div>
+</div>

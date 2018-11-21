@@ -1,0 +1,31 @@
+
+<div *ngIf="reportProject.length>0">
+<kendo-grid
+        [data]="gridData"
+        [filter]="filter"
+        [filterable]="true"
+        (filterChange)="filterChange($event)"
+				[height]="400"
+			
+		>
+		<ng-template kendoGridToolbarTemplate>
+			<button type="button" (click)="exportAsXLSX()" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+	</ng-template>
+    <kendo-grid-column field="project.projectName" title="Project Name">
+    </kendo-grid-column>
+    <kendo-grid-column field="project.customerName" title="customer Name">
+    </kendo-grid-column>
+    <kendo-grid-column field="project.numHourForProject" title="num hours to project"  filter="numeric">
+    </kendo-grid-column>
+    <kendo-grid-column field="isFinish" >
+        <ng-template kendoGridFilterCellTemplate>
+            <kendo-switch
+                (valueChange)="switchChange($event)"
+                offLabel="No"
+                [checked]="checked"
+                onLabel="Yes">
+            </kendo-switch>
+        </ng-template>
+		</kendo-grid-column>
+    </kendo-grid>
+</div>

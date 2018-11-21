@@ -1,0 +1,11 @@
+<h1>
+  {{hoursDisplay ? hoursDisplay : '00'}} : {{(minutesDisplay) && (minutesDisplay <= 59) ? minutesDisplay : '00'}} : {{(secondsDisplay) && (secondsDisplay <= 59) ? secondsDisplay : '00'}} <br/>
+</h1>
+
+<select  *ngIf="projectsWorker&&projectsWorker.length>0" (change)="selectProject($event)">
+  <option *ngFor="let item of projectsWorker" [value]="item.project.projectName">{{item.project.projectName}}</option>
+</select>
+<div *ngIf="isSelectProject">
+<button (click)="startTimer()" >start</button> 
+<button (click)="stopTimer()">stop</button> 
+</div>

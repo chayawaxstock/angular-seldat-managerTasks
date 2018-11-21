@@ -1,0 +1,15 @@
+
+<div *ngIf="workesNotinProject.length>0 else empty">
+<div *ngFor="let worker of workesNotinProject">
+  <label>{{worker.userName}} </label>
+  <input type="checkbox" [value]="worker" (change)="changeWorker(worker)">
+ 
+</div>
+<input type="button" value="save" (click)="saveChange()">
+</div>
+
+<ng-template #empty>
+    <div>
+      dont have worker to add this group
+    </div>
+  </ng-template>
