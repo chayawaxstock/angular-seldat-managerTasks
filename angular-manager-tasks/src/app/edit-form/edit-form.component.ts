@@ -1,11 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Product } from '../shared/models/product';
+import { createValidatorNumber, DepartmentEnum, createValidatorText } from '../shared/validators/user.validation';
+import { User } from '../shared/models/user';
+import { DepartmentUser } from '../shared/models/departmentUser';
+import { UserService } from '../shared/services/user.service';
+import { ManagerService } from '../shared/services/manager.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'kendo-grid-edit-form',
     styles: [
-      'input[type=text] { width: 100%; }'
+        'input[type=text] { width: 100%; }'
     ],
     template: `
         <kendo-dialog *ngIf="active" (close)="closeForm()">
@@ -15,38 +21,47 @@ import { Product } from '../shared/models/product';
 
             <form novalidate [formGroup]="editForm">
                 <div class="form-group">
-                    <label for="ProductName" class="control-label">Product name</label>
+                    <label for="userName" class="control-label">User name</label>
 
-                    <input type="text" class="k-textbox" formControlName="ProductName" />
+                    <input type="text" class="k-textbox" formControlName="userName" />
 
-                    <div
-                        class="k-tooltip k-tooltip-validation"
-                        [hidden]="editForm.controls.ProductName.valid || editForm.controls.ProductName.pristine">
-                        ProductName is required
+                   
+                </div>
+                <div class="form-group">
+                    <label for="email" class="control-label">email</label>
+
+                    <input type="text" class="k-textbox" formControlName="email" />
+                </div>
+                <div class="form-group">
+                    <label for="email" class="control-label">email</label>
+
+                    <input type="text" class="k-textbox" formControlName="email" />
+
+                   
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="UnitPrice" class="control-label">Unit price</label>
+                    <div class="form-group">
+                    <label for="numHoursWork" class="control-label">numHoursWork</label>
 
-                    <input type="text" class="k-textbox" formControlName="UnitPrice" />
-                </div>
-                <div class="form-group">
-                    <label for="UnitsInStock" class="control-label">Units in stock</label>
+                    <input type="number" class="k-textbox" formControlName="numHoursWork" />
 
-                    <input type="text" class="k-textbox" formControlName="UnitsInStock" />
-
-                    <div
-                        class="k-tooltip k-tooltip-validation"
-                        [hidden]="editForm.controls.UnitsInStock.valid || editForm.controls.UnitsInStock.pristine">
-                        Units must be between 0 and 99
+                   
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>
-                      <input type="checkbox" formControlName="Discontinued" />
-                      Discontinued product
-                    </label>
-                </div>
+
+                    <div class="example-wrapper">
+      <p>chooseDepartment</p>
+      <kendo-dropdownlist  [data]="departments"  [textField]="'department'" [valueField]="'id'"   (valueChange)="chooseDepartment($event)" >
+      </kendo-dropdownlist>
+    </div>
+                    <div class="form-group">
+                    <select  formControlName="departmentId" (change)="chooseDepartment($event)">
+                    <option *ngFor="let department of departments"  [value]="department.id">{{department.department}}</option>
+                  </select>
+                  </div>
+                  <div class="form-group">
+                 <select formControlName="managerId" *ngIf="userByDepartment.length>0" >
+                     <option *ngFor="let manager of userByDepartment" [value]="manager.userId">{{manager.userName}}</option>
+                  </select> 
+                  </div>
             </form>
 
             <kendo-dialog-actions>
@@ -57,14 +72,30 @@ import { Product } from '../shared/models/product';
     `
 })
 export class GridEditFormComponent {
+    constructor(public userService: UserService, public managerService: ManagerService, public router: Router) {
+
+        userService.getAllDepartments().subscribe(departments => {
+            this.departments = departments;
+            console.log(this.departments);
+        });
+    }
+
     public active = false;
+    public emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
     public editForm: FormGroup = new FormGroup({
-        'ProductID': new FormControl(),
-        'ProductName': new FormControl('', Validators.required),
-        'UnitPrice': new FormControl(0),
-        'UnitsInStock': new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,3}')])),
-        'Discontinued': new FormControl(false)
+        'userName': new FormControl('', Validators.required),
+        'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
+        'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
+        'departmentId': new FormControl("", [Validators.required]),
+        'managerId': new FormControl()
+
     });
+
+    departments: DepartmentUser[] = [];
+    userByDepartment: User[] = [];
+
+
 
     @Input() public isNew = false;
 
@@ -86,11 +117,32 @@ export class GridEditFormComponent {
     public onCancel(e): void {
         e.preventDefault();
         this.closeForm();
+
     }
 
     private closeForm(): void {
         this.active = false;
         this.cancel.emit();
+    }
+
+    chooseDepartment() {
+
+        let value = this.editForm.controls['departmentId'].value;
+        if (value == DepartmentEnum.TEAMLEADER) {
+            this.managerService.getUsersByDepartment("manager").subscribe(users => {
+                console.log(users);
+                this.userByDepartment = users;
+            });
+        }
+        else if (value != DepartmentEnum.MANAGER) {
+            this.managerService.getUsersByDepartment("teamLeader").subscribe(users => {
+                console.log(users);
+                this.userByDepartment = users;
+            });
+        }
+        else {
+            this.userByDepartment = [];
+        }
     }
 }
 

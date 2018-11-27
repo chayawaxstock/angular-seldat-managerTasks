@@ -26,6 +26,8 @@ import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { GridEditFormComponent } from './edit-form/edit-form.component';
 import { EditService } from './shared/services/edit-service.service';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+
 
 
 
@@ -59,7 +61,8 @@ import { EditService } from './shared/services/edit-service.service';
    InputsModule,
    ExcelExportModule,
    HttpClientJsonpModule,
-   DialogModule
+   DialogModule,
+   DropDownsModule
 
   ],
   providers: [UserService,AuthGuard,WorkerService,TeamleaderService,ManagerService,  {
