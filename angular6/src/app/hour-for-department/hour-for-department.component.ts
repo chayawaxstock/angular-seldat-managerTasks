@@ -23,6 +23,7 @@ export class HourForDepartmentComponent implements OnInit {
 
   changeNumHour()
   {
+ 
     this.numDepartment.emit(this.department) ;
   }
 

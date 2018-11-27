@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PresentDay } from '../models/pressentDay';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Global } from './global';
 import { SendEmail } from '../models/sendEmail';
 import { Project } from '../models/project';
@@ -10,6 +10,7 @@ import { ProjectWorker } from '../models/projectWorker';
 @Injectable()
 export class WorkerService {
  
+  timerSubject=new Subject();
   constructor(public httpClient:HttpClient) { }
   
   updateDayPressent(pressentDay:PresentDay): Observable<any> {

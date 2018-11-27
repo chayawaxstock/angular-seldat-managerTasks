@@ -4,6 +4,7 @@ import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
 import { TeamleaderService } from '../shared/services/teamleader.service';
 import { Project } from '../shared/models/project';
+import { Graph } from '../shared/models/graph';
 @Component({
   selector: 'app-graph-status-hours-projects',
   templateUrl: './graph-status-hours-projects.component.html',
@@ -20,33 +21,32 @@ export class GraphStatusHoursProjectsComponent implements OnInit {
   barChartLabels: any[]=[];
   barChartType: any;
   barChartLegend: any;
-  barChartData: any;
-
+  barChartData: any[]=[];
+  project:Project;
   constructor(public workerService:WorkerService,public userService:UserService,public teamLeaderService:TeamleaderService) { }
-  projects:Project[]=[];
+  usersHours:any[]=[];
   ngOnInit() {
 
      this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
-
-    this.teamLeaderService.getHourWorkerTeamLeader(this.userService.currentUser.userId).subscribe(res=>{
-      Object.entries(res).forEach(
+this.project=this.teamLeaderService.projectGraph;
+    this.teamLeaderService.getHourWorkerTeamLeader(this.userService.currentUser.userId,this.project.projectId).subscribe(res=>{
+       Object.entries(res).forEach(
         ([key, value]) => console.log(key, value)
-      );
-      debugger;
-      this.projects=res; 
-      res.forEach(x=>{   this.barChartLabels.push( x.projectName); })
-    });
-    //  this.barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+       );
+      // debugger;
+   
+         this.barChartLabels.push( this.project.projectName);
+
+      res.forEach((x)=>{console.log(x);let g=new Graph(); g.data.push(x.data); g.label=x.label; this.barChartData.push(g); })
+    });;
+    //  this.barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2=012'];
      this.barChartType = 'bar';
      this.barChartLegend = true;
    
-     this.barChartData = [
-      {data: [65, 59, 80, 81, 56, 55, 40], label: 'name project'},
-      {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-    ];
+   
 
     this.workerService.getHoursForUserProjects(this.userService.currentUser.userId).subscribe(
       res=>{

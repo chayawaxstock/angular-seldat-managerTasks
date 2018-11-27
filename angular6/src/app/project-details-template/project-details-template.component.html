@@ -16,7 +16,11 @@
         <li>
             <div><strong>date end</strong>{{project.dateEnd}}</div>
         </li>
+        <li>
+            <button (click)="showGraphHours(project)">show graph hours</button>
+        </li>
     </ul>
+
          <div class="cd-faq-trigger" id={{project.projectId}} (click)="showMoreDetails(project.projectId)">    </div> 
          <div *ngIf="toggle"> 
             <app-project-worker-details-template *ngFor="let item of workersForProject" [workerProject]="item"></app-project-worker-details-template>

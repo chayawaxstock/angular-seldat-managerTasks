@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
+import { Graph } from '../shared/models/graph';
+import { Project } from '../shared/models/project';
+import { ProjectWorker } from '../shared/models/projectWorker';
 
 @Component({
   selector: 'app-graph-status-hour',
@@ -10,42 +13,53 @@ import { UserService } from '../shared/services/user.service';
 export class GraphStatusHourComponent implements OnInit {
 
   barChartOptions: any;
-  barChartLabels: any;
+  barChartLabels: any[]=[];
   barChartType: any;
   barChartLegend: any;
-  barChartData: any;
+  barChartData: any[]=[];
 
-  constructor(public workerService:WorkerService,public userService:UserService) { }
-
+  constructor(public workerService: WorkerService, public userService: UserService) { }
+projects:ProjectWorker[]=[];
   ngOnInit() {
+    this.barChartData = [
+      {data: [], label: 'Hours required'},
+      {data: [], label: 'hours done'}
+     ];
 
-     this.barChartOptions = {
+    this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
-     this.barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-     this.barChartType = 'bar';
-     this.barChartLegend = true;
-   
-     this.barChartData = [
-      {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-      {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-    ];
 
-    this.workerService.getHoursForUserProjects(this.userService.currentUser.userId).subscribe(
-      res=>{
-        
-      }
-    )
+    this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId).subscribe(res => {
+     
+      // debugger;
+
+
+      this.workerService.getTasksOfWorker(this.userService.currentUser.userId).subscribe(res=>{
+        console.log(res);
+        this.projects=res;
+        res.forEach((x)=>{console.log(x); this.barChartLabels.push(x.project.projectName) ; this.barChartData[0].data.push(x.sumHoursDone); 
+       this.barChartData[1].data.push(x.hoursForProject);
+      });
+      });;
+
+  
+
+    
+    })
+     
+      this.barChartType = 'bar';
+      this.barChartLegend = true;
+
   }
-
   // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
+  public chartClicked(e: any): void {
+        console.log(e);
+      }
  
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
+  public chartHovered(e: any): void {
+        console.log(e);
+      }
 
-}
+    }

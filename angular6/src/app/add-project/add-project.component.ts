@@ -8,7 +8,7 @@ import { createValidatorText, createValidatorDateBegin, createValidatorNumber, v
 import { HourForDepartment } from '../shared/models/hourForDepartment';
 import { Router } from '@angular/router';
 import { ManagerService } from '../shared/services/manager.service';
-
+import swal from 'sweetalert2'
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
@@ -30,8 +30,8 @@ export class AddProjectComponent implements OnInit {
     let formGroupConfig = {
       projectName: new FormControl("", createValidatorText("projectName", 2, 15)),
       customerName: new FormControl("", createValidatorText("customerName", 2, 15)),
-      dateBegin:new FormControl("",createValidatorDateBegin("dateBegin")),
-      dateEnd: new FormControl("",),
+      dateBegin:new FormControl(new Date(),createValidatorDateBegin("dateBegin")),
+      dateEnd: new FormControl(new Date().setMonth(1)),
       numHourForProject: new FormControl("",createValidatorNumber("numHourForProject", 1, 20000)),
       idManager: new FormControl(""),
       hoursForDepartment:new FormControl(),
@@ -80,18 +80,25 @@ export class AddProjectComponent implements OnInit {
         
         this.managerService.addProject(this.project).subscribe(res=>{
         this.managerService.subjectProject.next("true");
-        alert("succsess");
-        },err=>{console.log("error")});
+        swal({
+          position: 'top-end',
+          type: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.router.navigate(["/manager/allProjects"])
+        },err=>{{swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+         
+        })}});
            
       }
 
      
     }
 
-    numDepartment(department1:DepartmentUser)
-    {
-      console.log(department1 +" de");
-      console.log(this.departments);
-    }
 
 }

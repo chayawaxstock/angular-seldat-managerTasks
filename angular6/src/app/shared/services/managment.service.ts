@@ -12,6 +12,7 @@ export class ManagmerService {
   subjectAllUsers= new Subject();
   subjectWorkerToProject=new Subject();
   subjectProject=new Subject();
+  subjectAllProjects=new Subject();
   constructor(public httpClient: HttpClient) { }
 
   baseUri:string="http://localhost:61309/api/"

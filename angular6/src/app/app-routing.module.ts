@@ -18,14 +18,20 @@ import { WorkerComponent } from "./worker/worker.component";
 import { TeamLeaderComponent } from "./team-leader/team-leader.component";
 import { ProjectDetailsComponent } from "./project-details/project-details.component";
 import { GraphStatusHoursProjectsComponent } from "./graph-status-hours-projects/graph-status-hours-projects.component";
-
+import { CreateReportComponent } from "./create-report/create-report.component";
+import { EditProjectComponent } from "./edit-project/edit-project.component";
+import { TimePickerComponent } from "@progress/kendo-angular-dateinputs";
+import{TimerComponent} from "./timer/timer.component"
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 
 
 
 const appRoutes: Routes = [
-    {path: "home", component: SignInComponent },
-    {path: "", component: SignInComponent },
+     {path: "home", component: SignInComponent },
+     {path: "", component: SignInComponent },
+    {path: "changePassword/:requestId", component: ChangePasswordComponent },
+    {path: "changePassword", component: ChangePasswordComponent },
      {path:'manager',component: ManagerComponent,children:[
            {path:'addUser',component: AddUserComponent},
            {path:'allUsers',component: AllUsersComponent},
@@ -34,7 +40,9 @@ const appRoutes: Routes = [
            {path:'addWorkerToProject',component: AddWorkerToProjectComponent},
           {path:'userInProject',component: UserInProjectComponent},
        
-           {path:'allProjects',component: AllProjectsComponent}
+           {path:'allProjects',component: AllProjectsComponent},
+           {path:'reports',component: CreateReportComponent},
+           {path:'editProject',component: EditProjectComponent},
      ]},
      {path:'worker',component: WorkerComponent},
      {path:'teamLeader',component: TeamLeaderComponent,children:[

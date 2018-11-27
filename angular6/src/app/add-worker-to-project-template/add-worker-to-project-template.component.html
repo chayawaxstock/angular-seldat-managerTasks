@@ -1,0 +1,7 @@
+
+<label>{{workerToProject.userName}} </label>
+<input type="checkbox" [value]="workerToProject" (change)="changeWorker()">
+<div  *ngIf="isChecked">
+<label>num hours for project</label>
+<input type="number" (change)="changeHoursForProject($event)" >
+</div>

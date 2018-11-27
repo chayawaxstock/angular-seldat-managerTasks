@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global } from './global';
 import { Project } from '../models/project';
+import { ProjectWorker } from '../models/projectWorker';
 
 @Injectable()
 export class ManagerService {
@@ -38,12 +39,16 @@ export class ManagerService {
       return this.httpClient.delete(Global.baseURI+"deleteProject/"+idProject);
   }
 
-  createReport(reportName:string): Observable<any> {
-     return this.httpClient.get(Global.baseURI+"createReport1/"+reportName);
+  createReport(): Observable<any> {
+     return this.httpClient.get(Global.baseURI+"createReport/1");
     }
     
   addProject(project: Project): Observable<any> {
     return this.httpClient.post(Global.baseURI+"Projects",project);
+  }
+  editProjct(project: Project): Observable<any> 
+  {
+    return this.httpClient.put(Global.baseURI+"updateProject",project);
   }
   
   getAllProjects(): Observable<Project[]> {
@@ -54,7 +59,7 @@ export class ManagerService {
     return this.httpClient.get<User[]>(Global.baseURI+"getWorkerNotProject/"+projectId);
   }
 
-  addWorkersToProject(projectId:number,workers:User[]):Observable<any>
+  addWorkersToProject(projectId:number,workers:ProjectWorker[]):Observable<any>
   {
     console.log(workers);
   return this.httpClient.put(Global.baseURI+"addWorkersToProject/"+projectId,workers);

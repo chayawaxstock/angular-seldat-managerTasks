@@ -104,7 +104,12 @@ export class ProjectWorkerDetailsTemplateComponent implements OnInit {
 
 
           }
-          else alert("not update");
+         else {swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+           
+          })}
         })
       }
     })

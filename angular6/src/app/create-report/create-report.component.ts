@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ExcelService } from '../shared/services/excel.service';
-import { ExcelExportData } from '@progress/kendo-angular-excel-export';
+
+import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
+import { GridModule, ExcelModule } from '@progress/kendo-angular-grid';
+import { ExcelExportData } from '@progress/kendo-angular-excel-export'; 
 import { process } from '@progress/kendo-data-query';
 import {
   GridComponent,
@@ -21,29 +24,21 @@ import { ReportProject } from '../shared/models/reportProject';
 export class CreateReportComponent  {
 
   reportProject:ReportProject[]=[];
+  public state: State = {
+    skip: 0,
+    take: 5,
+
+    // Initial filter descriptor
+};
 constructor(public excelServise:ExcelService,public managerService:ManagerService) {
 
-   this.managerService.createReport("reportProject").subscribe(res=>{
+   this.managerService.createReport().subscribe(res=>{
+       console.log(res)
     this.reportProject=res;
-    this.gridData = filterBy(this.reportProject, this.filter);
+    this.gridData=this.reportProject;
    });
 }
-  name = 'Angular 6';
-  data: any = [{
-    eid: 'e101',
-    ename: 'ravi',
-    esal: 1000
-  },
-  {
-    eid: 'e102',
-    ename: 'ram',
-    esal: 2000
-  },
-  {
-    eid: 'e103',
-    ename: 'rajesh',
-    esal: 3000
-  }];
+ 
  
   exportAsXLSX():void {
     this.excelServise.exportAsExcelFile(this.reportProject, 'reportProject');
@@ -53,21 +48,22 @@ constructor(public excelServise:ExcelService,public managerService:ManagerServic
   public products: any[] = this.reportProject;
   public checked = false;
   public filter: CompositeFilterDescriptor;
-  public gridData: any[] ;
+  public gridData: any;
 
   public filterChange(filter: CompositeFilterDescriptor): void {
       this.filter = filter;
-      this.gridData = filterBy(this.reportProject, filter);
+     this.gridData = filterBy(this.reportProject, filter);
   }
 
   public switchChange(checked: boolean): void {
+      debugger;
       const root = this.filter || { logic: 'and', filters: []};
 
-      const [filter] = flatten(root).filter(x => x.field === 'Discontinued');
+      const [filter] = flatten(root).filter(x => x.field === 'isFinish');
 
       if (!filter) {
           root.filters.push({
-              field: 'Discontinued',
+              field: 'isFinish',
               operator: 'eq',
               value: checked
           });
@@ -78,6 +74,7 @@ constructor(public excelServise:ExcelService,public managerService:ManagerServic
       this.filterChange(root);
   }
   public allData(): ExcelExportData {
+      debugger;
     const result: ExcelExportData =  {
         data: process(this.reportProject, { group: this.group, sort: [{ field: 'ProductID', dir: 'asc' }] }).data,
         group: this.group
@@ -86,8 +83,16 @@ constructor(public excelServise:ExcelService,public managerService:ManagerServic
     return result;
 }
 public group: any[] = [{
-  field: 'project.projectId'
+  field: 'id'
 }];
+
+
+public dataStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+    this.gridData = process(this.reportProject, this.state);
+}
+
+
 }
 
 

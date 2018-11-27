@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PresentDay } from '../shared/models/pressentDay';
 import { Subscription } from 'rxjs';
 import { WorkerService } from '../shared/services/worker.service';
@@ -13,7 +13,8 @@ import { Project } from '../shared/models/project';
 export class TimerComponent implements OnInit {
 
     ticks = 0;
-
+    @Input()
+    isPlay:boolean;
     minutesDisplay: number = 0;
     hoursDisplay: number = 0;
     secondsDisplay: number = 0;
@@ -27,24 +28,25 @@ export class TimerComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.workerService.getProjectsUser(this.userService.currentUser.userId).subscribe(res => {
-            this.projectsWorker = res;
-          
-        })
+      this.workerService.timerSubject.subscribe((status)=>{
+    if(status==false)
+        this.startTimer();
+     else this.stopTimer();
+      })
+      
+       
     }
-    selectProject(event) {
-        this.isSelectProject = true;
-        this.projectId =   this.projectsWorker[event.target["options"].selectedIndex].projectId;
-    }
+    // selectProject(event) {
+    //     this.isSelectProject = true;
+    //     if(event==0)
+    //     this.projectId =   this.projectsWorker[event].projectId;
+    //     else
+    //     this.projectId =   this.projectsWorker[event.target["options"].selectedIndex].projectId;
+    // }
 
 
     startTimer() {
-        this.pressantDay.timeBegin = new Date();
-        this.pressantDay.userId = this.userService.currentUser.userId;
-        this.pressantDay.projectId = this.projectId;
-        this.workerService.addPresentDay(this.pressantDay).subscribe(res => {
-            alert("begin");
-        }, err => { alert("err") })
+
         this.timer = setInterval(() => this.getTimer(), 1000);
     }
 
@@ -57,15 +59,12 @@ export class TimerComponent implements OnInit {
 
 
     stopTimer() {
-        this.pressantDay.timeEnd = new Date();
-        this.pressantDay.userId = this.userService.currentUser.userId;
+      
 
         clearInterval(this.timer);
-        this.workerService.updateDayPressent(this.pressantDay).subscribe(res => {
-            alert("add present");
             this.ticks = -1;
             this.getTimer();
-        });
+       
     }
 
 

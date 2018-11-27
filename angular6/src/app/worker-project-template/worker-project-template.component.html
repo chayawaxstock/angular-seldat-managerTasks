@@ -3,3 +3,6 @@
  <div><label>name:       </label>{{project.project.projectName}}</div>
  <div><label>hours for project:  </label>{{project.hoursForProject}}</div>
  <div><label>sum hours done:     </label>{{project.sumHoursDone}}</div>
+<button *ngIf="!isClick" (click)="clickUpdateWork(project.projectId)">start</button>
+<button *ngIf="stopClick" (click)="clickUpdateWork(project.projectId)">stop</button>
+<app-timer  [isPlay]="stopClick"></app-timer>

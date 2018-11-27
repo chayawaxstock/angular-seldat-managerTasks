@@ -31,6 +31,11 @@ this.project.hoursForDepartment[0].departmentUser.department
      this.managerService.workerToProject=this.project;
      this.router.navigate(["/manager/addWorkerToProject"])
   }
+  editProject()
+  {
+    this.managerService.project=this.project;
+    this.router.navigate(["/manager/editProject"])
+  }
 
   showWorker()
   {

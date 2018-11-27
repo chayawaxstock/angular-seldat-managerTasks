@@ -7,6 +7,7 @@ import { ManagerService } from '../shared/services/manager.service';
 import { createValidatorText, createValidatorNumber, DepartmentEnum, validatePassword } from '../shared/validators/user.validation';
 import sha256 from  'async-sha256';
 import swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -21,7 +22,7 @@ export class AddUserComponent  {
   departments: DepartmentUser[]=[];
   userByDepartment:User[]=[];
 
-  constructor(public userService:UserService,public managerService:ManagerService) {
+  constructor(public userService:UserService,public managerService:ManagerService,public router:Router) {
 
   userService.getAllDepartments().subscribe(departments=>{ this.departments=departments;
     console.log(this.departments);
@@ -60,6 +61,7 @@ export class AddUserComponent  {
           timer: 1500
         })
         this.formGroup.reset();
+        this.router.navigate(["/manager/allUsers"]);
       },err=>{swal({
         type: 'error',
         title: 'Oops...',

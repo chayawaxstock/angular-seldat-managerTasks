@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 
 import { UserService } from './shared/services/user.service';
-
+import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
+
+
 
 
 //custom Modules
@@ -43,7 +45,6 @@ import { ManagerComponent } from './manager/manager.component';
 import { AllProjectsComponent } from './all-projects/all-projects.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
-import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { UserTemplateComponent } from './user-template/user-template.component';
 import { ProjectTemplateComponent } from './project-template/project-template.component';
@@ -68,15 +69,22 @@ import { ChatModule } from '@progress/kendo-angular-conversational-ui';
 import { WorkerProjectTemplateComponent } from './worker-project-template/worker-project-template.component';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
-import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
 import { GraphStatusHoursProjectsComponent } from './graph-status-hours-projects/graph-status-hours-projects.component';
-import { MatCheckboxModule} from '@angular/material/checkbox';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { TasksOfWorkerComponent } from './tasks-of-worker/tasks-of-worker.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ProjectDetailsTemplateComponent } from './project-details-template/project-details-template.component';
 import { ProjectWorkerDetailsTemplateComponent } from './project-worker-details-template/project-worker-details-template.component';
+
+
+import { DepartmentDetailsComponent } from './department-details/department-details.component';
+import { WorkerDetailsComponent } from './worker-details/worker-details.component';
+import { EditProjectComponent } from './edit-project/edit-project.component';
+import { EditHoursForDepartmentComponent } from './edit-hours-for-department/edit-hours-for-department.component';
+import { AddWorkerToProjectTemplateComponent } from './add-worker-to-project-template/add-worker-to-project-template.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserProfilComponent } from './user-profil/user-profil.component';
 
 
 
@@ -91,7 +99,6 @@ import { ProjectWorkerDetailsTemplateComponent } from './project-worker-details-
     AllProjectsComponent,
     AddUserComponent,
     UpdateUserComponent,
-    DeleteUserComponent,
     AllUsersComponent,
     UserTemplateComponent,
     ProjectTemplateComponent,
@@ -116,6 +123,14 @@ import { ProjectWorkerDetailsTemplateComponent } from './project-worker-details-
     ProjectDetailsTemplateComponent,
     ProjectWorkerDetailsTemplateComponent,
     GraphStatusHoursProjectsComponent,
+    
+    DepartmentDetailsComponent,
+    WorkerDetailsComponent,
+    EditProjectComponent,
+    EditHoursForDepartmentComponent,
+    AddWorkerToProjectTemplateComponent,
+    ChangePasswordComponent,
+    UserProfilComponent,
   
   ],
   imports: [
@@ -134,13 +149,8 @@ import { ProjectWorkerDetailsTemplateComponent } from './project-worker-details-
     BrowserAnimationsModule,
    GridModule,
    InputsModule,
-// MatButtonModule,
-//      MatCheckboxModule,
-   // NgxLoadingModule.forRoot({})
-   // MatMenuModule,
-   // MatToolbarModule,
-  //  MatIconModule,
-   // MatCardModule
+   ExcelExportModule,
+
   
   ],
   providers: [UserService,AuthGuard,WorkerService,TeamleaderService,ManagerService,ExcelService],

@@ -1,3 +1,4 @@
-export class SendEmail{
- message:string;
+export class SendEmail {
+    subject: string;
+    message: string;
 }

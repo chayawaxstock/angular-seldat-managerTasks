@@ -16,19 +16,29 @@ import swal from 'sweetalert2'
 export class UpdateUserComponent implements OnInit {
 
   departments: DepartmentUser[]=[];
+  teamLeaders: User[]=[];
   formGroup: FormGroup;
   user: User;
+  managerName:string;
   obj: typeof Object = Object;
 errorList:string[];
 
   constructor(public userService: UserService,public managerService:ManagerService,public router:Router) {
-
+    this.user=this.managerService.userToEdit;
     userService.getAllDepartments().subscribe(departments=>{
        this.departments=departments;
       console.log(this.departments);
     });
-
-    this.user=this.managerService.userToEdit;
+    this.managerService.getUsersByDepartment("teamLeader").subscribe(res=>{
+    
+      console.log(res);
+      
+      this.teamLeaders=res;
+      this.managerName=this.teamLeaders.find(x=>x.userId==this.user.managerId).userName;
+    },err=>{
+      console.log(err);
+    });
+   
 
     let  emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/; 
     
@@ -37,6 +47,8 @@ errorList:string[];
       userName: new FormControl(this.user.userName, createValidatorText("userName", 2, 15)),
       email:new FormControl(this.user.email,createValidatorText("email", 8, 30,emailPattern)),
       numHoursWork:new FormControl(this.user.numHoursWork, createValidatorNumber("numHoursWork", 4, 9)),
+      departmentId:new FormControl(this.user.departmentUser.department),
+      idManager:new FormControl(this.user.manager.userName),
     };
     this.formGroup = new FormGroup(formGroupConfig);
 
@@ -52,10 +64,14 @@ errorList:string[];
    // this.user.userName  =this.formGroup.value["userName"];
    /// this.user.email=this.formGroup.value["email"];
    // this.user.numHoursWork=this.formGroup.value["numHoursWork"];
+   let managerId= this.user.managerId;
+
     this.user.email=this.formGroup.value.email;
     this.user.userName=this.formGroup.value.userName;
     this.user.numHoursWork=this.formGroup.value.numHoursWork;
    this.user.userId=this.managerService.userToEdit.userId;
+   this.user.departmentId=this.formGroup.value.departmentId;
+   this.user.managerId=managerId;
     this.managerService.updateUser(this.user).subscribe(res=>{
       swal({
         position: 'top-end',

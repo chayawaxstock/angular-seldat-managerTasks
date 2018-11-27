@@ -57,6 +57,7 @@ export class AllUsersComponent implements OnInit {
             'The worker has been deleted.',
             'success'
           )
+          this.router.navigate(["/manager/allUsers"]);
         },err=>{swal({
           type: 'error',
           title: 'Oops...',

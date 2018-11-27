@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-projects',
@@ -10,7 +11,7 @@ import swal from 'sweetalert2'
 })
 export class AllProjectsComponent implements OnInit {
  projects: Project[]=[];
-  constructor(public managerService:ManagerService) { }
+  constructor(public managerService:ManagerService,public router:Router) { }
  
   ngOnInit() {
     this.getAllProjects();
@@ -50,6 +51,8 @@ export class AllProjectsComponent implements OnInit {
             'The worker has been deleted.',
             'success'
           )
+
+          this.router.navigate(["/manager/allProjects"])
         },err=>{swal({
           type: 'error',
           title: 'Oops...',

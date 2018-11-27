@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Project } from '../models/project';
 import { Global } from './global';
 import { ProjectWorker } from '../models/projectWorker';
+import { Graph } from '../models/graph';
 
 @Injectable()
 export class TeamleaderService {
  
   constructor(public httpClient:HttpClient) { }
-
+  projectGraph:Project;
   getProjectTeamLeader(teamLeaderId:number):Observable<Project[]>
   {
     return this.httpClient.get<Project[]>(Global.baseURI+"getProjectsManager/"+teamLeaderId);
@@ -26,8 +27,8 @@ export class TeamleaderService {
   updateHours(worker:ProjectWorker): Observable<any> {   
   return this.httpClient.put(Global.baseURI+"updateProjectHours",worker);
  } 
- getHourWorkerTeamLeader(userId: number): Observable<any>  {
-  return this.httpClient.get(Global.baseURI+"getSumHoursByTeamLeader/"+userId);
+ getHourWorkerTeamLeader(userId: number,projectIdGraph:number): Observable<any[]>  {
+  return this.httpClient.get<any[]>(Global.baseURI+"getSumHoursDoneForUsers/"+userId+"/"+projectIdGraph);
   }
 
 }

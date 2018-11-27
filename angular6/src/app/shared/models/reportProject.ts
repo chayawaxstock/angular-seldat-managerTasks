@@ -1,11 +1,17 @@
 import { Project } from "./project";
+import { DepartmentUser } from "./departmentUser";
 
 export class ReportProject{
-    project:Project;
-    manager:string;
-    numWorkers:number;
-    sumHourWork:number;
-    daysStay:number;
-    presentDoing:number;
-    numHourDoDaysWorker:number;
+   id :number;
+    name :string;
+    customerName :string
+    dateBegin :Date;
+    dateEnd :Date;
+    totalHours :number;
+   sumHoursDo :number
+   precentsDone:number
+   daysleft :number
+   isFinish :boolean
+  teamLeader :string
+   items:ReportProject[]=[];
 }
