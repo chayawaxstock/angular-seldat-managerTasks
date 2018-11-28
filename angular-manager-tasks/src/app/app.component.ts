@@ -8,6 +8,8 @@ import { Product } from './/shared/models/product';
 import { EditService } from './/shared/services/edit-service.service';
 
 import { map } from 'rxjs/operators/map';
+import swal from 'sweetalert2';
+import { ManagerService } from './shared/services/manager.service';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +43,7 @@ import { map } from 'rxjs/operators/map';
           (save)="saveHandler($event)"
           (cancel)="cancelHandler()">
       </kendo-grid-edit-form>
+      <app-try></app-try>
   `
 })
 export class AppComponent implements OnInit {
@@ -55,7 +58,7 @@ export class AppComponent implements OnInit {
     public isNew: boolean;
     private editService: EditService;
 
-    constructor(@Inject(EditService) editServiceFactory: any) {
+    constructor(@Inject(EditService) editServiceFactory: any, public managerService: ManagerService) {
         this.editService = editServiceFactory();
     }
 
@@ -92,6 +95,30 @@ export class AppComponent implements OnInit {
     }
 
     public removeHandler({dataItem}) {
-        this.editService.remove(dataItem);
+        swal({
+            title: `Are you sure you want to delete ${dataItem.userName}?`,
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+                this.managerService.deleteUser(dataItem).subscribe(res=>{   swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )},err=>{swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                   
+                  })});
+
+           
+            }
+          })
+        
     }
 }

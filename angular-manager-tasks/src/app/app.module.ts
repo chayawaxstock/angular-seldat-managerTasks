@@ -27,6 +27,7 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { GridEditFormComponent } from './edit-form/edit-form.component';
 import { EditService } from './shared/services/edit-service.service';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { TryComponent } from './try/try.component';
 
 
 
@@ -41,6 +42,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     SignInComponent,
     ManagerMenuComponent,
     GridEditFormComponent,
+    TryComponent,
 
 
   ],

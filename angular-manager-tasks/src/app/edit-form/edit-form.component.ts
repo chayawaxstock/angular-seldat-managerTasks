@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Product } from '../shared/models/product';
 import { createValidatorNumber, DepartmentEnum, createValidatorText } from '../shared/validators/user.validation';
@@ -7,6 +7,9 @@ import { DepartmentUser } from '../shared/models/departmentUser';
 import { UserService } from '../shared/services/user.service';
 import { ManagerService } from '../shared/services/manager.service';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2'
+import { EditService } from '../shared/services/edit-service.service';
+
 
 @Component({
     selector: 'kendo-grid-edit-form',
@@ -49,19 +52,20 @@ import { Router } from '@angular/router';
 
                     <div class="example-wrapper">
       <p>chooseDepartment</p>
-      <kendo-dropdownlist  [data]="departments"  [textField]="'department'" [valueField]="'id'"   (valueChange)="chooseDepartment($event)" >
+      <div *ngIf="departments.length>0">
+      <kendo-dropdownlist   formControlName="departmentId"  [data]="departments"   [textField]="'text'"
+      [valueField]="'value'"
+      [valuePrimitive]="true"   [defaultItem]="defaultItem" (valueChange)="chooseDepartment($event)" >
       </kendo-dropdownlist>
     </div>
-                    <div class="form-group">
-                    <select  formControlName="departmentId" (change)="chooseDepartment($event)">
-                    <option *ngFor="let department of departments"  [value]="department.id">{{department.department}}</option>
-                  </select>
-                  </div>
-                  <div class="form-group">
-                 <select formControlName="managerId" *ngIf="userByDepartment.length>0" >
-                     <option *ngFor="let manager of userByDepartment" [value]="manager.userId">{{manager.userName}}</option>
-                  </select> 
-                  </div>
+    </div>
+
+    <div class="example-wrapper">
+    <p>teamleader</p>
+    <kendo-dropdownlist *ngIf="user" [data]="usersByDepartments"  [textField]="'text'" [valueField]="'value'"  [defaultItem]="defaultItemTeamleader"    >
+    </kendo-dropdownlist>
+  </div>
+                          
             </form>
 
             <kendo-dialog-actions>
@@ -72,17 +76,23 @@ import { Router } from '@angular/router';
     `
 })
 export class GridEditFormComponent {
-    constructor(public userService: UserService, public managerService: ManagerService, public router: Router) {
-
+    private editService: EditService;
+    departments:Array< { text: string, value: number }>=[];
+    usersByDepartments:Array< { text: string, value: number }>=[];
+    constructor(public userService: UserService, public managerService: ManagerService, public router: Router,@Inject(EditService) editServiceFactory: any) {
+        this.editService = editServiceFactory();
         userService.getAllDepartments().subscribe(departments => {
-            this.departments = departments;
+            debugger;
+         departments.forEach((element:DepartmentUser) => {
+                this.departments.push({text:element.department,value:element.id})
+            });
             console.log(this.departments);
+
         });
     }
 
     public active = false;
     public emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-
     public editForm: FormGroup = new FormGroup({
         'userName': new FormControl('', Validators.required),
         'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
@@ -92,17 +102,26 @@ export class GridEditFormComponent {
 
     });
 
-    departments: DepartmentUser[] = [];
-    userByDepartment: User[] = [];
+  
 
-
-
+    defaultItem: { text: string, value: number };
+    defaultItemTeamleader:{ text: string, value: number };
+   
+    user: User = new User();
     @Input() public isNew = false;
 
-    @Input() public set model(product: Product) {
-        this.editForm.reset(product);
+    @Input() public set model(user: User) {
+        if (user != undefined) {
+            console.log(this.departments)
+            debugger;
+            this.managerService.userToEdit = user;
+            this.user = user;
+            this.defaultItem={text:user.departmentUser.department,value:user.departmentUser.id};
+                        this.defaultItemTeamleader={text: user.manager.userName,value:user.manager.userId};
+            this.editForm.reset(user);
+        }
+        this.active = user !== undefined;
 
-        this.active = product !== undefined;
     }
 
     @Output() cancel: EventEmitter<any> = new EventEmitter();
@@ -110,7 +129,27 @@ export class GridEditFormComponent {
 
     public onSave(e): void {
         e.preventDefault();
-        this.save.emit(this.editForm.value);
+        this.editForm.value.userId = this.managerService.userToEdit.userId;
+        this.managerService.updateUser(this.editForm.value).subscribe(res => {
+            swal({
+                position: 'top-end',
+                type: 'success',
+                title: 'Success!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+            e.preventDefault();
+         this.save.emit(this.editForm.value);
+        }, err => {
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+
+            })
+        });
+         
         this.active = false;
     }
 
@@ -125,23 +164,33 @@ export class GridEditFormComponent {
         this.cancel.emit();
     }
 
-    chooseDepartment() {
-
-        let value = this.editForm.controls['departmentId'].value;
+    chooseDepartment(value: any) {
+        this.usersByDepartments=[];
+        this.defaultItemTeamleader ={ text: "", value: null };//not work remove default value
         if (value == DepartmentEnum.TEAMLEADER) {
             this.managerService.getUsersByDepartment("manager").subscribe(users => {
+                users.forEach((element:User) => {
+                    this.usersByDepartments.push({text:element.userName,value:element.userId})
+                });
                 console.log(users);
-                this.userByDepartment = users;
+               
             });
+            this.defaultItemTeamleader.text = this.user.manager.userName;
         }
         else if (value != DepartmentEnum.MANAGER) {
             this.managerService.getUsersByDepartment("teamLeader").subscribe(users => {
+
+                users.forEach((element:User) => {
+                    this.usersByDepartments.push({text:element.userName,value:element.userId})
+                });
                 console.log(users);
-                this.userByDepartment = users;
+              
             });
+            this.defaultItemTeamleader.text = this.user.manager.userName;
         }
         else {
-            this.userByDepartment = [];
+            this.usersByDepartments = [];
+          
         }
     }
 }
