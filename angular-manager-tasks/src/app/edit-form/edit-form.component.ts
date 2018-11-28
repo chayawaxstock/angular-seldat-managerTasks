@@ -82,7 +82,7 @@ export class GridEditFormComponent {
     constructor(public userService: UserService, public managerService: ManagerService, public router: Router,@Inject(EditService) editServiceFactory: any) {
         this.editService = editServiceFactory();
         userService.getAllDepartments().subscribe(departments => {
-            debugger;
+      
          departments.forEach((element:DepartmentUser) => {
                 this.departments.push({text:element.department,value:element.id})
             });
@@ -113,7 +113,7 @@ export class GridEditFormComponent {
     @Input() public set model(user: User) {
         if (user != undefined) {
             console.log(this.departments)
-            debugger;
+        
             this.managerService.userToEdit = user;
             this.user = user;
             this.defaultItem={text:user.departmentUser.department,value:user.departmentUser.id};
