@@ -15,15 +15,17 @@ import { State, CompositeFilterDescriptor, filterBy } from '@progress/kendo-data
 import { flatten } from '@progress/kendo-angular-grid/dist/es2015/filtering/base-filter-cell.component';
 import { ManagerService } from '../shared/services/manager.service';
 import { ReportProject } from '../shared/models/reportProject';
+import { ReportWorker } from '../shared/models/reportWorker';
+
 
 @Component({
-  selector: 'app-create-report',
-  templateUrl: './create-report.component.html',
-  styleUrls: ['./create-report.component.css']
+  selector: 'app-report-workers',
+  templateUrl: './report-workrts.component.html',
+  styleUrls: ['./report-workrts.component.css']
 })
-export class CreateReportComponent  {
+export class ReportWorkrtsComponent  {
 
-  reportProject:ReportProject[]=[];
+   reportWorker:ReportWorker[]=[];
   public state: State = {
     skip: 0,
     take: 5,
@@ -32,27 +34,27 @@ export class CreateReportComponent  {
 };
 constructor(public excelServise:ExcelService,public managerService:ManagerService) {
 
-   this.managerService.createReport(1).subscribe(res=>{
+   this.managerService.createReport(2).subscribe(res=>{
        console.log(res)
-    this.reportProject=res;
-    this.gridData=this.reportProject;
+    this.reportWorker=res;
+    this.gridData=this.reportWorker;
    });
 }
  
  
   exportAsXLSX():void {
-    this.excelServise.exportAsExcelFile(this.reportProject, 'reportProject');
+    this.excelServise.exportAsExcelFile(this.reportWorker, 'reportProject');
   }
 
 
-  public products: any[] = this.reportProject;
+  public products: any[] = this.reportWorker;
   public checked = false;
   public filter: CompositeFilterDescriptor;
   public gridData: any;
 
   public filterChange(filter: CompositeFilterDescriptor): void {
       this.filter = filter;
-     this.gridData = filterBy(this.reportProject, filter);
+     this.gridData = filterBy(this.reportWorker, filter);
   }
 
   public switchChange(checked: boolean): void {
@@ -76,7 +78,7 @@ constructor(public excelServise:ExcelService,public managerService:ManagerServic
   public allData(): ExcelExportData {
       debugger;
     const result: ExcelExportData =  {
-        data: process(this.reportProject, { group: this.group, sort: [{ field: 'ProductID', dir: 'asc' }] }).data,
+        data: process(this.reportWorker, { group: this.group, sort: [{ field: 'ProductID', dir: 'asc' }] }).data,
         group: this.group
     };
 
@@ -89,11 +91,7 @@ public group: any[] = [{
 
 public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
-    this.gridData = process(this.reportProject, this.state);
+    this.gridData = process(this.reportWorker, this.state);
 }
 
-
 }
-
-
-

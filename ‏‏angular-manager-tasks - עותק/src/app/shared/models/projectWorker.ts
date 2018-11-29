@@ -12,4 +12,6 @@ export class ProjectWorker {
     userWithoutPassword:User;
     sumHoursDone:number;
 
+
+
 }

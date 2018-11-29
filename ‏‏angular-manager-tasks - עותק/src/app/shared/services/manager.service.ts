@@ -39,8 +39,8 @@ export class ManagerService {
       return this.httpClient.delete(Global.baseURI+"deleteProject/"+idProject);
   }
 
-  createReport( idReport:number): Observable<any> {
-     return this.httpClient.get(Global.baseURI+"createReport/"+idReport);
+  createReport(): Observable<any> {
+     return this.httpClient.get(Global.baseURI+"createReport/1");
     }
     
   addProject(project: Project): Observable<any> {

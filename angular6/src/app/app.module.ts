@@ -85,6 +85,8 @@ import { EditHoursForDepartmentComponent } from './edit-hours-for-department/edi
 import { AddWorkerToProjectTemplateComponent } from './add-worker-to-project-template/add-worker-to-project-template.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserProfilComponent } from './user-profil/user-profil.component';
+import { ReportWorkrtsComponent } from './report-workrts/report-workrts.component';
+import { ReportWorkerTemplateComponent } from './report-worker-template/report-worker-template.component';
 
 
 
@@ -131,6 +133,8 @@ import { UserProfilComponent } from './user-profil/user-profil.component';
     AddWorkerToProjectTemplateComponent,
     ChangePasswordComponent,
     UserProfilComponent,
+    ReportWorkrtsComponent,
+    ReportWorkerTemplateComponent,
   
   ],
   imports: [
