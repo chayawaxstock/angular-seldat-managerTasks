@@ -14,6 +14,7 @@ export class ManagerService {
   subjectAllUsers= new Subject();
   subjectWorkerToProject=new Subject();
   subjectProject=new Subject();
+  subjectIsShow=new Subject();
   workerToProject: Project;
   project: Project;
   constructor(public httpClient: HttpClient) { }

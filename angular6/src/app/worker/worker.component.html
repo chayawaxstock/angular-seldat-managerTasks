@@ -1,6 +1,45 @@
 <app-log-out></app-log-out>
-<app-timer></app-timer>
-<app-send-email></app-send-email>
-<app-graph-status-hour></app-graph-status-hour>
-<app-tasks-of-worker></app-tasks-of-worker>
- <app-log-out></app-log-out>
+<nav class="main-menu">
+
+        <ul>
+      
+            <div class="nav-header">
+               <app-user-profil></app-user-profil>
+            </div>
+      
+         
+          <li class="has-subnav">
+            <a href="#">
+              <i class="fa fa-book fa-2x"></i>
+              <a class="nav-text"  [routerLink]="['/worker/myTasks']">my task</a>
+            </a>
+          </li>
+          <li class="has-subnav">
+            <a href="#">
+              <i class="fa fa-book fa-2x"></i>
+              <a class="nav-text" [routerLink]="['/worker/conectManager']">conectManager</a>
+            </a>
+          </li>
+          <li class="has-subnav">
+            <a href="#">
+              <i class="fa fa-book fa-2x"></i>
+              <a class="nav-text" [routerLink]="['/worker/pressent']">pressent</a>
+            </a>
+          </li>
+          <li class="has-subnav">
+              <a href="#">
+                <i class="fa fa-book fa-2x"></i>
+                <a class="nav-text" [routerLink]="['/worker/grafStatus']">grafStatus</a>
+              </a>
+            </li>
+      
+        </ul>
+      </nav> 
+      
+      
+      
+      
+      <body style="margin-left:100px">
+      
+        <router-outlet></router-outlet>
+      </body>

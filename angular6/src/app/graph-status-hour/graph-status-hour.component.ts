@@ -22,8 +22,8 @@ export class GraphStatusHourComponent implements OnInit {
 projects:ProjectWorker[]=[];
   ngOnInit() {
     this.barChartData = [
-      {data: [], label: 'Hours required'},
-      {data: [], label: 'hours done'}
+      {data: [], label: 'hours done'},
+      {data: [], label: 'Hours required'}
      ];
 
     this.barChartOptions = {
@@ -33,7 +33,7 @@ projects:ProjectWorker[]=[];
 
     this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId).subscribe(res => {
      
-      // debugger;
+       debugger;
 
 
       this.workerService.getTasksOfWorker(this.userService.currentUser.userId).subscribe(res=>{

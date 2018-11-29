@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { tap } from 'rxjs/operators/tap';
 import { map } from 'rxjs/operators/map';
+import { ManagerService } from './manager.service';
 import { User } from '../models/user';
 import { Global } from './global';
 

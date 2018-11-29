@@ -18,8 +18,9 @@ export class UserService {
   currentUser: User
   subjectAllProjects = new Subject();
   isFirst:boolean=true;
-  constructor(public httpClient: HttpClient, private router: Router) {
-  }
+
+  constructor(public httpClient: HttpClient, private router: Router) {}
+
   checkDepartment() {
     if (this.currentUser.departmentId == DepartmentEnum.TEAMLEADER)
       this.router.navigate(['/teamLeader']);
@@ -27,6 +28,7 @@ export class UserService {
       this.router.navigate(['/manager']);
     else this.router.navigate(['/worker']);
   }
+
   signInUser(user: LoginUser): Observable<User> {
     return this.httpClient.post<User>(Global.baseURI + "loginByPassword", user)
   }
@@ -42,10 +44,12 @@ export class UserService {
     formData.append('userName', userName);
     return this.httpClient.post<any>(Global.baseURI + "ForgetPassword", formData)
   }
+
   changePassord(user:LoginUser,requestId:number): Observable<any>
   {
     return this.httpClient.put(Global.baseURI+"ChangePassword/"+requestId,user);
   }
+
   getAllDepartments(): Observable<any> {
     return this.httpClient.get<any>(Global.baseURI + "Department/getAllDepartments");
   }
@@ -57,9 +61,8 @@ export class UserService {
   getIp(): Observable<any> {
     return this.httpClient.get("https://api.ipify.org/?format=json")
   }
+
   getHoursForProjectsByUser(userId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(Global.baseURI + "Users/getHoursForUserProjects/" + userId);
   }
-
-
 }

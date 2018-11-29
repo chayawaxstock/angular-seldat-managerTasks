@@ -8,9 +8,11 @@ import { Graph } from '../models/graph';
 
 @Injectable()
 export class TeamleaderService {
- 
-  constructor(public httpClient:HttpClient) { }
+
   projectGraph:Project;
+
+  constructor(public httpClient:HttpClient) { }
+
   getProjectTeamLeader(teamLeaderId:number):Observable<Project[]>
   {
     return this.httpClient.get<Project[]>(Global.baseURI+"getProjectsManager/"+teamLeaderId);

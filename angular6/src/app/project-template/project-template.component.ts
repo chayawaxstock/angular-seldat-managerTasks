@@ -3,6 +3,9 @@ import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2'
+import { EditService } from '../shared/services/edit-service.service';
+import { Global } from '../shared/services/global';
+
 
 @Component({
   selector: 'app-project-template',
@@ -15,14 +18,10 @@ export class ProjectTemplateComponent implements OnInit {
   project: Project;
   projects: Project[] = [];
   @Output() deleteProject: EventEmitter<number> = new EventEmitter<number>();
-  constructor(public managerService:ManagerService,public router:Router) { }
+  constructor(public managerService:ManagerService,public router:Router,public editService:EditService) { }
 
   ngOnInit() {
-    console.log(
-this.project.hoursForDepartment[0].sumHours,
 
-this.project.hoursForDepartment[0].departmentUser.department
-)
   }
 
   addWorkerToProject()
@@ -39,8 +38,10 @@ this.project.hoursForDepartment[0].departmentUser.department
 
   showWorker()
   {
+    Global.idProjectToGetWorker=this.project.projectId;
     this.managerService.project=this.project;
-    this.router.navigate(["/manager/userInProject"])
+    this.managerService.subjectIsShow.next(this.project.projectId);
+     this.router.navigate(["/manager/allUsers"]);
   }
 
  

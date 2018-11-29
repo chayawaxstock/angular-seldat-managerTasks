@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Product } from '../shared/models/product';
 import { createValidatorNumber, DepartmentEnum, createValidatorText } from '../shared/validators/user.validation';
@@ -9,6 +9,7 @@ import { ManagerService } from '../shared/services/manager.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2'
 import { EditService } from '../shared/services/edit-service.service';
+import sha256 from  'async-sha256';
 
 
 @Component({
@@ -35,13 +36,26 @@ import { EditService } from '../shared/services/edit-service.service';
 
                     <input type="text" class="k-textbox" formControlName="email" />
                 </div>
-                <div class="form-group">
-                    <label for="email" class="control-label">email</label>
+                <div *ngIf="isNew" class="form-group">
+                <label for="password" class="control-label">password</label>
 
-                    <input type="text" class="k-textbox" formControlName="email" />
+                <input type="password" class="k-textbox" formControlName="password" />
+               
+            
+        </div>
 
-                   
-                    </div>
+            <div  *ngIf="isNew" class="form-group">
+            <label for="confirmPassword" class="control-label">confirmPassword</label>
+
+            <input type="confirmPassword" class="k-textbox" formControlName="confirmPassword" />
+           
+        </div>
+
+
+
+      
+    
+     
                     <div class="form-group">
                     <label for="numHoursWork" class="control-label">numHoursWork</label>
 
@@ -76,49 +90,69 @@ import { EditService } from '../shared/services/edit-service.service';
     `
 })
 export class GridEditFormComponent {
+
     private editService: EditService;
-    departments:Array< { text: string, value: number }>=[];
-    usersByDepartments:Array< { text: string, value: number }>=[];
-    constructor(public userService: UserService, public managerService: ManagerService, public router: Router,@Inject(EditService) editServiceFactory: any) {
+    formGroup: FormGroup;
+    obj: typeof Object = Object;
+    departments: Array<{ text: string, value: number }> = [];
+    usersByDepartments: Array<{ text: string, value: number }> = [];
+    constructor(public userService: UserService, public managerService: ManagerService, public router: Router, @Inject(EditService) editServiceFactory: any) {
         this.editService = editServiceFactory();
         userService.getAllDepartments().subscribe(departments => {
-      
-         departments.forEach((element:DepartmentUser) => {
-                this.departments.push({text:element.department,value:element.id})
+
+            departments.forEach((element: DepartmentUser) => {
+                this.departments.push({ text: element.department, value: element.id })
             });
             console.log(this.departments);
 
         });
-    }
+        let formGroupConfig = {
+            'userName': new FormControl('', Validators.required),
+            'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
+            'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
+            'departmentId': new FormControl("", [Validators.required]),
+            'managerId': new FormControl()
+    
+        };
+        this.formGroup = new FormGroup(formGroupConfig);///להוסיף ולידציה של סיסמא
 
+    }
+  
     public active = false;
     public emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-    public editForm: FormGroup = new FormGroup({
-        'userName': new FormControl('', Validators.required),
-        'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
-        'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
-        'departmentId': new FormControl("", [Validators.required]),
-        'managerId': new FormControl()
+    
+    
 
-    });
 
-  
+
+
 
     defaultItem: { text: string, value: number };
-    defaultItemTeamleader:{ text: string, value: number };
-   
+    defaultItemTeamleader: { text: string, value: number };
+
     user: User = new User();
     @Input() public isNew = false;
 
     @Input() public set model(user: User) {
         if (user != undefined) {
             console.log(this.departments)
-        
+
             this.managerService.userToEdit = user;
             this.user = user;
-            this.defaultItem={text:user.departmentUser.department,value:user.departmentUser.id};
-                        this.defaultItemTeamleader={text: user.manager.userName,value:user.manager.userId};
-            this.editForm.reset(user);
+            if (this.isNew == false) {
+              
+                this.defaultItem = { text: user.departmentUser.department, value: user.departmentUser.id };
+                this.defaultItemTeamleader = { text: user.manager.userName, value: user.manager.userId };
+            }
+            else {
+                this.defaultItem = { text: '', value: null };
+                this.defaultItemTeamleader = { text: '', value: null };
+                this.formGroup.addControl("password", new FormControl('', Validators.required))
+                this.formGroup.addControl("confirmPassword", new FormControl('', Validators.required))
+            }
+
+
+            this.formGroup.reset(user);
         }
         this.active = user !== undefined;
 
@@ -129,8 +163,10 @@ export class GridEditFormComponent {
 
     public onSave(e): void {
         e.preventDefault();
-        this.editForm.value.userId = this.managerService.userToEdit.userId;
-        this.managerService.updateUser(this.editForm.value).subscribe(res => {
+        if(this.isNew==false)
+        {
+        this.formGroup.value.userId = this.managerService.userToEdit.userId;
+        this.managerService.updateUser(this.formGroup.value).subscribe(res => {
             swal({
                 position: 'top-end',
                 type: 'success',
@@ -140,7 +176,7 @@ export class GridEditFormComponent {
             })
 
             e.preventDefault();
-         this.save.emit(this.editForm.value);
+            this.save.emit(this.formGroup.value);
         }, err => {
             swal({
                 type: 'error',
@@ -149,10 +185,38 @@ export class GridEditFormComponent {
 
             })
         });
-         
+    }
+    else{
+
+        sha256(this.formGroup.value.password).then(p=>{
+            this.formGroup.value.password=p;
+            sha256(this.formGroup.value.confirmPassword).then(pass=>{
+                this.formGroup.value.confirmPassword=pass;
+          this.managerService.addUser(this.formGroup.value).subscribe(res=>{
+            swal({
+              position: 'top-end',
+              type: 'success',
+              title: 'Success adding worker!',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.formGroup.reset();
+            e.preventDefault();
+            this.save.emit(this.formGroup.value);
+          },err=>{swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+           
+          })});
+    
+          });
+          });
+
+
         this.active = false;
     }
-
+    }
     public onCancel(e): void {
         e.preventDefault();
         this.closeForm();
@@ -165,32 +229,33 @@ export class GridEditFormComponent {
     }
 
     chooseDepartment(value: any) {
-        this.usersByDepartments=[];
-        this.defaultItemTeamleader ={ text: "", value: null };//not work remove default value
+        this.usersByDepartments = [];
+        this.defaultItemTeamleader = { text: "", value: null };//not work remove default value
         if (value == DepartmentEnum.TEAMLEADER) {
             this.managerService.getUsersByDepartment("manager").subscribe(users => {
-                users.forEach((element:User) => {
-                    this.usersByDepartments.push({text:element.userName,value:element.userId})
+                users.forEach((element: User) => {
+                    this.usersByDepartments.push({ text: element.userName, value: element.userId })
                 });
                 console.log(users);
-               
+
             });
             this.defaultItemTeamleader.text = this.user.manager.userName;
         }
         else if (value != DepartmentEnum.MANAGER) {
             this.managerService.getUsersByDepartment("teamLeader").subscribe(users => {
 
-                users.forEach((element:User) => {
-                    this.usersByDepartments.push({text:element.userName,value:element.userId})
+                users.forEach((element: User) => {
+                    this.usersByDepartments.push({ text: element.userName, value: element.userId })
                 });
                 console.log(users);
-              
+
             });
-            this.defaultItemTeamleader.text = this.user.manager.userName;
+            if (this.isNew == false)
+                this.defaultItemTeamleader.text = this.user.manager.userName;
         }
         else {
             this.usersByDepartments = [];
-          
+
         }
     }
 }

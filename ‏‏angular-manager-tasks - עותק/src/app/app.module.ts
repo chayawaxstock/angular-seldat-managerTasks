@@ -19,15 +19,18 @@ import { AuthGuard } from './shared/auth.guard';
 import { HttpModule } from '@angular/http';
 import { WorkerService } from './shared/services/worker.service';
 import { TeamleaderService } from './shared/services/teamleader.service';
-import { ManagerService } from './shared/services/manager.service';
 import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridEditFormComponent } from './edit-form/edit-form.component';
 import { EditService } from './shared/services/edit-service.service';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { TryComponent } from './try/try.component';
+import { InputComponent } from './input/input.component';
+import { DatepickerComponent } from './datepicker/datepicker.component';
+import { PasswordComponent } from './password/password.component';
+import { DropDownListComponent } from './drop-down-list/drop-down-list.component';
+import { NumericTextBoxComponent } from './numeric-text-box/numeric-text-box.component';
+
 
 
 
@@ -41,10 +44,11 @@ import { TryComponent } from './try/try.component';
     AppComponent,
     SignInComponent,
     ManagerMenuComponent,
-    GridEditFormComponent,
-    TryComponent,
-
-
+    InputComponent,
+    DatepickerComponent,
+    PasswordComponent,
+    DropDownListComponent,
+    NumericTextBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,7 @@ import { TryComponent } from './try/try.component';
    DropDownsModule
 
   ],
-  providers: [UserService,AuthGuard,WorkerService,TeamleaderService,ManagerService,  {
+  providers: [UserService,AuthGuard,WorkerService,TeamleaderService,  {
     deps: [HttpClient],
     provide: EditService,
     useFactory: (jsonp: HttpClient) => () => new EditService(jsonp)

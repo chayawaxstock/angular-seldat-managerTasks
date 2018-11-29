@@ -3,6 +3,7 @@ import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import { User } from '../shared/models/user';
 import { Router } from '@angular/router';
+import { Global } from '../shared/services/global';
 
 @Component({
   selector: 'app-manager',
@@ -21,5 +22,9 @@ export class ManagerComponent implements OnInit {
   activeRoute(routename: string): boolean{
     return this.router.url.indexOf(routename) > -1;
   }
-
+  allUsers()
+  {
+    Global.idProjectToGetWorker=0;
+    this.managerService.subjectIsShow.next(0);
+  }
 }

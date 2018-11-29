@@ -1,5 +1,4 @@
 <app-log-out></app-log-out>
- <div class="area"></div>
 <nav class="main-menu">
   <ul>
 
@@ -7,16 +6,11 @@
          <app-user-profil></app-user-profil>
       </div>
 
-    <li>
-      <a href="http://justinfarrow.com">
-        <i class="fa fa-user fa-2x"></i>
-        <a class="nav-text" [routerLink]="['/manager/addUser']">add user</a>
-      </a>
-    </li>
+   
     <li class="has-subnav">
       <a href="#">
         <i class="fa fa-book fa-2x"></i>
-        <a class="nav-text" [routerLink]="['/manager/allUsers']">all user</a>
+        <a class="nav-text" (click)="allUsers()" [routerLink]="['/manager/allUsers']">all user</a>
       </a>
     </li>
     <li class="has-subnav">
@@ -47,4 +41,4 @@
 <body style="margin-left:100px">
 
   <router-outlet></router-outlet>
-</body>z
+</body>

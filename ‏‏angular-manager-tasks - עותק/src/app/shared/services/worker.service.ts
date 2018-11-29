@@ -34,14 +34,8 @@ export class WorkerService {
   addPresentDay(pressantDay: PresentDay): Observable<any> {
    return this.httpClient.post(Global.baseURI+"AddPresent",pressantDay);
   }
+
   getTasksOfWorker(userId):Observable<ProjectWorker[]>{
-
     return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"getProjectsById/"+userId);
-
   }
-   
-
- 
-
-
 }

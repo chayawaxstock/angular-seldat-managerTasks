@@ -13,31 +13,26 @@ export class ManagmerService {
   subjectWorkerToProject=new Subject();
   subjectProject=new Subject();
   subjectAllProjects=new Subject();
+  workerToProject: Project;
+  project: Project;
+
   constructor(public httpClient: HttpClient) { }
 
-  baseUri:string="http://localhost:61309/api/"
 
   getUserByDepartment(idDepertmant:string): Observable<User[]> {
-      return this.httpClient.get<User[]>(this.baseUri+"Users/getUsersByDepartment/"+idDepertmant)
+      return this.httpClient.get<User[]>(Global.baseURI+"Users/getUsersByDepartment/"+idDepertmant)
   } 
   
   addUser(user: User): Observable<any> {
-    return this.httpClient.post(this.baseUri+"addUser",user);
+    return this.httpClient.post(Global.baseURI+"addUser",user);
   }
 
    updateUser(user: User): Observable<any> {   
-     console.log("update");
-   return this.httpClient.put(this.baseUri+"updateUser",user);
+   return this.httpClient.put(Global.baseURI+"updateUser",user);
   }
   
   deleteUser(idUser: number): Observable<any> {
-        return this.httpClient.delete(this.baseUri+"deleteUser/"+idUser);
-    }
-  createReport(): Observable<any> {
-    let headers = new Headers();
-     headers.append('Content-Type', 'application/json');
-    headers.append('responseType', 'arrayBuffer');
-     return this.httpClient.get(this.baseUri+"createReport");
+        return this.httpClient.delete(Global.baseURI+"deleteUser/"+idUser);
     }
     
   addProject(project: Project): Observable<any> {
@@ -47,17 +42,34 @@ export class ManagmerService {
     return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
   }
 
-  getWorkerNotInProject(projectId: number): Observable<User[]> {
-    return this.httpClient.get<User[]>(Global.baseURI+"getWorkerNotProject/"+projectId);
-  }
-
   addWorkersToProject(projectId:number,workers:User[]):Observable<any>
   {
-    console.log(workers);
   return this.httpClient.put(Global.baseURI+"addWorkersToProject/"+projectId,workers);
   }
 
   getWorkerInProject(projectId:number): Observable<User[]> {
     return this.httpClient.get<User[]>(Global.baseURI+"getWorkerInProject/"+projectId)
   }
+
+  getUsersByDepartment(idDepertmant:string): Observable<User[]> {
+    return this.httpClient.get<User[]>(Global.baseURI+"Users/getUsersByDepartment/"+idDepertmant)
+} 
+
+  deleteProject(idProject: number): Observable<any> {
+    return this.httpClient.delete(Global.baseURI+"deleteProject/"+idProject);
+}
+
+createReport(): Observable<any> {
+   return this.httpClient.get(Global.baseURI+"createReport/1");
+  }
+  
+editProjct(project: Project): Observable<any> 
+{
+  return this.httpClient.put(Global.baseURI+"updateProject",project);
+}
+
+getWorkerNotInProject(projectId: number): Observable<User[]> {
+  return this.httpClient.get<User[]>(Global.baseURI+"getWorkerNotProject/"+projectId);
+}
+
 }

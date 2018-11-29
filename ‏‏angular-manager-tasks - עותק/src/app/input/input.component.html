@@ -1,0 +1,7 @@
+<div class="group">
+ 
+  <input kendoTextBox  [formControl]="formControl" [type]="type" matInput [placeholder]="placeholder" [min]="min" (keyup)="keyUp()">
+  <div *ngIf="formControl.errors&&formControl.touched">
+    <p *ngFor="let err of objectHolder.values(formControl.errors)" class="myAlert">{{err}}</p>
+  </div>
+</div>
