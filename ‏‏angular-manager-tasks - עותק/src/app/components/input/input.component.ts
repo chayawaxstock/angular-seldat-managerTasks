@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { type } from 'os';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,7 @@ export class InputComponent  {
  //----------------PROPERTIRS-------------------
 
  @Input()
- formControl: FormControl;
+ formcontrol: FormControl;
 
  @Input()
  placeholder: string;

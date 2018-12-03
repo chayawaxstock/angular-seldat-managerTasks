@@ -14,11 +14,11 @@ export class ProjectWorkerDetailsTemplateComponent implements OnInit {
   Isng: boolean = true;
   hoursForProject: number;
   @Input()
-  workerProject: ProjectWorker
+  workerProject: ProjectWorker=new ProjectWorker();
   isEditHours: boolean = false
   workerToEditHours: ProjectWorker;
   ngOnInit(keySearch?: string) {
-
+console.log(this.workerProject);
   }
   // this.medicineServ.getAllMedicine().subscribe(medicines => {
 

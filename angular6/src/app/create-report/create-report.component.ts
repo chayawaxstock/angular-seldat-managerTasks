@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ExcelService } from '../shared/services/excel.service';
-
-import { ExcelExportModule } from '@progress/kendo-angular-excel-export';
-import { GridModule, ExcelModule } from '@progress/kendo-angular-grid';
 import { ExcelExportData } from '@progress/kendo-angular-excel-export'; 
 import { process } from '@progress/kendo-data-query';
-import {
-  GridComponent,
-  GridDataResult,
-  DataStateChangeEvent
-} from '@progress/kendo-angular-grid';
+import {DataStateChangeEvent} from '@progress/kendo-angular-grid';
 import { State, CompositeFilterDescriptor, filterBy } from '@progress/kendo-data-query';
-
 import { flatten } from '@progress/kendo-angular-grid/dist/es2015/filtering/base-filter-cell.component';
 import { ManagerService } from '../shared/services/manager.service';
 import { ReportProject } from '../shared/models/reportProject';
@@ -24,39 +16,49 @@ import { ReportProject } from '../shared/models/reportProject';
 export class CreateReportComponent  {
 
   reportProject:ReportProject[]=[];
-  public state: State = {
-    skip: 0,
-    take: 5,
-
-    // Initial filter descriptor
-};
-constructor(public excelServise:ExcelService,public managerService:ManagerService) {
-
-   this.managerService.createReport(1).subscribe(res=>{
-       console.log(res)
-    this.reportProject=res;
-    this.gridData=this.reportProject;
-   });
-}
- 
- 
-  exportAsXLSX():void {
-    this.excelServise.exportAsExcelFile(this.reportProject, 'reportProject');
-  }
-
-
   public products: any[] = this.reportProject;
   public checked = false;
   public filter: CompositeFilterDescriptor;
   public gridData: any;
+  public state: State = {
+    skip: 0,
+    take: 5,
+};
 
+constructor(
+    public excelServise:ExcelService,
+    public managerService:ManagerService) {
+
+//get data from report 1-projectReport
+   this.managerService.createReport(1)
+   .subscribe(res=>{
+    this.reportProject=res;
+    this.gridData=this.reportProject;
+   });
+}
+
+  exportAsXLSX():void {
+      let projectReport=[];
+      this.gridData.forEach((element:ReportProject) => {
+          projectReport.push(element);
+            element.items.forEach((department:ReportProject)=>{
+              projectReport.push(department);
+              element.items.forEach((worker:ReportProject)=>{
+                projectReport.push(worker);
+             })
+          })
+      });
+
+    this.excelServise.exportAsExcelFile(projectReport, 'reportProject');
+  }
+
+  //fillter
   public filterChange(filter: CompositeFilterDescriptor): void {
       this.filter = filter;
      this.gridData = filterBy(this.reportProject, filter);
   }
 
   public switchChange(checked: boolean): void {
-      debugger;
       const root = this.filter || { logic: 'and', filters: []};
 
       const [filter] = flatten(root).filter(x => x.field === 'isFinish');
@@ -67,31 +69,18 @@ constructor(public excelServise:ExcelService,public managerService:ManagerServic
               operator: 'eq',
               value: checked
           });
-      } else {
+      } 
+      else {
           filter.value = checked;
       }
       this.checked = checked;
       this.filterChange(root);
   }
-  public allData(): ExcelExportData {
-      debugger;
-    const result: ExcelExportData =  {
-        data: process(this.reportProject, { group: this.group, sort: [{ field: 'ProductID', dir: 'asc' }] }).data,
-        group: this.group
-    };
 
-    return result;
-}
-public group: any[] = [{
-  field: 'id'
-}];
-
-
-public dataStateChange(state: DataStateChangeEvent): void {
+   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this.gridData = process(this.reportProject, this.state);
-}
-
+  }
 
 }
 

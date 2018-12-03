@@ -1,8 +1,11 @@
+
+
+
 <div class="card cardStyle">
   <div class="card-header">{{project.projectName}}</div>
   <div class="card-body">
     <strong>Customer:</strong> {{project.customerName}}<br>
-    
+
     <strong>NumHourForProject:</strong> {{project.numHourForProject}}<br>
     <strong>DateBegin:</strong> {{project.dateBegin | date: 'dd/MM/yyyy'}}<br>
     <strong>DateEnD:</strong> {{project.dateEnd | date: 'dd/MM/yyyy'}}<br>
@@ -13,15 +16,14 @@
       <strong>{{department.departmentUser.department}}</strong>
       {{department.sumHours}}<br>
     </div>
-  
-      <p class="k-block">
-          <button kendoButton [icon]="'folder'" [look]="'outline'" [primary]="true" (click)="showWorker()">Show worker</button>
-        <button kendoButton [icon]="'folder'" [look]="'outline'" [primary]="true" (click)="addWorkerToProject()">Add workers to project</button>
-        <button kendoButton [icon]="'folder'" [look]="'outline'" [primary]="true" (click)="editProject()">Edit project</button>
-        <button kendoButton [icon]="'folder'" [look]="'outline'" [primary]="true" (click)="delete()">Delete project</button>
-      </p>
-   
+
+    <p class="k-block">
+      <button kendoButton [look]="'outline'" [primary]="true" (click)="showWorker()">Show worker</button>
+      <button kendoButton [look]="'outline'" [primary]="true" (click)="addWorkerToProject()">Add workers to project</button>
+      <button kendoButton [look]="'outline'" [primary]="true" (click)="editProject()">Edit project</button>
+      <button kendoButton [look]="'outline'" [primary]="true" (click)="delete()">Delete project</button>
+    </p>
+
   </div>
 
 </div>
-

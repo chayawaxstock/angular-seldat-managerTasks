@@ -49,10 +49,12 @@ const appRoutes: Routes = [
      ]},
      {path:'worker',component: WorkerComponent,children:[
         {path:'myTasks',component:TasksOfWorkerComponent},
+        {path:'',component:TasksOfWorkerComponent},
         {path:'conectManager',component:SendEmailComponent},
         {path:'grafStatus',component:GraphStatusHourComponent}
      ]},
      {path:'teamLeader',component: TeamLeaderComponent,children:[
+      {path:'',component: ProjectDetailsComponent},
         {path:'projectDetails',component: ProjectDetailsComponent},
         {path:'graphStatusHoursProjects',component: GraphStatusHoursProjectsComponent},
      ]},

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { User } from '../shared/models/user';
+import { User } from '../../shared/models/user';
 import { FormGroup, FormControl } from '@angular/forms';
-import { UserService } from '../shared/services/user.service';
+import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
-import { createValidatorText, DepartmentEnum } from '../shared/validators/user.validation';
-import { LoginUser } from '../shared/models/loginUser';
+import { createValidatorText, DepartmentEnum } from '../../shared/validators/user.validation';
+import { LoginUser } from '../../shared/models/loginUser';
 import sha256 from 'async-sha256' ;
 
 @Component({

@@ -13,40 +13,31 @@ import { Project } from '../shared/models/project';
 export class TimerComponent implements OnInit {
 
     ticks = 0;
-    @Input()
-    isPlay:boolean;
+    @Input() isPlay:boolean;
+
     minutesDisplay: number = 0;
     hoursDisplay: number = 0;
     secondsDisplay: number = 0;
-    pressantDay: PresentDay = new PresentDay();
-    sub: Subscription;
-    timer: any;
-    isSelectProject: boolean = false;
-    projectsWorker: Project[];
-    projectId: number;
-    constructor(public workerService: WorkerService, public userService: UserService) {
 
-    }
+    timer: any;
+
+    constructor(
+        public workerService: WorkerService,
+        public userService: UserService) {}
+
+
     ngOnInit() {
-      this.workerService.timerSubject.subscribe((status)=>{
-    if(status==false)
-        this.startTimer();
-     else this.stopTimer();
+      this.workerService.timerSubject
+         .subscribe((status)=>{
+            if(status==false)
+              this.startTimer();
+            else this.stopTimer();
       })
       
        
     }
-    // selectProject(event) {
-    //     this.isSelectProject = true;
-    //     if(event==0)
-    //     this.projectId =   this.projectsWorker[event].projectId;
-    //     else
-    //     this.projectId =   this.projectsWorker[event.target["options"].selectedIndex].projectId;
-    // }
-
 
     startTimer() {
-
         this.timer = setInterval(() => this.getTimer(), 1000);
     }
 
@@ -57,14 +48,10 @@ export class TimerComponent implements OnInit {
         this.hoursDisplay = this.getHours(this.ticks);
     }
 
-
     stopTimer() {
-      
-
         clearInterval(this.timer);
             this.ticks = -1;
             this.getTimer();
-       
     }
 
 

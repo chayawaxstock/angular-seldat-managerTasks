@@ -17,19 +17,22 @@ export class ChangePasswordComponent implements OnInit{
   hostname: any;
   domain: any;
   requestId:number;
+
   //-----------------constructor-------------------
-  constructor(private userService: UserService, private router: Router,private route: ActivatedRoute) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute) {
+
     let formGroupConfig = {
       userName: new FormControl("", createValidatorText("userName", 2, 15)),
       password: new FormControl("", createValidatorText("password", 8, 20)),
      
     };
     this.formGroup = new FormGroup(formGroupConfig);
-
-   
   }
+
   ngOnInit() {
-    debugger;
     this.requestId =parseInt(this.route.snapshot.paramMap.get('requestId'));
   }
 
@@ -47,21 +50,20 @@ export class ChangePasswordComponent implements OnInit{
     //convert password to sha256
     sha256(user.password).then( p=>{
     user.password=p;
-    console.log(user.password);
-    this.changePass(user,pass);
+    this.changePass(user);
     });
   }
 
-  changePass(user:LoginUser,lastPassword): any {
+  changePass(user:LoginUser): any {
 
-    this.userService.changePassord(user,this.requestId).subscribe(data => {
+    this.userService.changePassord(user,this.requestId)
+    .subscribe(() => {
+
     this.router.navigate(['/home']);
       },
        err => {
-        // user.password=lastPassword;
-        // console.log(err.message);
+       //TODO:להדפיס שגיאות
         alert("invalid");
-      
       });
   }
 

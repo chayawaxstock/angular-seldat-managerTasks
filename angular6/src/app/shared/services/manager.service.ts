@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Global } from './global';
 import { Project } from '../models/project';
 import { ProjectWorker } from '../models/projectWorker';
+import swal from 'sweetalert2';
 
 @Injectable()
 export class ManagerService {
@@ -17,6 +18,7 @@ export class ManagerService {
   subjectIsShow=new Subject();
   workerToProject: Project;
   project: Project;
+  isNew:boolean=false;
   constructor(public httpClient: HttpClient) { }
 
 
@@ -69,5 +71,12 @@ export class ManagerService {
   getWorkerInProject(projectId:number): Observable<User[]> {
     return this.httpClient.get<User[]>(Global.baseURI+"getWorkerInProject/"+projectId)
   }
-
+  getErrorMessage()
+  {
+    swal({
+      type: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!', 
+    })
+  }
 }

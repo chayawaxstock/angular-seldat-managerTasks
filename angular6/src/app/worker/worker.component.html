@@ -1,14 +1,13 @@
-<app-log-out></app-log-out>
+<app-header></app-header>
 <nav class="main-menu">
 
-        <ul>
-      
-            <div class="nav-header">
-               <app-user-profil></app-user-profil>
-            </div>
-      
-         
-          <li class="has-subnav">
+        <ul class="margin-top">
+            <li class="has-subnav">
+                <a href="#">
+                  <a class="header nav-text"  >Worker-menu</a>
+                </a>
+              </li>
+          <li class=" has-subnav">
             <a href="#">
               <i class="fa fa-book fa-2x"></i>
               <a class="nav-text"  [routerLink]="['/worker/myTasks']">my task</a>
@@ -21,25 +20,14 @@
             </a>
           </li>
           <li class="has-subnav">
-            <a href="#">
-              <i class="fa fa-book fa-2x"></i>
-              <a class="nav-text" [routerLink]="['/worker/pressent']">pressent</a>
-            </a>
-          </li>
-          <li class="has-subnav">
               <a href="#">
                 <i class="fa fa-book fa-2x"></i>
                 <a class="nav-text" [routerLink]="['/worker/grafStatus']">grafStatus</a>
               </a>
             </li>
-      
         </ul>
       </nav> 
       
-      
-      
-      
-      <body style="margin-left:100px">
-      
+      <body class="body">
         <router-outlet></router-outlet>
       </body>

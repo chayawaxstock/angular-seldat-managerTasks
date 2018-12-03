@@ -27,7 +27,7 @@ export class ProjectDetailsTemplateComponent implements OnInit {
       this.teamleaderService.getUserBelongProject(event).subscribe(res => {
         this.workersForProject = res;
 
-        console.log(this.workersForProject[0]);
+        console.log(this.workersForProject[0].project.numHourForProject);
 
 
         this.toggle = true

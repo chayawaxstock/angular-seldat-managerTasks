@@ -1,9 +1,13 @@
 
+<h1>Select workers to add {{project.projectName}} project</h1>
+
 <div *ngIf="workesNotinProject.length>0 else empty">
-<div *ngFor="let worker of workesNotinProject">
-  <app-add-worker-to-project-template [workerToProject]="worker" (numHours)='numHours($event)'></app-add-worker-to-project-template>
-</div>
-<input type="button" value="save" (click)="saveChange()">
+
+  <div class="usersToAdd" *ngFor="let worker of workesNotinProject">
+    <app-add-worker-to-project-template [workerToProject]="worker" (numHours)='numHours($event)'></app-add-worker-to-project-template>
+  </div>
+
+  <button kendoButton [look]="'outline'" [primary]="true" (click)="saveChange()">Save</button>
 </div>
 
 <ng-template #empty>

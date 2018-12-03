@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
-import { ManagerMenuComponent } from './manager-menu/manager-menu.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { ManagerMenuComponent } from './components/manager-menu/manager-menu.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from './shared/services/user.service';
 import { ChartsModule } from 'ng2-charts';
@@ -25,18 +25,15 @@ import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { EditService } from './shared/services/edit-service.service';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { InputComponent } from './input/input.component';
-import { DatepickerComponent } from './datepicker/datepicker.component';
-import { PasswordComponent } from './password/password.component';
-import { DropDownListComponent } from './drop-down-list/drop-down-list.component';
-import { NumericTextBoxComponent } from './numeric-text-box/numeric-text-box.component';
-
-
-
-
-
-
-
+import { InputComponent } from './components/input/input.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { PasswordComponent } from './components/password/password.component';
+import { DropDownListComponent } from './components/drop-down-list/drop-down-list.component';
+import { NumericTextBoxComponent } from './components/numeric-text-box/numeric-text-box.component';
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { WorkerComponent } from './components/worker/worker.component';
+import { ConectManagerComponent } from './components/conect-manager/conect-manager.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 
 
 @NgModule({
@@ -48,7 +45,10 @@ import { NumericTextBoxComponent } from './numeric-text-box/numeric-text-box.com
     DatepickerComponent,
     PasswordComponent,
     DropDownListComponent,
-    NumericTextBoxComponent
+    NumericTextBoxComponent,
+    WorkerComponent,
+    ConectManagerComponent,
+    TextareaComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +68,9 @@ import { NumericTextBoxComponent } from './numeric-text-box/numeric-text-box.com
    ExcelExportModule,
    HttpClientJsonpModule,
    DialogModule,
-   DropDownsModule
+   DropDownsModule,
+   NbThemeModule.forRoot({ name: 'default' }),
+   NbLayoutModule
 
   ],
   providers: [UserService,AuthGuard,WorkerService,TeamleaderService,  {

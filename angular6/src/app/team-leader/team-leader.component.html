@@ -1,20 +1,19 @@
-<!-- <app-project-team-leader></app-project-team-leader> -->
-<app-log-out></app-log-out>
-
+<app-header></app-header>
 <nav class="main-menu">
-  <ul>
+  <ul class="margin-top">
+      <li class="has-subnav">
+          <a href="#">
+            <a class="header nav-text"  >TeamLeader-menu</a>
+          </a>
+        </li>
     <li class="has-subnav">
       <a href="#">
         <i class="fa fa-book fa-2x"></i>
         <a class="nav-text" [routerLink]="['/teamLeader/projectDetails']">project details</a>
       </a>
     </li>
-   
-    <li class="has-subnav">
-        <app-log-out></app-log-out>
-    </li> 
-
-
   </ul>
 </nav>
-<router-outlet></router-outlet>
+<body class="body">
+  <router-outlet></router-outlet>
+</body>

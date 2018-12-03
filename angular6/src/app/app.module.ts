@@ -60,7 +60,6 @@ import { TimerComponent } from './timer/timer.component';
 import { SendEmailComponent } from './send-email/send-email.component';
 import { GraphStatusHourComponent } from './graph-status-hour/graph-status-hour.component';
 import { ProjectWorkerComponent } from './project-worker/project-worker.component';
-import { ClockAnalistyComponent } from './clock-analisty/clock-analisty.component';
 import { WorkerToTeamLeaderComponent } from './worker-to-team-leader/worker-to-team-leader.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ChatModule } from '@progress/kendo-angular-conversational-ui';
@@ -88,6 +87,7 @@ import { WorkersManagementComponent } from './workers-management/workers-managem
 import { GridEditFormComponent } from './edit-form/edit-form.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { EditService } from './shared/services/edit-service.service';
+import { HeaderComponent } from './header/header.component';
 
 
 
@@ -116,7 +116,6 @@ import { EditService } from './shared/services/edit-service.service';
     SendEmailComponent,
     GraphStatusHourComponent,
     ProjectWorkerComponent,
-    ClockAnalistyComponent,
     WorkerToTeamLeaderComponent,
     TasksOfWorkerComponent,
     WorkerProjectTemplateComponent,
@@ -134,7 +133,8 @@ import { EditService } from './shared/services/edit-service.service';
     UserProfilComponent,
     ReportWorkrtsComponent,
     ReportWorkerTemplateComponent,
-    WorkersManagementComponent
+    WorkersManagementComponent,
+    HeaderComponent
 
   ],
   imports: [

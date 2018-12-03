@@ -1,28 +1,22 @@
-<div class="cd-faq-items">
+<div class="cd-faq-items possition">
     <ul id="info" class="cd-faq-group">
 
-        <li>
-            <div><strong>name</strong>{{project.projectName}}</div>
-        </li>
-        <li>
-            <div><strong>customer</strong>{{project.customer}}</div>
-        </li>
-        <li>
-            <div><strong>num hours</strong>{{project.numHours}}</div>
-        </li>
-        <li>
-            <div><strong>date begin</strong>{{project.dateBegin}}</div>
-        </li>
-        <li>
-            <div><strong>date end</strong>{{project.dateEnd}}</div>
-        </li>
-        <li>
+            <div><strong>name: </strong>{{project.projectName}}</div>
+
+            <div><strong>customer: </strong>{{project.customerName}}</div>
+
+            <div><strong>num hours: </strong>{{project.numHourForProject}}</div>
+
+            <div><strong>date begin: </strong>{{project.dateBegin | date :  "dd/MM/yyyy"}}</div>
+
+            <div><strong>date end: </strong>{{project.dateEnd | date :  "dd/MM/yyyy"}}</div>
+
             <button (click)="showGraphHours(project)">show graph hours</button>
-        </li>
+       
     </ul>
 
          <div class="cd-faq-trigger" id={{project.projectId}} (click)="showMoreDetails(project.projectId)">    </div> 
-         <div *ngIf="toggle"> 
+         <div *ngIf="toggle&&workersForProject.length>0"> 
             <app-project-worker-details-template *ngFor="let item of workersForProject" [workerProject]="item"></app-project-worker-details-template>
         </div>
 </div>

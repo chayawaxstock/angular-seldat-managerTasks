@@ -33,6 +33,7 @@ export class ProjectTemplateComponent implements OnInit {
   editProject()
   {
     this.managerService.project=this.project;
+    this.managerService.isNew=false;
     this.router.navigate(["/manager/editProject"])
   }
 
@@ -50,6 +51,7 @@ export class ProjectTemplateComponent implements OnInit {
     console.log(this.project.projectId)
     this.deleteProject.emit(this.project.projectId);
   }
+
 }
 
 

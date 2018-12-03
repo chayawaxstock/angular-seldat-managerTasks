@@ -88,17 +88,10 @@ export class AddProjectComponent implements OnInit {
           timer: 1500
         })
         this.router.navigate(["/manager/allProjects"])
-        },err=>{{swal({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-         
-        })}});
-           
+        }
+        ,err=>{
+          this.managerService.getErrorMessage();
+        });   
       }
-
-     
     }
-
-
 }
