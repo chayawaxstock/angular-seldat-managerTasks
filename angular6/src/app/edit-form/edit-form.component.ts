@@ -85,6 +85,7 @@ export class GridEditFormComponent {
         e.preventDefault();
         if(this.isNew==false)
         {
+            debugger;
           this.formGroup.value.userId = this.managerService.userToEdit.userId;
           this.managerService.updateUser(this.formGroup.value)
           .subscribe(

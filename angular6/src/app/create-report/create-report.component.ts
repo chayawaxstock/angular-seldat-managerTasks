@@ -28,7 +28,7 @@ export class CreateReportComponent  {
 constructor(
     public excelServise:ExcelService,
     public managerService:ManagerService) {
-
+debugger;
 //get data from report 1-projectReport
    this.managerService.createReport(1)
    .subscribe(res=>{

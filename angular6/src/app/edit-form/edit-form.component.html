@@ -56,7 +56,7 @@
 
            <div class="example-wrapper">
                <p>teamleader</p>
-                 <kendo-dropdownlist *ngIf="user" [data]="usersByDepartments"  [textField]="'text'" [valueField]="'value'"  [defaultItem]="defaultItemTeamleader"    >
+                 <kendo-dropdownlist  formControlName="managerId"  *ngIf="user" [data]="usersByDepartments"  [textField]="'text'" [valueField]="'value'" [valuePrimitive]="true"  [defaultItem]="defaultItemTeamleader"    >
                  </kendo-dropdownlist>
            </div>          
       </form>

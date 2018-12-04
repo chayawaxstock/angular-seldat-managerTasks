@@ -51,7 +51,6 @@ export class SignInComponent {
          this.ip = res.ip;
          this.userService.loginByUserComputer(this.ip)
            .subscribe(x => {
-         this.user = x;
         //save user in global prop
            this.userService.currentUser = x;
 
