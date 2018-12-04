@@ -1,7 +1,7 @@
 <div *ngIf="messageEmpty!=''">{{messageEmpty}}</div>
 
 <div *ngIf="barChartLabels.length>0"> 
-  <div style="display: block">
+  <div >
     <canvas baseChart 
             [datasets]="barChartData"
             [labels]="barChartLabels"

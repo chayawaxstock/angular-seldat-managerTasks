@@ -18,7 +18,8 @@ export class ManagerService {
   subjectIsShow=new Subject();
   workerToProject: Project;
   project: Project;
-  isNew:boolean=false;
+  isNew:boolean;
+  isShow:boolean;
   constructor(public httpClient: HttpClient) { }
 
 

@@ -43,7 +43,7 @@ export class SignInComponent {
     };
     this.formGroup = new FormGroup(formGroupConfig);
   }
-
+  //----------------METHODS-------------------
   signInWithIp()
   {
     this.userService.getIp()
@@ -65,7 +65,6 @@ export class SignInComponent {
     });
 
   }
-  //-----------------functions-------------------
 
   submitRegister() {
 

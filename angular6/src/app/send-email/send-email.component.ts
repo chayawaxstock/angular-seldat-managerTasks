@@ -15,7 +15,6 @@ export class SendEmailComponent implements OnInit {
   
    //----------------PROPERTIRS-------------------
    formGroup: FormGroup;
- 
 
   //----------------CONSTRUCTOR------------------
 
@@ -24,20 +23,16 @@ export class SendEmailComponent implements OnInit {
     public userService:UserService,
     public router:Router) {}
 
+  //----------------METHODS-------------------
   ngOnInit() {
-    
     let formGroupConfig = {
       subject: new FormControl(""),
       body: new FormControl(""),
 
     };
     this.formGroup = new FormGroup(formGroupConfig);
-  
   }
 
-
-  //----------------METHODS-------------------
-  
   sendEmail()
   {
     this.workerService.sendEmail(this.formGroup.value,this.userService.currentUser.userId).subscribe(

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, process } from '@progress/kendo-data-query';
 import { EditService } from '../shared/services/edit-service.service';
@@ -7,46 +7,17 @@ import { map } from 'rxjs/operators/map';
 import swal from 'sweetalert2';
 import { ManagerService } from '../shared/services/manager.service';
 import { User } from '../shared/models/user';
-import { Global } from '../shared/services/global';
+
 
 @Component({
     selector: 'app-workers-management',
     templateUrl: './workers-management.component.html',
-    styleUrls: ['./workers-management.component.css'],
-    template: `
-      <kendo-grid
-          [data]="view | async"
-          [height]="533"
-          [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
-          [pageable]="true" [sortable]="true"
-          (dataStateChange)="onStateChange($event)"
-          (edit)="editHandler($event)" (remove)="removeHandler($event)"
-          (add)="addHandler($event)"
-        >
-        <ng-template kendoGridToolbarTemplate *ngIf="isShow==0">
-            <button kendoGridAddCommand >Add new</button>
-        </ng-template>
-        <kendo-grid-column field="userName" title="userName"></kendo-grid-column>
-        <kendo-grid-column field="email" title="email"></kendo-grid-column>
-        <kendo-grid-column field="departmentUser.department" title="departmentUser"></kendo-grid-column>
-        <kendo-grid-column  *ngIf="manager" field="manager.userName" title="manager"></kendo-grid-column>
-        <kendo-grid-column field="numHoursWork" title="numHoursWork"></kendo-grid-column>
-        <kendo-grid-command-column *ngIf="isShow==0" title="command" width="220">
-            <ng-template kendoGridCellTemplate >
-                <button kendoGridEditCommand [primary]="true">Edit</button>
-                <button kendoGridRemoveCommand>Delete</button>
-            </ng-template>
-        </kendo-grid-command-column>
-      </kendo-grid>
+    styleUrls: ['./workers-management.component.css']
 
-      <kendo-grid-edit-form [model]="editDataItem" [isNew]="isNew"
-          (save)="saveHandler($event)"
-          (cancel)="cancelHandler()">
-      </kendo-grid-edit-form>
-    
-  `
 })
 export class WorkersManagementComponent implements OnInit {
+
+       //----------------PROPERTIRS-------------------
     public view: Observable<GridDataResult>;
     public gridState: State = {
         sort: [],
@@ -57,21 +28,17 @@ export class WorkersManagementComponent implements OnInit {
     public editDataItem: User;
     public isNew: boolean;
     private editService: EditService;
-   isShow:number=0;
+    @Input()
+    isShow:number;
+
+      //----------------CONSTRUCTOR------------------
     constructor(@Inject(EditService) editServiceFactory: any, public managerService: ManagerService) {
         this.editService = editServiceFactory();
 
     }
-
+  //----------------METHODS-------------------
     public ngOnInit(): void {
-      this.managerService.subjectIsShow.subscribe(v=>{
-      this.isShow=Number(v);
-      Global.idProjectToGetWorker=this.isShow;
-    this.editService.data=[];
-      this.editService.read(); 
 
-         })
-        
         this.view = this.editService.pipe(map(data => process(data, this.gridState)));
         this.editService.read();
         
@@ -79,7 +46,6 @@ export class WorkersManagementComponent implements OnInit {
 
     public onStateChange(state: State) {
         this.gridState = state;
-
         this.editService.read();
     }
 
@@ -130,8 +96,6 @@ export class WorkersManagementComponent implements OnInit {
 
                     })
                 });
-
-
             }
         })
 

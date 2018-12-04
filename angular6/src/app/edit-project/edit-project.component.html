@@ -1,4 +1,3 @@
-<h2>Edit project</h2>
 
 <kendo-dialog *ngIf="active" (close)="closeForm()">
 
@@ -6,7 +5,7 @@
         {{ isNew ? 'Add project' : 'Edit project' }}
     </kendo-dialog-titlebar>
 
-    <form novalidate [formGroup]="formGroup" >
+    <form novalidate [formGroup]="formGroup">
         <div class="form-group">
             <label for="projectName" class="control-label">Project name</label>
 
@@ -30,21 +29,23 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="dateBegin" class="control-label">dateBegin</label>
-            <input type="date" class="k-textbox" formControlName="dateBegin" name="dateBegin" />
+
+        <div class="col-xs-12 col-sm-6 example-col">
+            <p>Date begin</p>
+            <kendo-datepicker formControlName="dateBegin">
+            </kendo-datepicker>
             <div class="help-block" *ngIf="formGroup.controls['dateBegin'].errors&&formGroup.controls['dateBegin'].touched">
-                <p *ngFor="let err of obj.values(formGroup.controls['dateBegin'].errors)">{{err}}</p>
-            </div>
+                    <p *ngFor="let err of obj.values(formGroup.controls['dateBegin'].errors)">{{err}}</p>
+                </div>
         </div>
 
-        <div class="form-group">
-            <label for="dateEnd" class="control-label">dateEnd</label>
-            <input type="date" class="k-textbox" formControlName="dateEnd" name="dateEnd" />
+        <div class="col-xs-12 col-sm-6 example-col">
+            <p>Date end</p>
+            <kendo-datepicker formControlName="dateEnd"> 
+            </kendo-datepicker>
             <div class="help-block" *ngIf="formGroup.controls['dateEnd'].errors&&formGroup.controls['dateEnd'].touched">
-                <p *ngFor="let err of obj.values(formGroup.controls['dateEnd'].errors)">{{err}}</p>
-            </div>
-
+                    <p *ngFor="let err of obj.values(formGroup.controls['dateEnd'].errors)">{{err}}</p>
+                </div>
         </div>
 
 
@@ -63,16 +64,18 @@
         </div>
 
         <div class="example-wrapper">
-                <p>teamleader</p>
-                <kendo-dropdownlist formControlName="idManager"  [data]="usersByDepartments"  [textField]="'text'" [valueField]="'value'"  [valuePrimitive]="true"   >
-                </kendo-dropdownlist>
-              </div>
-                        
+            <p>teamleader</p>
+            <kendo-dropdownlist formControlName="idManager" [data]="usersByDepartments" [textField]="'text'"
+                [valueField]="'value'" [valuePrimitive]="true">
+            </kendo-dropdownlist>
+        </div>
+
         <input type="checkbox" (change)="Ischecked()">
         <kendo-dialog-actions>
 
             <button class="k-button" (click)="onCancel($event)">Cancel</button>
-            <button *ngIf="isNew"  class="k-button k-primary" [disabled]="formGroup.invalid" (click)="addProject()">   Add</button>
-            <button *ngIf="!isNew" class="k-button k-primary" [disabled]="formGroup.invalid" (click)="editProject()">  Edit</button>
+            <button *ngIf="isNew" class="k-button k-primary" [disabled]="formGroup.invalid" (click)="addProject()"> Add</button>
+            <button *ngIf="!isNew" class="k-button k-primary" [disabled]="formGroup.invalid" (click)="editProject()">
+                Edit</button>
         </kendo-dialog-actions>
     </form>

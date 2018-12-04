@@ -35,9 +35,9 @@ export class AllProjectsComponent implements OnInit {
 
   getAllProjects() {
     this.managerService.getAllProjects()
-    .subscribe(res => {
-      this.projects = res;
-    });
+      .subscribe(res => {
+        this.projects = res;
+      });
   }
 
   deleteProject(id: number) {
@@ -55,47 +55,48 @@ export class AllProjectsComponent implements OnInit {
         let indexProject = this.projects.findIndex(p => p.projectId == id)
 
         this.managerService.deleteProject(id)
-        .subscribe(res => {
-          this.projects.splice(indexProject, 1);
-          swal(
-            'Deleted!',
-            'The worker has been deleted.',
-            'success'
-          )
-          this.router.navigate(["/manager/allProjects"])
-        }, 
-        err => {
-        this.managerService.getErrorMessage();
-        })
+          .subscribe(res => {
+            this.projects.splice(indexProject, 1);
+            swal(
+              'Deleted!',
+              'The worker has been deleted.',
+              'success'
+            )
+            this.router.navigate(["/manager/allProjects"])
+          },
+            err => {
+              this.managerService.getErrorMessage();
+            })
       }
     })
   }
 
   addProject() {
 
-    this.managerService.isNew=true;
+    this.managerService.isNew = true;
     this.project = new Project();
 
     this.userService.getAllDepartments()
-    .subscribe((departments)=> {
+      .subscribe((departments) => {
 
-      //get all worker department
-      let departmentsWorker=departments.filter(x => x.id > 2);
+        //get all worker department
+        let departmentsWorker = departments.filter(x => x.id > 2);
 
-      departmentsWorker.forEach((element :DepartmentUser) => {
+        departmentsWorker.forEach((element: DepartmentUser) => {
 
-        let departmentUser=new DepartmentUser();
-        departmentUser.id=element.id;
-        departmentUser.department=element.department;
+          let departmentUser = new DepartmentUser();
+          departmentUser.id = element.id;
+          departmentUser.department = element.department;
 
-        let hour=new HourForDepartment();
-        hour.departmentId=element.id;
-        hour.departmentUser=departmentUser;
-         this.project.hoursForDepartment.push(hour);
+          let hour = new HourForDepartment();
+          hour.departmentId = element.id;
+          hour.departmentUser = departmentUser;
+          this.project.hoursForDepartment.push(hour);
+        });
+        this.project.dateBegin = new Date();
+        this.project.dateEnd = new Date();
+        this.managerService.project = this.project;
+        this.router.navigate(["/manager/editProject"]);
       });
-
-      this.managerService.project = this.project;
-      this.router.navigate(["/manager/editProject"]);
-    });
   }
 }

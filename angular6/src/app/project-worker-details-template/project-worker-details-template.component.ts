@@ -1,88 +1,67 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProjectWorker } from '../shared/models/projectWorker';
 import { TeamleaderService } from '../shared/services/teamleader.service';
 import swal from 'sweetalert2';
+import { ManagerService } from '../shared/services/manager.service';
 
 @Component({
   selector: 'app-project-worker-details-template',
   templateUrl: './project-worker-details-template.component.html',
   styleUrls: ['./project-worker-details-template.component.css']
 })
-export class ProjectWorkerDetailsTemplateComponent implements OnInit {
-
-  constructor(public teamleaderService: TeamleaderService) { }
+export class ProjectWorkerDetailsTemplateComponent {
   Isng: boolean = true;
   hoursForProject: number;
-  @Input()
-  workerProject: ProjectWorker=new ProjectWorker();
+  @Input() workerProject: ProjectWorker = new ProjectWorker();
   isEditHours: boolean = false
   workerToEditHours: ProjectWorker;
-  ngOnInit(keySearch?: string) {
-console.log(this.workerProject);
+  @Input() sumHoursStay: number[] = [];
+
+  @Output() changeSumHoursStay: EventEmitter<any> = new EventEmitter<any>();
+  constructor(public teamleaderService: TeamleaderService, private managerService: ManagerService) {
+
   }
-  // this.medicineServ.getAllMedicine().subscribe(medicines => {
 
-  //  },
-  //     (error: HttpErrorResponse) => alert("can't connect to database"))
-  // if(this.Isng)
-  // {
-  //     this.teamleaderService.getAllUserMedicine(sessionStorage.getItem("userMail"), sessionStorage.getItem("userPassword")).subscribe(userMedicineList => {
-  //       this.userMedicineList = userMedicineList;
-  //     },
-  //       (error: HttpErrorResponse) => alert("can't connect to database"))
-  //   }
-  //   else 
-  //   {
-  //     this.userMedicineList=[];
-  //   this.medicineServ.getBooksSearch(sessionStorage.getItem("userMail"), sessionStorage.getItem("userPassword"),keySearch).subscribe(res => {console.log(res);  this.userMedicineList = res }, err => { });
-  //   }}
-
-  // search(keySearch) {
-  //   if(keySearch)
-  //   {
-  //   this.Isng=false;
-  //   this.ngOnInit(keySearch);
-  //   }
-  //   else{
-  //     this.Isng=true;
-  //        this.ngOnInit();
-  //   }
-  // }
   editHours(worker: ProjectWorker) {
-    // this.isEditHours=true;
     this.hoursForProject = worker.hoursForProject;
 
-
-
     swal({
-      
-      title: 'Enter units in stock',
+      title: 'Change hoursForProject',
       input: 'number',
-      inputValue:`${worker.hoursForProject}`,
+      inputValue: `${worker.hoursForProject}`,
       inputAttributes: {
         autocapitalize: 'off'
       },
       showCancelButton: true,
       confirmButtonText: 'Update',
       showLoaderOnConfirm: true,
-      preConfirm: (login) => {
-        this.hoursForProject=login;
+      preConfirm: (num) => {
+        this.hoursForProject = num;
         this.workerToEditHours = worker;
       },
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
-        this.hoursForProject=result.value;
-        this.updateHours();
+
+        if (this.checkNumStay(result.value) == true) {
+          this.hoursForProject = result.value;
+          this.updateHours();
+        }
+        else {
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'num of hour stay to this department less than num hours to edit!'
+          })
+        }
       }
     })
-    // this.isEditStock=true;
-  
-    // document.getElementById("editstock").style.visibility='visible';
-    //   this.unitsInStock=medicine.unitsInStock;
-    //   this.medicineToUpdateStack=medicine;
 
-    
+  }
+  checkNumStay(numHour: number): boolean {
+    if (this.sumHoursStay[this.workerToEditHours.user.departmentId - 3] - numHour >= 0)
+      return true;
+    return false;
   }
   updateHours() {
     swal({
@@ -96,25 +75,17 @@ console.log(this.workerProject);
       if (result.value) {
         this.workerToEditHours.hoursForProject = this.hoursForProject;
         this.workerToEditHours.project = null;
-        this.teamleaderService.updateHours(this.workerToEditHours).subscribe(res => {
-          if (res == true) {
+        this.teamleaderService.updateHours(this.workerToEditHours)
+          .subscribe(() => {
+            this.changeSumHoursStay.emit({ idDepartment: this.workerToEditHours.user.departmentId, hours: this.hoursForProject })
             swal(
               `the hours update to ${this.hoursForProject}`
             )
-
-
-          }
-         else {swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-           
-          })}
-        })
+          }, () => {
+            this.managerService.getErrorMessage();
+          })
       }
     })
-
   }
-
 }
 

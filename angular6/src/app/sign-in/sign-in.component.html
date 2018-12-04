@@ -11,7 +11,7 @@
                 <p *ngFor="let err of obj.values(formGroup.controls['userName'].errors)">{{err}}</p>
             </div>
 
-            <input class="form-control" type="password" placeholder="Enter password" formControlName="password"  name="password">
+            <input class="form-control" type="password" placeholder="Enter password" formControlName="password" name="password">
             <div class="help-block" *ngIf="formGroup.controls['password'].errors&&formGroup.controls['password'].touched">
                 <p *ngFor="let err of obj.values(formGroup.controls['password'].errors)">{{err}}</p>
             </div>

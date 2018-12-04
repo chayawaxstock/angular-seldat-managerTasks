@@ -30,7 +30,7 @@ export class GridEditFormComponent {
     defaultItem: { text: string, value: number };
     defaultItemTeamleader: { text: string, value: number };
     user: User = new User();
-    
+
     @Input() public isNew = false;
 
     @Input() public set model(user: User) {
@@ -45,8 +45,8 @@ export class GridEditFormComponent {
             else {
                 this.defaultItem = { text: '', value: null };
                 this.defaultItemTeamleader = { text: '', value: null };
-                this.formGroup.addControl("password", new FormControl('', Validators.required))
-                this.formGroup.addControl("confirmPassword", new FormControl('', Validators.required))
+                this.formGroup.addControl("password", new FormControl('',createValidatorText("password",8,8)))
+                this.formGroup.addControl("confirmPassword", new FormControl('',createValidatorText("confirmPassword",8,8)))
             }
            this.formGroup.reset(user);
         }
@@ -72,7 +72,7 @@ export class GridEditFormComponent {
         });
 
         let formGroupConfig = {
-            'userName': new FormControl('', Validators.required),
+            'userName': new FormControl('',createValidatorText("userName",2,15)),
             'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
             'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
             'departmentId': new FormControl("", [Validators.required]),

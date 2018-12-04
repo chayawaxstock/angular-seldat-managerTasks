@@ -11,30 +11,26 @@ import { Project } from '../shared/models/project';
     styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
-
+    //----------------PROPERTIRS-------------------
     ticks = 0;
-    @Input() isPlay:boolean;
-
+    @Input() isPlay: boolean;
     minutesDisplay: number = 0;
     hoursDisplay: number = 0;
     secondsDisplay: number = 0;
-
     timer: any;
-
+    //----------------CONSTRUCTOR------------------
     constructor(
         public workerService: WorkerService,
-        public userService: UserService) {}
+        public userService: UserService) { }
 
-
+    //----------------METHODS-------------------
     ngOnInit() {
-      this.workerService.timerSubject
-         .subscribe((status)=>{
-            if(status==false)
-              this.startTimer();
-            else this.stopTimer();
-      })
-      
-       
+        this.workerService.timerSubject
+            .subscribe((status) => {
+                if (status == false)
+                    this.startTimer();
+                else this.stopTimer();
+            })
     }
 
     startTimer() {
@@ -50,8 +46,8 @@ export class TimerComponent implements OnInit {
 
     stopTimer() {
         clearInterval(this.timer);
-            this.ticks = -1;
-            this.getTimer();
+        this.ticks = -1;
+        this.getTimer();
     }
 
 

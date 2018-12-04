@@ -1,6 +1,3 @@
-
-
-
 <div class="card cardStyle">
   <div class="card-header">{{project.projectName}}</div>
   <div class="card-body">
@@ -17,11 +14,11 @@
       {{department.sumHours}}<br>
     </div>
 
-    <p class="k-block">
-      <button kendoButton [look]="'outline'" [primary]="true" (click)="showWorker()">Show worker</button>
-      <button kendoButton [look]="'outline'" [primary]="true" (click)="addWorkerToProject()">Add workers to project</button>
-      <button kendoButton [look]="'outline'" [primary]="true" (click)="editProject()">Edit project</button>
-      <button kendoButton [look]="'outline'" [primary]="true" (click)="delete()">Delete project</button>
+    <p>
+      <button class="btn btn-link" (click)="showWorker()">Show worker</button><br>
+      <button class="btn btn-link" (click)="addWorkerToProject()">Add workers to project</button><br>
+      <button class="btn btn-link" (click)="editProject()">Edit project</button><br>
+      <button class="btn btn-link" (click)="delete()">Delete project</button><br>
     </p>
 
   </div>

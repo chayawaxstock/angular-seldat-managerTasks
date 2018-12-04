@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { createValidatorText, createValidatorDateBegin, createValidatorNumber, validateDateEnd } from '../shared/validators/user.validation';
+import { createValidatorText, createValidatorDateBegin, createValidatorNumber, validateDateEnd, validateSumHourForDepartment } from '../shared/validators/user.validation';
 import { DepartmentUser } from '../shared/models/departmentUser';
 import { User } from '../shared/models/user';
 import { UserService } from '../shared/services/user.service';
@@ -51,8 +51,8 @@ export class EditProjectComponent implements OnInit {
     let formGroupConfig = {
       projectName: new FormControl(this.project.projectName, createValidatorText("projectName", 2, 15)),
       customerName: new FormControl(this.project.customerName, createValidatorText("customerName", 2, 15)),
-      dateBegin: new FormControl(this.project.dateBegin, createValidatorDateBegin("dateBegin")),
-      dateEnd: new FormControl(this.project.dateEnd),
+      dateBegin: new FormControl(new Date(this.project.dateBegin), createValidatorDateBegin("dateBegin")),
+      dateEnd: new FormControl(new Date( this.project.dateEnd)),
       numHourForProject: new FormControl(this.project.numHourForProject, createValidatorNumber("numHourForProject", 1, 20000)),
       idManager: new FormControl(this.projectManager),
       hoursForDepartment: new FormControl(),
@@ -76,7 +76,7 @@ export class EditProjectComponent implements OnInit {
   }
 
   editProject() {
-
+    validateSumHourForDepartment(this.formGroup,this.project)
     if (this.formGroup.invalid) {
       return;
     }
@@ -88,7 +88,8 @@ export class EditProjectComponent implements OnInit {
       this.project.projectId = projectId;
       this.project.isFinish = this.isChecked;
       this.project.idManager = this.managerService.project.idManager;
-
+      this.project.dateBegin.setDate(this.project.dateBegin.getDate() + 1 );
+      this.project.dateEnd.setDate(this.project.dateEnd.getDate() + 1 );
       this.managerService.editProjct(this.project)
       .subscribe(res => {
         this.managerService.subjectProject.next("true");
@@ -105,6 +106,7 @@ export class EditProjectComponent implements OnInit {
   }
 
   addProject() {
+    validateSumHourForDepartment(this.formGroup,this.project)
     if (this.formGroup.invalid) {
       return;
     }

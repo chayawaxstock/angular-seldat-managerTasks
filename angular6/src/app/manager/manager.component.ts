@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import { User } from '../shared/models/user';
@@ -10,21 +10,17 @@ import { Global } from '../shared/services/global';
   templateUrl: './manager.component.html',
   styleUrls: ['./manager.component.css']
 })
-export class ManagerComponent implements OnInit {
+export class ManagerComponent  {
 
-  projects: Project[]=[];
-  @Input() loginInfo:User;
-  constructor(public managerService:ManagerService,public router:Router) { }
+  projects: Project[] = [];
+  @Input() loginInfo: User;
+  constructor(public managerService: ManagerService, public router: Router) { }
 
-  ngOnInit() {
-
-  }
-  activeRoute(routename: string): boolean{
+  activeRoute(routename: string): boolean {
     return this.router.url.indexOf(routename) > -1;
   }
-  allUsers()
-  {
-    Global.idProjectToGetWorker=0;
+  allUsers() {
+    Global.idProjectToGetWorker = 0;
     this.managerService.subjectIsShow.next(0);
   }
 }

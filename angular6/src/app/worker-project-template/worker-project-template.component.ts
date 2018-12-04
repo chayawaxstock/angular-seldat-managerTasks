@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProjectWorker } from '../shared/models/projectWorker';
 import { PresentDay } from '../shared/models/pressentDay';
 import { WorkerService } from '../shared/services/worker.service';
@@ -13,24 +13,21 @@ import swal from 'sweetalert2';
   styleUrls: ['./worker-project-template.component.css']
 })
 
-export class WorkerProjectTemplateComponent  {
-
+export class WorkerProjectTemplateComponent {
+  //----------------PROPERTIRS-------------------
   @Input()
   project: ProjectWorker;
-
   @Input()
   isClick: boolean;
-
   stopClick: boolean = false;
   pressantDay: PresentDay = new PresentDay();
-
   @Output() clickWork: EventEmitter<number> = new EventEmitter<number>();
-
+  //----------------CONSTRUCTOR------------------
   constructor(
     public workerService: WorkerService,
     public userService: UserService,
     public router: Router) { }
-
+  //----------------METHODS-------------------
   clickUpdateWork(projectId: number) {
     this.workerService.timerSubject.next(this.stopClick);
 
@@ -59,15 +56,15 @@ export class WorkerProjectTemplateComponent  {
         timer: 1500
       })
     },
-     err => {
-      {
-        swal({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-        })
-      }
-    })
+      err => {
+        {
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+        }
+      })
   }
 
   stopTimer(projectId: number) {
@@ -75,29 +72,25 @@ export class WorkerProjectTemplateComponent  {
     this.pressantDay.timeEnd = new Date();
 
     this.workerService.updateDayPressent(this.pressantDay)
-    .subscribe(res => {
-      swal({
-        type: 'success',
-        title: 'Stop',
-        showConfirmButton: false,
-        timer: 1500
-      });
-
-      this.userService.subjectAllProjects.next("true");
-
-    }, 
-    err => {
-      {
+      .subscribe(res => {
         swal({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+          type: 'success',
+          title: 'Stop',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        this.userService.subjectAllProjects.next("true");
+
+      },
+        err => {
+          {
+            swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+          }
         })
-      }
-    })
-
-
   }
-
-
 }

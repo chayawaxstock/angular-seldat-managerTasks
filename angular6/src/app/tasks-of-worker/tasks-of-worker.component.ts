@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
 import { WorkerService } from '../shared/services/worker.service';
-import { ProjectWorkerComponent } from '../project-worker/project-worker.component';
 import { ProjectWorker } from "../shared/models/projectWorker";
 
 @Component({
@@ -11,40 +10,37 @@ import { ProjectWorker } from "../shared/models/projectWorker";
 })
 export class TasksOfWorkerComponent implements OnInit {
 
-  isClick:boolean=false;
-  isTimerStart:boolean=false;
-  projects:ProjectWorker[]=[];
-
+  //----------------PROPERTIRS-------------------
+  isClick: boolean = false;
+  isTimerStart: boolean = false;
+  projects: ProjectWorker[] = [];
+  //----------------CONSTRUCTOR------------------
   constructor(
-    public workerService:WorkerService,
-    public userService:UserService) { }
-
-  ngOnInit() 
-  {
+    public workerService: WorkerService,
+    public userService: UserService) { }
+  //----------------METHODS-------------------
+  ngOnInit() {
     this.getAllProjects();
     this.userService.subjectAllProjects
-    .subscribe(
-      v=>{
-      this.getAllProjects();
-    })
+      .subscribe(
+        v => {
+          this.getAllProjects();
+        })
   }
 
-  getAllProjects()
-  {
+  getAllProjects() {
     this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
-    .subscribe(res=>{
-      this.projects=res;
-    });;
+      .subscribe(res => {
+        this.projects = res;
+      });;
   }
 
-  clickWork()
-  {
-    this.isClick=!this.isClick;
+  clickWork() {
+    this.isClick = !this.isClick;
   }
 
-  timer()
-  {
-   this.isTimerStart=!this.isTimerStart;
+  timer() {
+    this.isTimerStart = !this.isTimerStart;
   }
 
 }
