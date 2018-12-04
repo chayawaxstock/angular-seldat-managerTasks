@@ -237,15 +237,14 @@
   }
   @media only screen and (min-width: 768px) {
     .cd-faq-items {
+      border-width: 1px;
+      border-style: solid;
       position: static;
       height: auto;
-      width: 78%;
+      width: 50%;
       float: right;
       overflow: visible;
       -webkit-transform: translateZ(0) translateX(0);
-      -moz-transform: translateZ(0) translateX(0);
-      -ms-transform: translateZ(0) translateX(0);
-      -o-transform: translateZ(0) translateX(0);
       transform: translateZ(0) translateX(0);
       padding: 0;
       background: transparent;
@@ -253,9 +252,9 @@
   }
   @media only screen and (min-width: 1024px) {
     .cd-faq-items {
-      float: none;
-      width: 100%;
-      padding-left:77px;
+      float: left;
+      width: 30%;
+      padding-left: 89px;
     }
     .no-js .cd-faq-items {
       padding-left: 0;
@@ -489,4 +488,10 @@
       margin: 20px 0;
       padding: 7px 20px;
       width: auto;
+  }
+  .possition{
+    padding-top: 36px;
+    margin-top: 0px;
+    margin-left: 18px;
+    margin-top: 22px;
   }

@@ -1,5 +1,0 @@
-
-<button (click)="addUser()">add new user</button>
-<div *ngFor="let user of users">
-  <app-user-template [user]="user" (deleteUser)='deleteUser($event)'></app-user-template>
-</div>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
-import { Graph } from '../shared/models/graph';
-import { Project } from '../shared/models/project';
 import { ProjectWorker } from '../shared/models/projectWorker';
 
 @Component({
@@ -17,13 +15,17 @@ export class GraphStatusHourComponent implements OnInit {
   barChartType: any;
   barChartLegend: any;
   barChartData: any[]=[];
+  projects:ProjectWorker[]=[];
 
-  constructor(public workerService: WorkerService, public userService: UserService) { }
-projects:ProjectWorker[]=[];
+  constructor(
+    public workerService: WorkerService,
+    public userService: UserService) { }
+
   ngOnInit() {
+
     this.barChartData = [
-      {data: [], label: 'Hours required'},
-      {data: [], label: 'hours done'}
+      {data: [], label: 'hours done'},
+      {data: [], label: 'Hours required'}
      ];
 
     this.barChartOptions = {
@@ -31,35 +33,22 @@ projects:ProjectWorker[]=[];
       responsive: true
     };
 
-    this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId).subscribe(res => {
-     
-      // debugger;
+    this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId)
+    .subscribe(res => {
 
-
-      this.workerService.getTasksOfWorker(this.userService.currentUser.userId).subscribe(res=>{
-        console.log(res);
-        this.projects=res;
-        res.forEach((x)=>{console.log(x); this.barChartLabels.push(x.project.projectName) ; this.barChartData[0].data.push(x.sumHoursDone); 
-       this.barChartData[1].data.push(x.hoursForProject);
+      this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
+      .subscribe(res=>{
+        
+        res.forEach((x)=>{
+           this.barChartLabels.push(x.project.projectName) ;
+           this.barChartData[0].data.push(x.sumHoursDone); 
+           this.barChartData[1].data.push(x.hoursForProject);
       });
-      });;
-
-  
-
-    
-    })
+    });;
+  })
      
-      this.barChartType = 'bar';
-      this.barChartLegend = true;
+  this.barChartType = 'bar';
+  this.barChartLegend = true;
 
   }
-  // events
-  public chartClicked(e: any): void {
-        console.log(e);
-      }
- 
-  public chartHovered(e: any): void {
-        console.log(e);
-      }
-
-    }
+}

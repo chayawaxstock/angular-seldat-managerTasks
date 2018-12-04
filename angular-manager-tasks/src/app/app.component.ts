@@ -10,10 +10,11 @@ import { EditService } from './/shared/services/edit-service.service';
 import { map } from 'rxjs/operators/map';
 import swal from 'sweetalert2';
 import { ManagerService } from './shared/services/manager.service';
+import { User } from './shared/models/user';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
       <kendo-grid
           [data]="view | async"
           [height]="533"
@@ -53,7 +54,7 @@ export class AppComponent implements OnInit {
         take: 10
     };
 
-    public editDataItem: Product;
+    public editDataItem: User;
     public isNew: boolean;
     private editService: EditService;
 
@@ -74,11 +75,11 @@ export class AppComponent implements OnInit {
     }
 
     public addHandler() {
-        this.editDataItem = new Product();
+        this.editDataItem = new User();
         this.isNew = true;
     }
 
-    public editHandler({dataItem}) {
+    public editHandler({ dataItem }) {
         this.editDataItem = dataItem;
         this.isNew = false;
     }
@@ -87,13 +88,14 @@ export class AppComponent implements OnInit {
         this.editDataItem = undefined;
     }
 
-    public saveHandler(product: Product) {
-        this.editService.save(product, this.isNew);
+    public saveHandler(user: User) {
+        this.managerService.addUser(user);
+        this.editService.save(user, this.isNew);
 
         this.editDataItem = undefined;
     }
 
-    public removeHandler({dataItem}) {
+    public removeHandler({ dataItem }) {
         swal({
             title: `Are you sure you want to delete ${dataItem.userName}?`,
             text: "You won't be able to revert this!",
@@ -102,22 +104,27 @@ export class AppComponent implements OnInit {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
-                this.managerService.deleteUser(dataItem).subscribe(res=>{   swal(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                  )},err=>{swal({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                   
-                  })});
+                this.managerService.deleteUser(dataItem.userId).subscribe(res => {
+                    swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    this.editService.remove(dataItem);
+                }, err => {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
 
-           
+                    })
+                });
+
+
             }
-          })
-        
+        })
+
     }
 }

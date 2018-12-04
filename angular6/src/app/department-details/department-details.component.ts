@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DepartmentUser } from '../shared/models/departmentUser';
 
 @Component({
@@ -6,13 +6,10 @@ import { DepartmentUser } from '../shared/models/departmentUser';
   templateUrl: './department-details.component.html',
   styleUrls: ['./department-details.component.css']
 })
-export class DepartmentDetailsComponent implements OnInit {
+export class DepartmentDetailsComponent  {
 
   constructor() { }
 
   @Input() department:DepartmentUser[];
-  ngOnInit() {
-    console.log(this.department);
-  }
 
 }

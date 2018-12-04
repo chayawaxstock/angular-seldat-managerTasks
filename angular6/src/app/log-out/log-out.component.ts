@@ -8,15 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './log-out.component.html',
   styleUrls: ['./log-out.component.css']
 })
-export class LogOutComponent implements OnInit {
+export class LogOutComponent {
+  
+  constructor(
+    public userService: UserService
+    ,public router: Router) { }
 
-  constructor(public userService:UserService ,public router:Router) { }
-
-  ngOnInit() {
-  }
-
-  logout()
-  {
+  logout() {
     swal({
       title: `Are you sure you want to log out ?`,
       type: 'warning',
@@ -26,10 +24,9 @@ export class LogOutComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.value) {
-        this.userService.currentUser=null;
+        this.userService.currentUser = null;
         this.router.navigate(['/home']);
       }
-      
     })
   }
 

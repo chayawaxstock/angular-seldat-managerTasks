@@ -31,4 +31,9 @@ export class TeamleaderService {
   return this.httpClient.get<any[]>(Global.baseURI+"getSumHoursDoneForUsers/"+userId+"/"+projectIdGraph);
   }
 
+  getSumStayByProjectAndDepartment(idProject:number): Observable<any> {
+   return this.httpClient.get(Global.baseURI+"getSumStayByProjectAndDepartment/"+idProject);
+  }
+ 
+
 }

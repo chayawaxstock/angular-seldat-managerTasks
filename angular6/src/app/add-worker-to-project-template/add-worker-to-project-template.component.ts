@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../shared/models/user';
 import { ProjectWorker } from '../shared/models/projectWorker';
+import { ManagerService } from '../shared/services/manager.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-worker-to-project-template',
@@ -9,30 +11,32 @@ import { ProjectWorker } from '../shared/models/projectWorker';
 })
 export class AddWorkerToProjectTemplateComponent implements OnInit {
 
-  @Input()
-  workerToProject: User;
+  @Input() workerToProject: User;
+
   isChecked: boolean = false;
   hoursForProject:number;
   workerProject:ProjectWorker;
-  @Output() numHours: EventEmitter<ProjectWorker> = new EventEmitter<ProjectWorker>();
-  constructor() { 
-this.workerProject=new ProjectWorker();
 
+  @Output() numHours: EventEmitter<ProjectWorker> = new EventEmitter<ProjectWorker>();
+
+  constructor(
+    private managerService:ManagerService,
+    private router:Router) { 
+    this.workerProject=new ProjectWorker();
   }
 
   ngOnInit() {
     this.workerProject.userId=this.workerToProject.userId;
-console.log(this.workerToProject);
   }
-  changeWorker() {
-    if (this.isChecked == false)
-      this.isChecked = true;
-      else this.isChecked=false;
+
+  changeWorker()
+  {
+      this.isChecked =!this.isChecked;
   }
+
   changeHoursForProject(event)
   {
     this.workerProject.hoursForProject=event.target.value;
     this.numHours.emit(this.workerProject);
   }
-
 }

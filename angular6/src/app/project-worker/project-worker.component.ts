@@ -10,13 +10,13 @@ import { UserService } from '../shared/services/user.service';
 })
 export class ProjectWorkerComponent implements OnInit {
 
-  projectsWorker:Project[];
+  projectsWorker: Project[];
 
-  constructor(public workerService:WorkerService,public userService:UserService) { }
+  constructor(private workerService: WorkerService, private userService: UserService) { }
 
   ngOnInit() {
-    this.workerService.getProjectsUser(this.userService.currentUser.userId).subscribe(res=>{
-       this.projectsWorker=res;
+    this.workerService.getProjectsUser(this.userService.currentUser.userId).subscribe(res => {
+      this.projectsWorker = res;
     })
   }
 }

@@ -14,49 +14,54 @@ import { ProjectWorker } from '../shared/models/projectWorker';
 export class AddWorkerToProjectComponent implements OnInit {
 
   project:Project;
-
   workesNotinProject:User[]=[];
   addWorker:User[]=[];
   workersAddToProject:ProjectWorker[]=[];
-  constructor(public managerService:ManagerService,public router:Router ) {
- 
-   }
+
+  constructor(
+    public managerService:ManagerService,
+    public router:Router ) { }
 
   ngOnInit(){
       this.project=this.managerService.workerToProject; 
-       this.managerService.getWorkerNotInProject(this.project.projectId).subscribe(res=>{
-          console.log(res);
+
+       this.managerService.getWorkerNotInProject(this.project.projectId)
+       .subscribe(res=>{
           this.workesNotinProject=res;
-          res.forEach(x=>{let w=new ProjectWorker();w.projectId=this.project.projectId,w.userId=x.userId; this.workersAddToProject.push(w)});
+          res.forEach(x=>
+            {
+              let worker=new ProjectWorker();
+              worker.projectId=this.project.projectId,
+              worker.userId=x.userId; 
+              this.workersAddToProject.push(worker)
+            });
         })    
   }
 
+  //update hours for worker in project
   numHours(workerProject:ProjectWorker)
   {
     this.workersAddToProject.filter(x=>x.userId==workerProject.userId)[0].hoursForProject=workerProject.hoursForProject;
   }
 
+  //save add worker to project
   saveChange()
   {
     this.workersAddToProject=this.workersAddToProject.filter(x=>x.hoursForProject>0);
-    this.managerService.addWorkersToProject(this.project.projectId,this.workersAddToProject).subscribe(res=>{
+    this.managerService.addWorkersToProject(this.project.projectId,this.workersAddToProject)
+    .subscribe(res=>{
       swal({
-        position: 'top-end',
         type: 'success',
         title: 'Success',
         showConfirmButton: false,
         timer: 1500
       })
-
-      this.router.navigate(["/manager/allProjects"])
+      //return to allProjects component
+     this.router.navigate(["/manager/allProjects"]);
     },err=>{
       {
-        swal({
-        type: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-       
-      })}
+      this.managerService.getErrorMessage();
+      }
     });
   }
 

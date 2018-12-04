@@ -1,26 +1,32 @@
+<div class="container">
+    <div class="card card-container">
 
-<div >
+        <p id="profile-name" class="header">WELL COME -SIGN IN </p>
 
-  <div class="container">
-      <h1>Welcome</h1>
-    
-      <form class="form example-form" [formGroup]="formGroup" (ngSubmit)="submitRegister()" name="formUser">
-          <input type="text" placeholder="Enter Username" formControlName="userName" name="name">
-          <div class="help-block" *ngIf="formGroup.controls['userName'].errors&&formGroup.controls['userName'].touched">
-              <p *ngFor="let err of obj.values(formGroup.controls['userName'].errors)">{{err}}</p>
-          </div>
-          <input type="password" placeholder="Enter password" formControlName="password"  name="password">
-          <div class="help-block" *ngIf="formGroup.controls['password'].errors&&formGroup.controls['password'].touched">
-              <p *ngFor="let err of obj.values(formGroup.controls['password'].errors)">{{err}}</p>
-          </div>
-         
-          <label>remember me</label>
-          <input type="checkbox" value="remember me" formControlName="remember">
-          <button type="submit" id="login-button" [disabled]="formGroup.invalid">Login</button>
-          <button type="button" (click)="forgetPassword()">forgot password?</button>
-      </form>
-  </div>
+        <form class="form-signin" [formGroup]="formGroup" (ngSubmit)="submitRegister()" name="formUser">
+            <span id="reauth-email" class="reauth-email"></span>
 
+            <input type="text" class="form-control" placeholder="Enter Username" formControlName="userName" name="name">
+            <div class="help-block" *ngIf="formGroup.controls['userName'].errors&&formGroup.controls['userName'].touched">
+                <p *ngFor="let err of obj.values(formGroup.controls['userName'].errors)">{{err}}</p>
+            </div>
+
+            <input class="form-control" type="password" placeholder="Enter password" formControlName="password" name="password">
+            <div class="help-block" *ngIf="formGroup.controls['password'].errors&&formGroup.controls['password'].touched">
+                <p *ngFor="let err of obj.values(formGroup.controls['password'].errors)">{{err}}</p>
+            </div>
+
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me" formControlName="remember"> Remember me
+                </label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" [disabled]="formGroup.invalid">Sign in</button>
+
+        </form>
+        <a href="javascript:void(0)" class="forgot-password" (click)="forgetPassword()">
+            Forgot the password?
+        </a>
+    </div>
 </div>
-
-

@@ -1,5 +1,5 @@
 
-      <kendo-grid
+    <kendo-grid
       [data]="department"
       selectable="true"
       >
@@ -9,5 +9,5 @@
       <kendo-grid-column field="precentsDone"></kendo-grid-column>
       <div *kendoGridDetailTemplate="let dataItem">
         <app-worker-details [workers]="dataItem.items"></app-worker-details>
-   </div>
+      </div>
     </kendo-grid>

@@ -17,7 +17,7 @@ export class WorkerService {
       return this.httpClient.put(Global.baseURI+"updatePresentDay",pressentDay)
     }
 
-  sendEmail(message: SendEmail,userId:number=1): Observable<any> {
+  sendEmail(message: SendEmail,userId:number): Observable<any> {
    return this.httpClient.put(Global.baseURI+"sendMessageToManagers/"+userId,message );
   }
 

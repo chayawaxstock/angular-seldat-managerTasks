@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Global } from './global';
 import { Project } from '../models/project';
 import { ProjectWorker } from '../models/projectWorker';
+import swal from 'sweetalert2';
 
 @Injectable()
 export class ManagerService {
@@ -14,8 +15,11 @@ export class ManagerService {
   subjectAllUsers= new Subject();
   subjectWorkerToProject=new Subject();
   subjectProject=new Subject();
+  subjectIsShow=new Subject();
   workerToProject: Project;
   project: Project;
+  isNew:boolean;
+  isShow:boolean;
   constructor(public httpClient: HttpClient) { }
 
 
@@ -39,8 +43,8 @@ export class ManagerService {
       return this.httpClient.delete(Global.baseURI+"deleteProject/"+idProject);
   }
 
-  createReport(): Observable<any> {
-     return this.httpClient.get(Global.baseURI+"createReport/1");
+  createReport( idReport:number): Observable<any> {
+     return this.httpClient.get(Global.baseURI+"createReport/"+idReport);
     }
     
   addProject(project: Project): Observable<any> {
@@ -68,5 +72,12 @@ export class ManagerService {
   getWorkerInProject(projectId:number): Observable<User[]> {
     return this.httpClient.get<User[]>(Global.baseURI+"getWorkerInProject/"+projectId)
   }
-
+  getErrorMessage()
+  {
+    swal({
+      type: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!', 
+    })
+  }
 }

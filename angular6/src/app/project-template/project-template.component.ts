@@ -1,54 +1,48 @@
-import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../shared/models/project';
 import { ManagerService } from '../shared/services/manager.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2'
+import { EditService } from '../shared/services/edit-service.service';
+import { Global } from '../shared/services/global';
+
 
 @Component({
   selector: 'app-project-template',
   templateUrl: './project-template.component.html',
   styleUrls: ['./project-template.component.css']
 })
-export class ProjectTemplateComponent implements OnInit {
+export class ProjectTemplateComponent {
 
   @Input()
   project: Project;
   projects: Project[] = [];
   @Output() deleteProject: EventEmitter<number> = new EventEmitter<number>();
-  constructor(public managerService:ManagerService,public router:Router) { }
+  constructor(public managerService: ManagerService, public router: Router, public editService: EditService) { }
 
-  ngOnInit() {
-    console.log(
-this.project.hoursForDepartment[0].sumHours,
+  addWorkerToProject() {
 
-this.project.hoursForDepartment[0].departmentUser.department
-)
+    this.managerService.workerToProject = this.project;
+    this.router.navigate(["/manager/addWorkerToProject"])
   }
-
-  addWorkerToProject()
-  {
- 
-     this.managerService.workerToProject=this.project;
-     this.router.navigate(["/manager/addWorkerToProject"])
-  }
-  editProject()
-  {
-    this.managerService.project=this.project;
+  editProject() {
+    this.managerService.project = this.project;
+    this.managerService.isNew = false;
     this.router.navigate(["/manager/editProject"])
   }
 
-  showWorker()
-  {
-    this.managerService.project=this.project;
-    this.router.navigate(["/manager/userInProject"])
+  showWorker() {
+    Global.idProjectToGetWorker = this.project.projectId;
+    this.managerService.project = this.project;
+    this.managerService.subjectIsShow.next(this.project.projectId);
+    this.router.navigate(["/manager/showWorkers"]);
   }
 
- 
-  delete()
-  {
+
+  delete() {
     console.log(this.project.projectId)
     this.deleteProject.emit(this.project.projectId);
   }
+
 }
 
 

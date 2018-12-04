@@ -8,19 +8,12 @@ import sha256 from 'async-sha256';
 import swal from 'sweetalert2';
 import { User } from '../shared/models/user';
 
-
-
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
-export class SignInComponent implements OnInit {
-
-
-  ngOnInit(): void {
-
-  }
+export class SignInComponent {
 
   //-----------------properties-------------------
   formGroup: FormGroup;
@@ -31,10 +24,14 @@ export class SignInComponent implements OnInit {
   user: User
 
   //-----------------constructor-------------------
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private router: Router) {
 
+      //check if do logout or enter firstTime
     if(this.userService.isFirst)
-    { this.signInWithIp();
+    {
+       this.signInWithIp();
       this.userService.isFirst=false;
     }
 
@@ -45,29 +42,29 @@ export class SignInComponent implements OnInit {
 
     };
     this.formGroup = new FormGroup(formGroupConfig);
-
-
   }
-
+  //----------------METHODS-------------------
   signInWithIp()
   {
-    this.userService.getIp().subscribe(res => {
-      this.ip = res.ip;
-      this.userService.loginByUserComputer(this.ip).subscribe(x => {
-        this.user = x;
+    this.userService.getIp()
+      .subscribe(res => {
+         this.ip = res.ip;
+         this.userService.loginByUserComputer(this.ip)
+           .subscribe(x => {
+         this.user = x;
         //save user in global prop
-        this.userService.currentUser = x;
+           this.userService.currentUser = x;
 
         //check promissing
         this.userService.checkDepartment();
       }, err => {
+        //TODO:להדפיס את השגיאה
         //faild login
         this.router.navigate(['/home']);
       });
     });
 
   }
-  //-----------------functions-------------------
 
   submitRegister() {
 
@@ -82,6 +79,7 @@ export class SignInComponent implements OnInit {
     sha256(user.password).then(p => {
       user.password = p;
       console.log(user.password);
+
       let ip = "";
       if (this.formGroup.controls["remember"].value == true) {
         //checked remember me save ip
@@ -90,6 +88,7 @@ export class SignInComponent implements OnInit {
           this.signIn(user, pass);
         });
       }
+
       else this.signIn(user, pass);
     });
   }
@@ -98,34 +97,35 @@ export class SignInComponent implements OnInit {
 
     this.userService.signInUser(user).subscribe(data => {
       this.userService.currentUser = data;
-      // localStorage.setItem("user",JSON.stringify(data));
+
+      //check premmesion
       this.userService.checkDepartment();
 
     },
       err => {
         user.password = lastPassword;
-        console.log(err.message);
+        //TODO:להדפיס שגיאות
         alert("invalid");
 
       });
   }
 
   forgetPassword() {
-    this.userService.forgetPassword(this.formGroup.controls['userName'].value).subscribe(res => {
+    this.userService.forgetPassword(this.formGroup.controls['userName'].value)
+      .subscribe(res => {
       swal({
-        position: 'top-end',
         type: 'success',
-        title: 'We send you a mail to change your password',
+        title: 'We send you a email to change your password',
         showConfirmButton: false,
         timer: 1500
       })
-    }, err => {
+    },
+     err => {
       {
         swal({
           type: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
-
         })
       }
 

@@ -11,7 +11,6 @@ export class ManagmerService {
   userToEdit: User;
   subjectAllUsers= new Subject();
   subjectWorkerToProject=new Subject();
-  subjectProject=new Subject();
   subjectAllProjects=new Subject();
   constructor(public httpClient: HttpClient) { }
 

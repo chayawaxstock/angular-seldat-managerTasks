@@ -9,9 +9,7 @@ export class ProjectWorker {
     projectName: string;
     hoursForProject: number;
     project: Project;
-    userWithoutPassword:User;
+    user:User;
     sumHoursDone:number;
-
-
 
 }

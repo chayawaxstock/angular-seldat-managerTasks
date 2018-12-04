@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SendEmail } from '../shared/models/sendEmail';
 import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -11,29 +12,45 @@ import swal from 'sweetalert2';
 })
 export class SendEmailComponent implements OnInit {
 
-  isSend:boolean=false;
-  message:SendEmail=new SendEmail();
-  constructor(public workerService:WorkerService,public userService:UserService) { }
+  
+   //----------------PROPERTIRS-------------------
+   formGroup: FormGroup;
 
+  //----------------CONSTRUCTOR------------------
+
+  constructor(
+    public workerService:WorkerService,
+    public userService:UserService,
+    public router:Router) {}
+
+  //----------------METHODS-------------------
   ngOnInit() {
-  }
+    let formGroupConfig = {
+      subject: new FormControl(""),
+      body: new FormControl(""),
 
-  enableSend()
-  {
-    this.isSend=true;
+    };
+    this.formGroup = new FormGroup(formGroupConfig);
   }
 
   sendEmail()
   {
-  
-    this.workerService.sendEmail(this.message,this.userService.currentUser.userId).subscribe(
+    this.workerService.sendEmail(this.formGroup.value,this.userService.currentUser.userId).subscribe(
       res=>{
         swal({
           position: 'top-end',
           type: 'success',
-          title: 'The messge has been sent',
+          title: 'The message has been sent',
           showConfirmButton: false,
           timer: 1500
+        })
+        this.router.navigate(["/worker"]);
+
+      },err=>{
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'send email failed',
         })
       }
     );

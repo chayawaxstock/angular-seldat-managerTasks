@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DepartmentUser } from '../shared/models/departmentUser';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from '../shared/models/user';
@@ -13,66 +13,51 @@ import swal from 'sweetalert2'
   templateUrl: './update-user.component.html',
   styleUrls: ['./update-user.component.css']
 })
-export class UpdateUserComponent implements OnInit {
-
-  departments: DepartmentUser[]=[];
-  teamLeaders: User[]=[];
+export class UpdateUserComponent  {
+  //----------------PROPERTIRS-------------------
+  departments: DepartmentUser[] = [];
+  teamLeaders: User[] = [];
   formGroup: FormGroup;
   user: User;
-  managerName:string;
+  managerName: string;
   obj: typeof Object = Object;
-errorList:string[];
-
-  constructor(public userService: UserService,public managerService:ManagerService,public router:Router) {
-    this.user=this.managerService.userToEdit;
-    userService.getAllDepartments().subscribe(departments=>{
-       this.departments=departments;
+  errorList: string[];
+  //----------------CONSTRUCTOR------------------
+  constructor(public userService: UserService, public managerService: ManagerService, public router: Router) {
+    this.user = this.managerService.userToEdit;
+    userService.getAllDepartments().subscribe(departments => {
+      this.departments = departments;
       console.log(this.departments);
     });
-    this.managerService.getUsersByDepartment("teamLeader").subscribe(res=>{
-    
-      console.log(res);
-      
-      this.teamLeaders=res;
-      this.managerName=this.teamLeaders.find(x=>x.userId==this.user.managerId).userName;
-    },err=>{
+    this.managerService.getUsersByDepartment("teamLeader").subscribe(res => {
+      this.teamLeaders = res;
+      this.managerName = this.teamLeaders.find(x => x.userId == this.user.managerId).userName;
+    }, err => {
       console.log(err);
     });
-   
 
-    let  emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/; 
-    
+    let emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     let formGroupConfig = {
-
       userName: new FormControl(this.user.userName, createValidatorText("userName", 2, 15)),
-      email:new FormControl(this.user.email,createValidatorText("email", 8, 30,emailPattern)),
-      numHoursWork:new FormControl(this.user.numHoursWork, createValidatorNumber("numHoursWork", 4, 9)),
-      departmentId:new FormControl(this.user.departmentUser.department),
-      idManager:new FormControl(this.user.manager.userName),
+      email: new FormControl(this.user.email, createValidatorText("email", 8, 30, emailPattern)),
+      numHoursWork: new FormControl(this.user.numHoursWork, createValidatorNumber("numHoursWork", 4, 9)),
+      departmentId: new FormControl(this.user.departmentUser.department),
+      idManager: new FormControl(this.user.manager.userName),
     };
     this.formGroup = new FormGroup(formGroupConfig);
 
-    
-   }
-
-  ngOnInit() {
-  
   }
+    //----------------METHODS-------------------
 
-  saveChangeUser()
-  {
-   // this.user.userName  =this.formGroup.value["userName"];
-   /// this.user.email=this.formGroup.value["email"];
-   // this.user.numHoursWork=this.formGroup.value["numHoursWork"];
-   let managerId= this.user.managerId;
-
-    this.user.email=this.formGroup.value.email;
-    this.user.userName=this.formGroup.value.userName;
-    this.user.numHoursWork=this.formGroup.value.numHoursWork;
-   this.user.userId=this.managerService.userToEdit.userId;
-   this.user.departmentId=this.formGroup.value.departmentId;
-   this.user.managerId=managerId;
-    this.managerService.updateUser(this.user).subscribe(res=>{
+  saveChangeUser() {
+    let managerId = this.user.managerId;
+    this.user.email = this.formGroup.value.email;
+    this.user.userName = this.formGroup.value.userName;
+    this.user.numHoursWork = this.formGroup.value.numHoursWork;
+    this.user.userId = this.managerService.userToEdit.userId;
+    this.user.departmentId = this.formGroup.value.departmentId;
+    this.user.managerId = managerId;
+    this.managerService.updateUser(this.user).subscribe(res => {
       swal({
         position: 'top-end',
         type: 'success',
@@ -80,19 +65,15 @@ errorList:string[];
         showConfirmButton: false,
         timer: 1500
       })
-     this.router.navigate(["/manager/allUsers"]);
-    // },err=>{
-    //   this.errorList=[];
-    //   if(err.error)
-    //   err.error.forEach(element => {
-    //     this.errorList.push(element+" ");
-    //   });
-    },err=>{swal({
-      type: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-     
-    })})
+      this.router.navigate(["/manager/allUsers"]);
+    }, err => {
+      swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+
+      })
+    })
   }
 
 }
