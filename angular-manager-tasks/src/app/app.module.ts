@@ -28,6 +28,8 @@ import { GridEditFormComponent } from './edit-form/edit-form.component';
 import { EditService } from './shared/services/edit-service.service';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { TryComponent } from './try/try.component';
+import { GridEditComponent } from './grid-edit/grid-edit.component';
+import { GridModelComponent } from './grid-model/grid-model.component';
 
 
 
@@ -43,6 +45,8 @@ import { TryComponent } from './try/try.component';
     ManagerMenuComponent,
     GridEditFormComponent,
     TryComponent,
+    GridEditComponent,
+    GridModelComponent,
 
 
   ],

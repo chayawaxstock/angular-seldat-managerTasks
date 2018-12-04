@@ -12,7 +12,7 @@ import { EditService } from '../shared/services/edit-service.service';
 
 
 @Component({
-    selector: 'kendo-grid-edit-form',
+    selector: 'kendo-grid-edit-form1',
     styles: [
         'input[type=text] { width: 100%; }'
     ],
@@ -25,23 +25,13 @@ import { EditService } from '../shared/services/edit-service.service';
             <form novalidate [formGroup]="editForm">
                 <div class="form-group">
                     <label for="userName" class="control-label">User name</label>
-
                     <input type="text" class="k-textbox" formControlName="userName" />
-
-                   
                 </div>
                 <div class="form-group">
                     <label for="email" class="control-label">email</label>
-
                     <input type="text" class="k-textbox" formControlName="email" />
                 </div>
-                <div class="form-group">
-                    <label for="email" class="control-label">email</label>
-
-                    <input type="text" class="k-textbox" formControlName="email" />
-
-                   
-                    </div>
+              
                     <div class="form-group">
                     <label for="numHoursWork" class="control-label">numHoursWork</label>
 
@@ -51,8 +41,8 @@ import { EditService } from '../shared/services/edit-service.service';
                     </div>
 
                     <div class="example-wrapper">
-      <p>chooseDepartment</p>
-      <div *ngIf="departments.length>0">
+                       <p>chooseDepartment</p>
+             <div *ngIf="departments.length>0">
       <kendo-dropdownlist   formControlName="departmentId"  [data]="departments"   [textField]="'text'"
       [valueField]="'value'"
       [valuePrimitive]="true"   [defaultItem]="defaultItem" (valueChange)="chooseDepartment($event)" >
@@ -99,7 +89,6 @@ export class GridEditFormComponent {
         'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
         'departmentId': new FormControl("", [Validators.required]),
         'managerId': new FormControl()
-
     });
 
   
