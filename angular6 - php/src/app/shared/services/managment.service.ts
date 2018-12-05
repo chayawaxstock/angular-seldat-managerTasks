@@ -43,7 +43,7 @@ export class ManagmerService {
     return this.httpClient.post(Global.baseURI+"Projects",project);
   }
   getAllProjects(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
+    return this.httpClient.get<Project[]>(Global.baseURLPHP+"getAllProjects");
   }
 
   getWorkerNotInProject(projectId: number): Observable<User[]> {

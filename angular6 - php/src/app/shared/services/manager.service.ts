@@ -56,7 +56,7 @@ export class ManagerService {
   }
   
   getAllProjects(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
+    return this.httpClient.get<Project[]>(Global.baseURLPHP+"/project/getAllProjects");
   }
 
   getWorkerNotInProject(projectId: number): Observable<User[]> {
