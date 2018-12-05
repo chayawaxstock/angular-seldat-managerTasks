@@ -93,7 +93,6 @@ export class SignInComponent {
   }
 
   signIn(user: LoginUser, lastPassword): any {
-
     this.userService.signInUser(user).subscribe(data => {
       this.userService.currentUser = data;
 

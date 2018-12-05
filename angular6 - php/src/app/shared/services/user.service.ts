@@ -28,9 +28,10 @@ export class UserService {
       this.router.navigate(['/manager']);
     else this.router.navigate(['/worker']);
   }
-  
+
   signInUser(user: LoginUser): Observable<User> {
-    return this.httpClient.post<User>(Global.baseURI + "loginByPassword", user)
+    debugger;
+    return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
   }
 
   loginByUserComputer(ip: string): Observable<User> {
