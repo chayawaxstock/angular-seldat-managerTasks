@@ -13,7 +13,7 @@ import sha256 from  'async-sha256';
 
 
 @Component({
-    selector: 'kendo-grid-edit-form',
+    selector: 'kendo-grid-edit-form1',
     styles: [
         'input[type=text] { width: 100%; }'
     ],
@@ -26,16 +26,15 @@ import sha256 from  'async-sha256';
             <form novalidate [formGroup]="editForm">
                 <div class="form-group">
                     <label for="userName" class="control-label">User name</label>
-
                     <input type="text" class="k-textbox" formControlName="userName" />
-
-                   
                 </div>
                 <div class="form-group">
                     <label for="email" class="control-label">email</label>
-
                     <input type="text" class="k-textbox" formControlName="email" />
                 </div>
+<<<<<<< HEAD
+              
+=======
                 <div *ngIf="isNew" class="form-group">
                 <label for="password" class="control-label">password</label>
 
@@ -56,6 +55,7 @@ import sha256 from  'async-sha256';
       
     
      
+>>>>>>> f7c8064b42b998463d8ceaa69b26f0ccb98cc97a
                     <div class="form-group">
                     <label for="numHoursWork" class="control-label">numHoursWork</label>
 
@@ -65,8 +65,8 @@ import sha256 from  'async-sha256';
                     </div>
 
                     <div class="example-wrapper">
-      <p>chooseDepartment</p>
-      <div *ngIf="departments.length>0">
+                       <p>chooseDepartment</p>
+             <div *ngIf="departments.length>0">
       <kendo-dropdownlist   formControlName="departmentId"  [data]="departments"   [textField]="'text'"
       [valueField]="'value'"
       [valuePrimitive]="true"   [defaultItem]="defaultItem" (valueChange)="chooseDepartment($event)" >
@@ -120,11 +120,21 @@ export class GridEditFormComponent {
   
     public active = false;
     public emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+<<<<<<< HEAD
+    public editForm: FormGroup = new FormGroup({
+        'userName': new FormControl('', Validators.required),
+        'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
+        'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
+        'departmentId': new FormControl("", [Validators.required]),
+        'managerId': new FormControl()
+    });
+=======
     
     
 
 
 
+>>>>>>> f7c8064b42b998463d8ceaa69b26f0ccb98cc97a
 
 
     defaultItem: { text: string, value: number };

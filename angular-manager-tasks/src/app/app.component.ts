@@ -40,11 +40,10 @@ import { User } from './shared/models/user';
         </kendo-grid-command-column>
       </kendo-grid>
 
-      <kendo-grid-edit-form [model]="editDataItem" [isNew]="isNew"
+      <kendo-grid-edit-form1 [model]="editDataItem" [isNew]="isNew"
           (save)="saveHandler($event)"
           (cancel)="cancelHandler()">
-      </kendo-grid-edit-form>
-      <app-try></app-try>
+      </kendo-grid-edit-form1>
   `
 })
 export class AppComponent implements OnInit {

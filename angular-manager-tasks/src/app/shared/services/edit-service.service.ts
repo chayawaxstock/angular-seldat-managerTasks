@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { tap } from 'rxjs/operators/tap';
 import { map } from 'rxjs/operators/map';
+import { User } from '../models/user';
 
 const CREATE_ACTION = 'create';
 const UPDATE_ACTION = 'update';
@@ -54,7 +55,7 @@ export class EditService extends BehaviorSubject<any[]> {
         if (!dataItem) { return; }
 
         // find orignal data item
-        const originalDataItem = this.data.find(item => item.ProductID === dataItem.ProductID);
+        const originalDataItem = this.data.find(item => item.userId === dataItem.userId);
 
         // revert changes
         Object.assign(originalDataItem, dataItem);
