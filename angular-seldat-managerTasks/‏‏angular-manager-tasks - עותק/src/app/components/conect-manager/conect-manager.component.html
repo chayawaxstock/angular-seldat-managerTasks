@@ -1,0 +1,13 @@
+
+
+<form [formGroup]="formGroup" (ngSubmit)="sendEmail()" name="formEmail">
+  
+   <!--subject  -->
+  <input kendoTextBox formControlName="subject" type="text"  placeholder="subject" name="input"/> 
+  <!-- body -->
+  <textarea kendoTextArea [autoSize]="true" formControlName="body" placeholder="enter message here" name="name"></textarea>
+
+  <button [disabled]="formGroup.invalid" >send email</button>
+</form>
+
+
