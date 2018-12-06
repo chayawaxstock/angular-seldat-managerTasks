@@ -32,7 +32,7 @@ export class GraphStatusHourComponent implements OnInit {
       scaleShowVerticalLines: false,
       responsive: true
     };
-
+debugger;
     this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId)
     .subscribe(res => {
 

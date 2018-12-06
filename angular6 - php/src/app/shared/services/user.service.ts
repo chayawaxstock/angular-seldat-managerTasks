@@ -21,6 +21,7 @@ export class UserService {
   isFirst:boolean=true;
   constructor(public httpClient: HttpClient, private router: Router) {
   }
+
   checkDepartment() {
     if (this.currentUser.departmentId == DepartmentEnum.TEAMLEADER)
       this.router.navigate(['/teamLeader']);
@@ -30,27 +31,29 @@ export class UserService {
   }
 
   signInUser(user: LoginUser): Observable<User> {
-    debugger;
     return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
   }
 
   loginByUserComputer(ip: string): Observable<User> {
     let formData: FormData = new FormData();
     formData.append('ip', ip);
-    return this.httpClient.post<User>(Global.baseURI + "LoginByComputerUser", formData)
+    return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByIp", formData)
   }
 
+  //dont finish
   forgetPassword(userName: string): Observable<any> {
+    debugger;
     let formData: FormData = new FormData();
     formData.append('userName', userName);
-    return this.httpClient.post<any>(Global.baseURI + "ForgetPassword", formData)
+    return this.httpClient.post<any>(Global.baseURLPHP + "/user/forgetPassword", formData)
   }
+
   changePassord(user:LoginUser,requestId:number): Observable<any>
   {
     return this.httpClient.put(Global.baseURI+"ChangePassword/"+requestId,user);
   }
-  getAllDepartments(): Observable<DepartmentUser[]> {
-    
+
+  getAllDepartments(): Observable<DepartmentUser[]> {  
     return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
   }
 
@@ -62,8 +65,9 @@ export class UserService {
   getIp(): Observable<any> {
     return this.httpClient.get("https://api.ipify.org/?format=json")
   }
+  
   getHoursForProjectsByUser(userId: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(Global.baseURI + "Users/getHoursForUserProjects/" + userId);
+    return this.httpClient.get<any[]>(Global.baseURLPHP + "/user/getHoursForUserProjects?userId=" + userId);
   }
 
 

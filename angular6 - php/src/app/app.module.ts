@@ -69,6 +69,10 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { IntlModule } from '@progress/kendo-angular-intl';
+
+import '@progress/kendo-angular-intl/locales/bg/all';
+import '@progress/kendo-angular-intl/locales/de/all';
 
 
 @NgModule({
@@ -130,6 +134,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     DropDownsModule,
     ButtonsModule,
     DateInputsModule,
+    IntlModule 
   ],
   providers: [
     UserService,

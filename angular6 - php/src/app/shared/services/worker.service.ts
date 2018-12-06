@@ -14,7 +14,8 @@ export class WorkerService {
   constructor(public httpClient:HttpClient) { }
   
   updateDayPressent(pressentDay:PresentDay): Observable<any> {
-      return this.httpClient.put(Global.baseURI+"updatePresentDay",pressentDay)
+    debugger;
+      return this.httpClient.put(Global.baseURLPHP+"/presenceday/updatePresenceDayWorker",pressentDay)
     }
 
   sendEmail(message: SendEmail,userId:number): Observable<any> {

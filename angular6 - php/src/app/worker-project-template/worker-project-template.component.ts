@@ -5,7 +5,7 @@ import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-
+import { IntlService } from '@progress/kendo-angular-intl';
 
 @Component({
   selector: 'app-worker-project-template',
@@ -26,7 +26,8 @@ export class WorkerProjectTemplateComponent {
   constructor(
     public workerService: WorkerService,
     public userService: UserService,
-    public router: Router) { }
+    public router: Router,
+    public intl: IntlService) { }
   //----------------METHODS-------------------
   clickUpdateWork(projectId: number) {
     this.workerService.timerSubject.next(this.stopClick);
@@ -68,8 +69,8 @@ export class WorkerProjectTemplateComponent {
   }
 
   stopTimer(projectId: number) {
-
-    this.pressantDay.timeEnd = new Date();
+   
+    this.pressantDay.timeEnd =new Date( this.intl.formatDate(new Date(), "d")) ;
 
     this.workerService.updateDayPressent(this.pressantDay)
       .subscribe(res => {
