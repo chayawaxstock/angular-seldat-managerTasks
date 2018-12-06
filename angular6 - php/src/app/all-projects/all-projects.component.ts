@@ -36,6 +36,7 @@ export class AllProjectsComponent implements OnInit {
   getAllProjects() {
     this.managerService.getAllProjects()
       .subscribe(res => {
+        debugger;
         this.projects = res;
       });
   }
