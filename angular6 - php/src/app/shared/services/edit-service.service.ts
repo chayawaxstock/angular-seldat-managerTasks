@@ -75,7 +75,7 @@ export class EditService extends BehaviorSubject<any[]> {
         if(Global.idProjectToGetWorker==0)
         return this.http.get("http://localhost:12988/api/Users/getAllUsers")
             .pipe(map(res => <any[]>res));
-        return this.http.get<User[]>(Global.baseURI+"getWorkerInProject/"+Global.idProjectToGetWorker)
+        return this.http.get<User[]>(Global.baseURLPHP+"/projectworker/getWorkersInProject?projectId="+Global.idProjectToGetWorker)
             .pipe(map(res => <any[]>res));
 
     }

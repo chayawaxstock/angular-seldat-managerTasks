@@ -9,7 +9,7 @@ import { UserService } from '../shared/services/user.service';
 import { HourForDepartment } from '../shared/models/hourForDepartment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
@@ -114,6 +114,8 @@ export class EditProjectComponent implements OnInit {
       this.projectAdd=this.project;
       this.project = this.formGroup.value;
       this.project.hoursForDepartment = [];
+      let formatedDate = new DatePipe('en-US').transform(this.formGroup.controls['dateBegin'].value, 'dd/mm/yyyy');
+      this.project.dateBegin=new Date( formatedDate);
       let numHour: HourForDepartment;
 
       this.departments.forEach(element => {
