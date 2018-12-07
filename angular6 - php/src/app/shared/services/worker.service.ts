@@ -29,20 +29,15 @@ export class WorkerService {
 
   getProjectsUser(userId):Observable<Project[]>
   {
-     return this.httpClient.get<Project[]>(Global.baseURI+"getProjectsById/"+userId);
+     return this.httpClient.get<Project[]>(Global.baseURI+"/user/getProjectsById/"+userId);
   }
 
   addPresentDay(pressantDay: PresentDay): Observable<any> {
    return this.httpClient.post(Global.baseURI+"AddPresent",pressantDay);
   }
+
   getTasksOfWorker(userId):Observable<ProjectWorker[]>{
-
-    return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"getProjectsById/"+userId);
-
+    return this.httpClient.get<ProjectWorker[]>(Global.baseURLPHP+"/user/getProjectsByUserId?userId="+userId);
   }
    
-
- 
-
-
 }

@@ -29,9 +29,12 @@ export class TasksOfWorkerComponent implements OnInit {
   }
 
   getAllProjects() {
+    debugger;
     this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
       .subscribe(res => {
         this.projects = res;
+      },err=>{
+
       });;
   }
 

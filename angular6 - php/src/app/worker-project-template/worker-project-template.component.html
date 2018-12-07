@@ -4,7 +4,7 @@
       <div class="card-text">
          <label>hours for project:</label> {{project.hoursForProject}}
          <div>
-            <label>sum hours done:</label> {{project.sumHoursDone}}
+            <label>sum hours done:</label> {{!project.sumHoursDone?0:project.sumHoursDone}}
          </div>
          <button kendoButton *ngIf="!isClick" (click)="clickUpdateWork(project.projectId)">start work</button>
          <button kendoButton *ngIf="stopClick" (click)="clickUpdateWork(project.projectId)">stop work</button>

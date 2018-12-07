@@ -37,7 +37,7 @@ export class GraphStatusHoursProjectsComponent implements OnInit {
 
     this.teamLeaderService.getHourWorkerTeamLeader(this.userService.currentUser.userId,this.project.projectId)
     .subscribe(res=>{
-    if(res.length==0)
+    if(res==null||res.length==0)
     {
       this.messageEmpty="no have data";
       return;
@@ -47,6 +47,7 @@ export class GraphStatusHoursProjectsComponent implements OnInit {
     //   ([key, value]) => console.log(key, value));
 
      this.barChartLabels.push( this.project.projectName);
+     
       res.forEach(
         (x)=>{
          let g=new Graph();
