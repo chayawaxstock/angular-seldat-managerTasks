@@ -36,7 +36,7 @@ export class TeamleaderService {
   }
 
   getSumStayByProjectAndDepartment(idProject:number): Observable<any> {
-   return this.httpClient.get(Global.baseURI+"/projectworker/getSumStayByProjectAndDepartment?projectId="+idProject);
+   return this.httpClient.get(Global.baseURLPHP+"/projectworker/getSumStayByProjectAndDepartment?projectId="+idProject);
   }
  
 

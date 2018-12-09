@@ -32,8 +32,7 @@ export class ManagerService {
   }
 
    updateUser(user: User): Observable<any> {   
-     console.log("update");
-   return this.httpClient.put(Global.baseURI+"updateUser",user);
+   return this.httpClient.put(Global.baseURLPHP+"/user/updateUser",user);
   }
   
   deleteUser(idUser: number): Observable<any> {
@@ -54,7 +53,7 @@ export class ManagerService {
 
   editProjct(project: Project): Observable<any> 
   {
-    return this.httpClient.put(Global.baseURI+"updateProject",project);
+    return this.httpClient.put(Global.baseURLPHP+"/project/updateProject",project);
   }
   
   getAllProjects(): Observable<Project[]> {
