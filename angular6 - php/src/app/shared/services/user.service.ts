@@ -44,9 +44,7 @@ export class UserService {
   //dont finish
   forgetPassword(userName: string): Observable<any> {
     debugger;
-    let formData: FormData = new FormData();
-    formData.append('userName', userName);
-    return this.httpClient.post<any>(Global.baseURLPHP + "/user/forgetPassword", formData)
+    return this.httpClient.get(Global.baseURLPHP + "/user/forgetPassword?userName="+userName)
   }
 
   changePassord(user:LoginUser,requestId:number): Observable<any>
