@@ -69,7 +69,7 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { SignaturePadModule } from 'angular2-signaturepad';
+
 
 @NgModule({
   declarations: [
@@ -129,7 +129,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     DropDownsModule,
     ButtonsModule,
     DateInputsModule,
-    SignaturePadModule
+
   ],
   providers: [
     UserService,

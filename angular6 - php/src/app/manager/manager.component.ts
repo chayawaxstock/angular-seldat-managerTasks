@@ -5,14 +5,14 @@ import { ManagerService } from '../shared/services/manager.service';
 import { User } from '../shared/models/user';
 import { Router } from '@angular/router';
 import { Global } from '../shared/services/global';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+
 @Component({
   selector: 'app-manager',
   templateUrl: './manager.component.html',
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent  {
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+
   private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
     'minWidth': 5,
     'canvasWidth': 500,
@@ -32,13 +32,13 @@ export class ManagerComponent  {
   }
   ngAfterViewInit() {
     // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+   // this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    //this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
   }
  
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+   // console.log(this.signaturePad.toDataURL());
   }
  
   drawStart() {
@@ -52,6 +52,6 @@ export class ManagerComponent  {
 
   clear()
   {
-    this.signaturePad.clear();
+    //this.signaturePad.clear();
   }
 }
