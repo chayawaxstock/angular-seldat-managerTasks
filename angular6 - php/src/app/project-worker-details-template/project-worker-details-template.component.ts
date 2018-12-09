@@ -42,7 +42,7 @@ export class ProjectWorkerDetailsTemplateComponent {
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
-
+debugger
         if (this.checkNumStay(result.value) == true) {
           this.hoursForProject = result.value;
           this.updateHours();
@@ -81,7 +81,7 @@ export class ProjectWorkerDetailsTemplateComponent {
             swal(
               `the hours update to ${this.hoursForProject}`
             )
-          }, () => {
+          }, err => {
             this.managerService.getErrorMessage();
           })
       }

@@ -23,8 +23,8 @@ export class ManagerService {
   constructor(public httpClient: HttpClient) { }
 
 
-  getUsersByDepartment(idDepertmant:string): Observable<User[]> {
-      return this.httpClient.get<User[]>(Global.baseURI+"Users/getUsersByDepartment/"+idDepertmant)
+  getUsersByDepartment(depertmantName:string): Observable<User[]> {
+      return this.httpClient.get<User[]>(Global.baseURLPHP+"/user/getUsersByDepartment?departmentName="+depertmantName)
   } 
   
   addUser(user: User): Observable<any> {
@@ -39,7 +39,8 @@ export class ManagerService {
   deleteUser(idUser: number): Observable<any> {
         return this.httpClient.post<any>(Global.baseURLPHP+"/user/deleteUser",{"userId":idUser});
     }
-    deleteProject(projectId: number): Observable<any> {
+
+  deleteProject(projectId: number): Observable<any> {
       return this.httpClient.post<any>(Global.baseURLPHP+"/project/deleteProject",{"projectId":projectId});
   }
 
@@ -50,6 +51,7 @@ export class ManagerService {
   addProject(project: Project): Observable<any> {
     return this.httpClient.post(Global.baseURLPHP+"/project/addProject",project);
   }
+
   editProjct(project: Project): Observable<any> 
   {
     return this.httpClient.put(Global.baseURI+"updateProject",project);
@@ -71,8 +73,9 @@ export class ManagerService {
   }
 
   getWorkerInProject(projectId:number): Observable<User[]> {
-    return this.httpClient.get<User[]>(Global.baseURI+"getWorkerInProject/"+projectId)
+    return this.httpClient.get<User[]>(Global.baseURLPHP+"/projectworker/getWorkersInProject?projectId="+projectId)
   }
+
   getErrorMessage()
   {
     swal({

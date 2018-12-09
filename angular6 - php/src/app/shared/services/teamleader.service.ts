@@ -11,28 +11,32 @@ export class TeamleaderService {
  
   constructor(public httpClient:HttpClient) { }
   projectGraph:Project;
+
   getProjectTeamLeader(teamLeaderId:number):Observable<Project[]>
   {
-    return this.httpClient.get<Project[]>(Global.baseURI+"getProjectsManager/"+teamLeaderId);
+    return this.httpClient.get<Project[]>(Global.baseURLPHP+"/project/getProjectsManager?teamLeaderId="+teamLeaderId);
   }
+
   getUserBelongProject(projectId:number):Observable<ProjectWorker[]>
   {
-    return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"Users/getUserBelongProject/"+projectId);
+    return this.httpClient.get<ProjectWorker[]>(Global.baseURLPHP+"/projectworker/getUsersBelongProject?projectId="+projectId);
   }
-  getUserBelongTeamleader():Observable<ProjectWorker[]>
-  {
-    return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"Users/getUserBelongProject");
-  }
+
+  // getUserBelongTeamleader():Observable<ProjectWorker[]>
+  // {
+  //   return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"Users/getUserBelongProject");
+  // }
 
   updateHours(worker:ProjectWorker): Observable<any> {   
   return this.httpClient.put(Global.baseURI+"updateProjectHours",worker);
- } 
+  } 
+
  getHourWorkerTeamLeader(userId: number,projectIdGraph:number): Observable<any[]>  {
-  return this.httpClient.get<any[]>(Global.baseURI+"getSumHoursDoneForUsers/"+userId+"/"+projectIdGraph);
+  return this.httpClient.get<any[]>(Global.baseURLPHP+"/projectworker/getSumHoursDoneForUsers?teamLeaderId="+userId+"&projectId="+projectIdGraph);
   }
 
   getSumStayByProjectAndDepartment(idProject:number): Observable<any> {
-   return this.httpClient.get(Global.baseURI+"getSumStayByProjectAndDepartment/"+idProject);
+   return this.httpClient.get(Global.baseURI+"/projectworker/getSumStayByProjectAndDepartment?projectId="+idProject);
   }
  
 

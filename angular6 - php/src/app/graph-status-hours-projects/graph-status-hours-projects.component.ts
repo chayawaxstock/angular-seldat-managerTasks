@@ -63,12 +63,6 @@ export class GraphStatusHoursProjectsComponent implements OnInit {
      this.barChartType = 'bar';
      this.barChartLegend = true;
   
-    // this.workerService.getHoursForUserProjects(this.userService.currentUser.userId)
-    // .subscribe(
-    //   res=>{
-        
-    //   }
-    // )
   }
 
 }

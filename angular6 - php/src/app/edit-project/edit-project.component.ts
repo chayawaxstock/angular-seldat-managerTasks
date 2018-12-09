@@ -36,7 +36,7 @@ export class EditProjectComponent implements OnInit {
     public managerService: ManagerService,
      public userService: UserService,
       public router: Router) {
-
+debugger
     this.project = this.managerService.project;
     this.isNew = this.managerService.isNew;
 
@@ -67,6 +67,7 @@ export class EditProjectComponent implements OnInit {
     this.userService.getAllDepartments()
     //get only department worker
     .subscribe(departments => {
+      debugger;
       this.departments = departments.filter(x => x.id > 2);
     });
   }

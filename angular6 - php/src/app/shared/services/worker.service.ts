@@ -22,22 +22,22 @@ export class WorkerService {
    return this.httpClient.put(Global.baseURI+"sendMessageToManagers/"+userId,message );
   }
 
-  getHoursForUserProjects(userId: number): Observable<any> {
-    //TODO:לשנות את הניתוב
-      return this.httpClient.get(Global.baseURI+"getSumHoursDoneForUsers/"+userId);
-  }
+  // getHoursForUserProjects(userId: number): Observable<any> {
+  //   //TODO:לשנות את הניתוב
+  //     return this.httpClient.get(Global.baseURI+"getSumHoursDoneForUsers/"+userId);
+  // }
 
-  getProjectsUser(userId):Observable<Project[]>
-  {
-     return this.httpClient.get<Project[]>(Global.baseURI+"/user/getProjectsById/"+userId);
-  }
+  // getProjectsUser(userId):Observable<Project[]>
+  // {
+  //    return this.httpClient.get<Project[]>(Global.baseURI+"/user/getProjectsById/"+userId);
+  // }
 
   addPresentDay(pressantDay: PresentDay): Observable<any> {
    return this.httpClient.post(Global.baseURI+"AddPresent",pressantDay);
   }
 
   getTasksOfWorker(userId):Observable<ProjectWorker[]>{
-    return this.httpClient.get<ProjectWorker[]>(Global.baseURLPHP+"/user/getProjectsByUserId?userId="+userId);
+    return this.httpClient.get<ProjectWorker[]>(Global.baseURLPHP+"/projectworker/getProjectsByUserId?userId="+userId);
   }
    
 }

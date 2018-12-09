@@ -23,7 +23,7 @@ import { WorkerComponent } from './worker/worker.component';
 import { TimerComponent } from './timer/timer.component';
 import { SendEmailComponent } from './send-email/send-email.component';
 import { GraphStatusHourComponent } from './graph-status-hour/graph-status-hour.component';
-import { ProjectWorkerComponent } from './project-worker/project-worker.component';
+
 import { WorkerToTeamLeaderComponent } from './worker-to-team-leader/worker-to-team-leader.component';
 import { WorkerProjectTemplateComponent } from './worker-project-template/worker-project-template.component';
 import { GraphStatusHoursProjectsComponent } from './graph-status-hours-projects/graph-status-hours-projects.component';
@@ -93,7 +93,6 @@ import '@progress/kendo-angular-intl/locales/de/all';
     TimerComponent,
     SendEmailComponent,
     GraphStatusHourComponent,
-    ProjectWorkerComponent,
     WorkerToTeamLeaderComponent,
     TasksOfWorkerComponent,
     WorkerProjectTemplateComponent,
