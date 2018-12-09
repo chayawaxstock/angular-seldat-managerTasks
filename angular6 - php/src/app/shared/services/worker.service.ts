@@ -4,7 +4,7 @@ import { PresentDay } from '../models/pressentDay';
 import { Observable, Subject } from 'rxjs';
 import { Global } from './global';
 import { SendEmail } from '../models/sendEmail';
-import { ProjectWorker } from '../models/projectWorker';
+
 
 @Injectable()
 export class WorkerService {
