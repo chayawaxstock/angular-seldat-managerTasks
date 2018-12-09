@@ -14,24 +14,32 @@ import { IntlService } from '@progress/kendo-angular-intl';
 })
 
 export class WorkerProjectTemplateComponent {
+
   //----------------PROPERTIRS-------------------
   @Input()
   project: ProjectWorker;
+
   @Input()
   isClick: boolean;
+
   stopClick: boolean = false;
-  pressantDay: PresentDay = new PresentDay();
+  preccentDay: PresentDay = new PresentDay();
+
   @Output() clickWork: EventEmitter<number> = new EventEmitter<number>();
+
   //----------------CONSTRUCTOR------------------
   constructor(
     public workerService: WorkerService,
     public userService: UserService,
     public router: Router,
     public intl: IntlService) { }
-  //----------------METHODS-------------------
-  clickUpdateWork(projectId: number) {
-    this.workerService.timerSubject.next(this.stopClick);
 
+
+  //----------------METHODS-------------------
+
+  clickUpdateWork(projectId: number) {
+
+    this.workerService.timerSubject.next(this.stopClick);
     this.stopClick = !this.stopClick;
     this.clickWork.emit(this.project.projectId);
 
@@ -40,16 +48,16 @@ export class WorkerProjectTemplateComponent {
     }
 
     else this.stopTimer(projectId);
-
   }
 
   startTimer(projectId: number) {
-    this.pressantDay.timeBegin = new Date();
-    this.pressantDay.timeEnd = new Date();
-    this.pressantDay.userId = this.userService.currentUser.userId;
-    this.pressantDay.projectId = projectId;
+    this.preccentDay.timeBegin = new Date();
+    this.preccentDay.timeEnd = new Date();
+    this.preccentDay.userId = this.userService.currentUser.userId;
+    this.preccentDay.projectId = projectId;
 
-    this.workerService.addPresentDay(this.pressantDay).subscribe(res => {
+    this.workerService.addPresentDay(this.preccentDay)
+      .subscribe(res => {
       swal({
         type: 'success',
         title: 'Start',
@@ -70,9 +78,9 @@ export class WorkerProjectTemplateComponent {
 
   stopTimer(projectId: number) {
    
-    this.pressantDay.timeEnd =new Date( this.intl.formatDate(new Date(), "d")) ;
+    this.preccentDay.timeEnd =new Date( this.intl.formatDate(new Date(), "d")) ;
 
-    this.workerService.updateDayPressent(this.pressantDay)
+    this.workerService.updateDayPressent(this.preccentDay)
       .subscribe(res => {
         swal({
           type: 'success',

@@ -8,13 +8,15 @@ import { User } from '../shared/models/user';
   styleUrls: ['./worker-to-team-leader.component.css']
 })
 export class WorkerToTeamLeaderComponent implements OnInit {
+
      //----------------PROPERTIRS-------------------
   teamLeaders: User[];
 
+  
   //----------------CONSTRUCTOR------------------
-  constructor(public managerService:ManagerService) {
+  constructor(public managerService:ManagerService) { }
 
-   }
+
   //----------------METHODS-------------------
   ngOnInit() {
     this.managerService.getUsersByDepartment("teamLeader").subscribe(res=>{

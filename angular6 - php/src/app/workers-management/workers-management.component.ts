@@ -34,8 +34,8 @@ export class WorkersManagementComponent implements OnInit {
       //----------------CONSTRUCTOR------------------
     constructor(@Inject(EditService) editServiceFactory: any, public managerService: ManagerService) {
         this.editService = editServiceFactory();
-
     }
+
   //----------------METHODS-------------------
     public ngOnInit(): void {
 
@@ -81,7 +81,8 @@ export class WorkersManagementComponent implements OnInit {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
-                this.managerService.deleteUser(dataItem.userId).subscribe(res => {
+                this.managerService.deleteUser(dataItem.userId)
+                .subscribe(() => {
                     swal(
                         'Deleted!',
                         'Your file has been deleted.',
@@ -92,7 +93,7 @@ export class WorkersManagementComponent implements OnInit {
                     swal({
                         type: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',
+                        text: err.errors,
 
                     })
                 });
