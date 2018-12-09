@@ -6,6 +6,7 @@ import { Global } from './global';
 import { SendEmail } from '../models/sendEmail';
 import { ProjectWorker } from '../models/projectWorker';
 
+
 @Injectable()
 export class WorkerService {
  
@@ -13,7 +14,6 @@ export class WorkerService {
   constructor(public httpClient:HttpClient) { }
   
   updateDayPressent(pressentDay:PresentDay): Observable<any> {
-    debugger;
       return this.httpClient.put(Global.baseURLPHP+"/presenceday/updatePresenceDayWorker",pressentDay)
     }
 

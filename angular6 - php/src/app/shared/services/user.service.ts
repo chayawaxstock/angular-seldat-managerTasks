@@ -44,9 +44,7 @@ export class UserService {
   //dont finish
   forgetPassword(userName: string): Observable<any> {
     debugger;
-    let formData: FormData = new FormData();
-    formData.append('userName', userName);
-    return this.httpClient.post<any>(Global.baseURLPHP + "/user/forgetPassword", formData)
+    return this.httpClient.get(Global.baseURLPHP + "/user/forgetPassword?userName="+userName)
   }
 
   changePassord(user:LoginUser,requestId:number): Observable<any>
@@ -55,8 +53,8 @@ export class UserService {
   }
 
   getAllDepartments(): Observable<DepartmentUser[]> {  
-    // return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
-    return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
+    return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
+    //return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
   }
 
   getAllUsers(): Observable<User[]> {
@@ -67,7 +65,7 @@ export class UserService {
   getIp(): Observable<any> {
     return this.httpClient.get("https://api.ipify.org/?format=json")
   }
-  
+
   getHoursForProjectsByUser(userId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(Global.baseURLPHP + "/user/getHoursForUserProjects?userId=" + userId);
   }

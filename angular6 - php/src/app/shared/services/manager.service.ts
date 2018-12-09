@@ -45,12 +45,12 @@ export class ManagerService {
   }
 
   createReport( idReport:number): Observable<any> {
-     return this.httpClient.get(Global.baseURI+"createReport/"+idReport);
+     return this.httpClient.get(Global.baseURLPHP+"/project/createReport?idReport="+idReport);
     }
     
   addProject(project: Project): Observable<any> {
-    // return this.httpClient.post(Global.baseURLPHP+"/project/addProject",project);
-    return this.httpClient.post(Global.baseURI+"Projects",project);
+    return this.httpClient.post(Global.baseURLPHP+"/project/addProject",project);
+    //return this.httpClient.post(Global.baseURI+"Projects",project);
   }
 
   editProjct(project: Project): Observable<any> 
@@ -60,8 +60,8 @@ export class ManagerService {
   
   getAllProjects(): Observable<Project[]> {
 
-    return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
-    // return this.httpClient.get<Project[]>(Global.baseURLPHP+"/project/getAllProjects");
+    //return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
+   return this.httpClient.get<Project[]>(Global.baseURLPHP+"/project/getAllProjects");
   }
 
   getWorkerNotInProject(projectId: number): Observable<User[]> {

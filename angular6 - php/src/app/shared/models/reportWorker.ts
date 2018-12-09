@@ -1,10 +1,10 @@
 export class ReportWorker{
-id:number;
+    id:number;
     name :string;
     department :string;
     year :number;
     month:number;
-  totalHours :number
+    totalHours :number
     sumHoursDoMonth :number;
     sumHoursDo :number;
     precentsDone :number;
