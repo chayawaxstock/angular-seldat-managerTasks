@@ -55,8 +55,8 @@ export class UserService {
   }
 
   getAllDepartments(): Observable<DepartmentUser[]> {  
-    // return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
-    return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
+    return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
+    //return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
   }
 
   getAllUsers(): Observable<User[]> {
@@ -67,7 +67,7 @@ export class UserService {
   getIp(): Observable<any> {
     return this.httpClient.get("https://api.ipify.org/?format=json")
   }
-  
+
   getHoursForProjectsByUser(userId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(Global.baseURLPHP + "/user/getHoursForUserProjects?userId=" + userId);
   }

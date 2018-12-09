@@ -44,9 +44,8 @@ export class ManagerService {
       return this.httpClient.post<any>(Global.baseURLPHP+"/project/deleteProject",{"projectId":projectId});
   }
 
-  //begin--not good
   createReport( idReport:number): Observable<any> {
-     return this.httpClient.get(Global.baseURI+"createReport?idReport="+idReport);
+     return this.httpClient.get(Global.baseURLPHP+"/project/createReport?idReport="+idReport);
     }
     
   addProject(project: Project): Observable<any> {

@@ -110,6 +110,7 @@ export class SignInComponent {
   }
 
   forgetPassword() {
+    debugger;
     this.userService.forgetPassword(this.formGroup.controls['userName'].value)
       .subscribe(res => {
       swal({
