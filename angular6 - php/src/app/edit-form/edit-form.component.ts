@@ -76,7 +76,8 @@ export class GridEditFormComponent {
             'email': new FormControl("", createValidatorText("email", 5, 30, this.emailPattern)),
             'numHoursWork': new FormControl("", createValidatorNumber("numHoursWork", 4, 9)),
             'departmentId': new FormControl("", [Validators.required]),
-            'managerId': new FormControl()
+            'managerId': new FormControl(),
+
         };
         this.formGroup = new FormGroup(formGroupConfig);   
     }
@@ -111,6 +112,7 @@ export class GridEditFormComponent {
             sha256(this.formGroup.value.confirmPassword)
             .then(pass=>{
                 this.formGroup.value.confirmPassword=pass;
+
               this.managerService.addUser(this.formGroup.value)
               .subscribe(res=>{
             swal({

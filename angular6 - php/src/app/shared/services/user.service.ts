@@ -31,7 +31,8 @@ export class UserService {
   }
 
   signInUser(user: LoginUser): Observable<User> {
-    return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
+    // return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
+    return this.httpClient.post<User>(Global.baseURI + "loginByPassword",user);
   }
 
   loginByUserComputer(ip: string): Observable<User> {
@@ -54,7 +55,8 @@ export class UserService {
   }
 
   getAllDepartments(): Observable<DepartmentUser[]> {  
-    return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
+    // return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
+    return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
   }
 
   getAllUsers(): Observable<User[]> {

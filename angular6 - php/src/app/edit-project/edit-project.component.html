@@ -41,7 +41,7 @@
 
         <div class="col-xs-12 col-sm-6 example-col">
             <p>Date end</p>
-            <kendo-datepicker formControlName="dateEnd"  [format]="'dd-MM-yyyy '"> 
+            <kendo-datepicker formControlName="dateEnd"  [format]="'dd-MM-yyyy '" > 
             </kendo-datepicker>
             <div class="help-block" *ngIf="formGroup.controls['dateEnd'].errors&&formGroup.controls['dateEnd'].touched">
                     <p *ngFor="let err of obj.values(formGroup.controls['dateEnd'].errors)">{{err}}</p>
@@ -78,4 +78,6 @@
             <button *ngIf="!isNew" class="k-button k-primary" [disabled]="formGroup.invalid" (click)="editProject()">
                 Edit</button>
         </kendo-dialog-actions>
+
+
     </form>

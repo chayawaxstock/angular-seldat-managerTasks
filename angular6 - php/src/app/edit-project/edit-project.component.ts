@@ -31,8 +31,11 @@ export class EditProjectComponent implements OnInit {
   projectAdd:Project=new Project();
   public active = true;
   usersByDepartments: Array<{ text: string, value: number }> = [];
-
+  x:any;
+  public dateBegin: Date = new Date(2000, 2, 10);
+  public dateEnd: Date = new Date(2000, 2, 10);
   constructor(
+
     public managerService: ManagerService,
      public userService: UserService,
       public router: Router) {
@@ -82,6 +85,7 @@ debugger
       return;
     }
     else {
+    
       let department = this.project.hoursForDepartment;
       let projectId = this.project.projectId;
       this.project = this.formGroup.value;
@@ -105,6 +109,12 @@ debugger
        this.managerService.getErrorMessage());
     }
   }
+//    convert(str) {
+//     var date = new Date(str),
+//         mnth = ("0" + (date.getMonth()+1)).slice(-2),
+//         day  = ("0" + date.getDate()).slice(-2);
+//     return [ date.getFullYear(), mnth, day ].join("-");
+// }
 
   addProject() {
     validateSumHourForDepartment(this.formGroup,this.project)
@@ -112,11 +122,12 @@ debugger
       return;
     }
     else {
+    
       this.projectAdd=this.project;
       this.project = this.formGroup.value;
-      this.project.hoursForDepartment = [];
-      let formatedDate = new DatePipe('en-US').transform(this.formGroup.controls['dateBegin'].value, 'dd/mm/yyyy');
-      this.project.dateBegin=new Date( formatedDate);
+    //  this.project.dateBegin=new Date( this.convert(this.project.dateBegin));
+    //  this.project.dateEnd=new Date( this.convert(this.project.dateEnd));
+      this.project.hoursForDepartment = [];   
       let numHour: HourForDepartment;
 
       this.departments.forEach(element => {

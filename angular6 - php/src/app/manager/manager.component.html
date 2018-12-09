@@ -30,5 +30,10 @@
 </nav>
 
 <body style="margin-left:100px">
+<div>
+  <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+  <button (click)="ok()" >ok</button>
+  <button (click)="clear()" >clear</button>
+</div>
   <router-outlet></router-outlet>
 </body>
