@@ -18,8 +18,6 @@ export class SignInComponent {
   //-----------------properties-------------------
   formGroup: FormGroup;
   obj: typeof Object = Object;
-  hostname: any;
-  domain: any;
   ip: string;
   user: User
 
@@ -92,6 +90,7 @@ export class SignInComponent {
 
   signIn(user: LoginUser, lastPassword): any {
 
+    debugger;
     this.userService.signInUser(user)
     .subscribe(data => {
       this.userService.currentUser = data;

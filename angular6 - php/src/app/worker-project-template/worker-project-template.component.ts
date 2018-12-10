@@ -54,7 +54,7 @@ export class WorkerProjectTemplateComponent {
     this.preccentDay.timeEnd = new Date();
     this.preccentDay.userId = this.userService.currentUser.userId;
     this.preccentDay.projectId = projectId;
-
+    debugger;
     this.workerService.addPresentDay(this.preccentDay)
       .subscribe(() => {
       swal({

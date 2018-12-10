@@ -81,6 +81,7 @@ export class WorkersManagementComponent implements OnInit {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
+                debugger;
                 this.managerService.deleteUser(dataItem.userId)
                 .subscribe(() => {
                     swal(

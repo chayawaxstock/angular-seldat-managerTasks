@@ -88,6 +88,7 @@ export class EditProjectComponent implements OnInit {
       return;
     }
     else {
+      debugger;
       let department = this.project.hoursForDepartment;
       let projectId = this.project.projectId;
       this.project = this.formGroup.value;
@@ -113,12 +114,13 @@ export class EditProjectComponent implements OnInit {
   }
 
   addProject() {
+
     validateSumHourForDepartment(this.formGroup, this.project)
     if (this.formGroup.invalid) {
       return;
     }
     else {
-
+      debugger;
       this.projectAdd = this.project;
       this.project = this.formGroup.value;
       this.project.hoursForDepartment = [];

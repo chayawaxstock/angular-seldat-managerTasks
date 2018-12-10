@@ -14,6 +14,9 @@
         <textarea kendoTextArea [autoSize]="true" formControlName="body" placeholder="enter message here" name="name"></textarea>
       </div>
     </div>
+    <div class="help-block" *ngIf="formGroup.controls['body'].errors&&formGroup.controls['body'].touched">
+      <p *ngFor="let err of obj.values(formGroup.controls['body'].errors)">{{err}}</p>
+    </div>
 
     <div class="form-group">
       <div class="col-md-offset-8 col-md-4 margin-left">

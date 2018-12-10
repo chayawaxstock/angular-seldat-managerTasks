@@ -18,21 +18,12 @@ export class WorkerService {
     }
 
   sendEmail(message: SendEmail,userId:number): Observable<any> {
-   return this.httpClient.put(Global.baseURI+"sendMessageToManagers/"+userId,message );
+   return this.httpClient.put(Global.baseURLPHP+"/user/sendMessageToManagers?userId="+userId,message );
   }
 
-  // getHoursForUserProjects(userId: number): Observable<any> {
-  //   //TODO:לשנות את הניתוב
-  //     return this.httpClient.get(Global.baseURI+"getSumHoursDoneForUsers/"+userId);
-  // }
-
-  // getProjectsUser(userId):Observable<Project[]>
-  // {
-  //    return this.httpClient.get<Project[]>(Global.baseURI+"/user/getProjectsById/"+userId);
-  // }
-
   addPresentDay(pressantDay: PresentDay): Observable<any> {
-   return this.httpClient.post(Global.baseURI+"AddPresent",pressantDay);
+    debugger;
+   return this.httpClient.post(Global.baseURLPHP+"/presenceday/addPresent",pressantDay);
   }
 
   getTasksOfWorker(userId):Observable<ProjectWorker[]>{

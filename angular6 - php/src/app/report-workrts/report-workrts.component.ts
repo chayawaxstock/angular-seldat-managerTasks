@@ -32,7 +32,9 @@ export class ReportWorkrtsComponent {
         public excelServise: ExcelService,
         public managerService: ManagerService) {
 
-        this.managerService.createReport(2).subscribe(res => {
+        this.managerService.createReport(2)
+        .subscribe(res => {
+            debugger;
             this.reportWorker = res;
             this.gridData = this.reportWorker;
         });
@@ -40,7 +42,15 @@ export class ReportWorkrtsComponent {
 
     //----------------METHODS-------------------
     exportAsXLSX(): void {
-        this.excelServise.exportAsExcelFile(this.reportWorker, 'reportProject');
+        let workersReport = [];
+        this.gridData.forEach((element: ReportWorker) => {
+            workersReport.push(element);
+            element.items.forEach((department: ReportWorker) => {
+                workersReport.push(department);  
+            })
+        });
+
+        this.excelServise.exportAsExcelFile(workersReport, 'reportProject');
     }
 
     public filterChange(filter: CompositeFilterDescriptor): void {

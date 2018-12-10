@@ -31,8 +31,8 @@ export class UserService {
   }
 
   signInUser(user: LoginUser): Observable<User> {
-    // return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
-    return this.httpClient.post<User>(Global.baseURI + "loginByPassword",user);
+    console.log(user);
+     return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByPassword",user);
   }
 
   loginByUserComputer(ip: string): Observable<User> {
@@ -41,9 +41,7 @@ export class UserService {
     return this.httpClient.post<User>(Global.baseURLPHP + "/user/loginByIp", formData)
   }
 
-  //dont finish
   forgetPassword(userName: string): Observable<any> {
-    debugger;
     return this.httpClient.get(Global.baseURLPHP + "/user/forgetPassword?userName="+userName)
   }
 
@@ -52,9 +50,9 @@ export class UserService {
     return this.httpClient.put(Global.baseURI+"ChangePassword/"+requestId,user);
   }
 
-  getAllDepartments(): Observable<DepartmentUser[]> {  
+  getAllDepartments(): Observable<DepartmentUser[]> 
+  {  
     return this.httpClient.get<DepartmentUser[]>(Global.baseURLPHP + "/department/getAllDepartments");
-    //return this.httpClient.get<DepartmentUser[]>(Global.baseURI + "Department/getAllDepartments");
   }
 
   getAllUsers(): Observable<User[]> {

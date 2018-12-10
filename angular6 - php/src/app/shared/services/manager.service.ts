@@ -45,10 +45,12 @@ export class ManagerService {
   }
 
   createReport( idReport:number): Observable<any> {
-     return this.httpClient.get(Global.baseURLPHP+"/project/createReport?idReport="+idReport);
+     return this.httpClient.get(Global.baseURLPHP+"/project/createReports?idReport="+idReport);
     }
     
   addProject(project: Project): Observable<any> {
+    console.log(project);
+    debugger;
     return this.httpClient.post(Global.baseURLPHP+"/project/addProject",project);
     //return this.httpClient.post(Global.baseURI+"Projects",project);
   }
