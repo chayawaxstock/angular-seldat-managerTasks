@@ -47,7 +47,7 @@ export class UserService {
 
   changePassord(user:LoginUser,requestId:number): Observable<any>
   {
-    return this.httpClient.put(Global.baseURI+"ChangePassword/"+requestId,user);
+    return this.httpClient.put(Global.baseURLPHP+"user/changePassword?requestId="+requestId,{"user":user});
   }
 
   getAllDepartments(): Observable<DepartmentUser[]> 

@@ -8,7 +8,11 @@
          </div>
          <button kendoButton *ngIf="!isClick" (click)="clickUpdateWork(project.projectId)">start work</button>
          <button kendoButton *ngIf="stopClick" (click)="clickUpdateWork(project.projectId)">stop work</button>
-
+         <div *ngIf="isStop">
+            <signature-pad [options]="signaturePadOptions"></signature-pad>
+            <button (click)="ok()">ok</button>
+            <button (click)="clear()">clear</button>
+          </div>
          <app-timer [isPlay]="stopClick"></app-timer>
       </div>
    </div>

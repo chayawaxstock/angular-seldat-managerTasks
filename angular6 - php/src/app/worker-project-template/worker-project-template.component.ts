@@ -6,7 +6,8 @@ import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { IntlService } from '@progress/kendo-angular-intl';
-
+import { ViewChild } from '@angular/core';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 @Component({
   selector: 'app-worker-project-template',
   templateUrl: './worker-project-template.component.html',
@@ -16,6 +17,14 @@ import { IntlService } from '@progress/kendo-angular-intl';
 export class WorkerProjectTemplateComponent {
 
   //----------------PROPERTIRS-------------------
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+
+  private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+    'minWidth': 5,
+    'canvasWidth': 500,
+    'canvasHeight': 300,
+    
+  };
   @Input()
   project: ProjectWorker;
 
@@ -26,7 +35,7 @@ export class WorkerProjectTemplateComponent {
   preccentDay: PresentDay = new PresentDay();
 
   @Output() clickWork: EventEmitter<number> = new EventEmitter<number>();
-
+  isStop: boolean = false;
   //----------------CONSTRUCTOR------------------
   constructor(
     public workerService: WorkerService,
@@ -57,27 +66,35 @@ export class WorkerProjectTemplateComponent {
     debugger;
     this.workerService.addPresentDay(this.preccentDay)
       .subscribe(() => {
-      swal({
-        type: 'success',
-        title: 'Start',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    },
-      err => {
-        {
-          swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-        }
-      })
+        swal({
+          type: 'success',
+          title: 'Start',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+        err => {
+          {
+            swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+          }
+        })
   }
 
-  stopTimer(projectId: number) { 
+  stopTimer(projectId: number) {
+    this.isStop = true;
 
-    this.preccentDay.timeEnd =new Date( this.intl.formatDate(new Date(), "d")) ;
+  }
+
+
+  clear() {
+    this.signaturePad.clear();
+  }
+  ok() {
+    this.preccentDay.timeEnd = new Date(this.intl.formatDate(new Date(), "d"));
 
     this.workerService.updateDayPressent(this.preccentDay)
       .subscribe(() => {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { UserService } from './services/user.service';
-import { DepartmentEnum } from './departmentEnum';
+import { DepartmentEnum } from './validators/user.validation';
+
 
 
 @Injectable()
