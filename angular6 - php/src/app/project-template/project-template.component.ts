@@ -13,17 +13,24 @@ import { Global } from '../shared/services/global';
 })
 export class ProjectTemplateComponent {
 
-  @Input()
-  project: Project;
+  //----------------PROPERTIRS-------------------
+  @Input() project: Project;
   projects: Project[] = [];
   @Output() deleteProject: EventEmitter<number> = new EventEmitter<number>();
-  constructor(public managerService: ManagerService, public router: Router, public editService: EditService) { }
 
+  //----------------CONSTRUCTOR------------------
+  constructor(
+    public managerService: ManagerService,
+    public router: Router,
+    public editService: EditService) { }
+
+
+  //----------------METHODS-------------------
   addWorkerToProject() {
-
     this.managerService.workerToProject = this.project;
     this.router.navigate(["/manager/addWorkerToProject"])
   }
+
   editProject() {
     this.managerService.project = this.project;
     this.managerService.isNew = false;
@@ -39,7 +46,6 @@ export class ProjectTemplateComponent {
 
 
   delete() {
-    console.log(this.project.projectId)
     this.deleteProject.emit(this.project.projectId);
   }
 

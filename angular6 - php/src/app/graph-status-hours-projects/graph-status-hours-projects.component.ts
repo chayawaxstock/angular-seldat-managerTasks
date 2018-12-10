@@ -13,56 +13,54 @@ import { Graph } from '../shared/models/graph';
 
 export class GraphStatusHoursProjectsComponent implements OnInit {
 
+  //----------------PROPERTIRS-------------------
   barChartOptions: any;
-  barChartLabels: any[]=[];
+  barChartLabels: any[] = [];
   barChartType: any;
   barChartLegend: any;
-  barChartData: any[]=[];
-  project:Project;
-  messageEmpty: string; 
-  usersHours:any[]=[];
+  barChartData: any[] = [];
+  project: Project;
+  messageEmpty: string;
+  usersHours: any[] = [];
 
+  //----------------CONSTRUCTOR------------------
   constructor(
-    public workerService:WorkerService,
-    public userService:UserService,
-    public teamLeaderService:TeamleaderService) { }
- 
+    public workerService: WorkerService,
+    public userService: UserService,
+    public teamLeaderService: TeamleaderService) { }
+
+
+  //----------------METHODS-------------------
   ngOnInit() {
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
 
-    this.project=this.teamLeaderService.projectGraph;
+    this.project = this.teamLeaderService.projectGraph;
 
-    this.teamLeaderService.getHourWorkerTeamLeader(this.userService.currentUser.userId,this.project.projectId)
-    .subscribe(res=>{
-    if(res==null||res.length==0)
-    {
-      this.messageEmpty="no have data";
-      return;
-    }
-    
-    // Object.entries(res).forEach(
-    //   ([key, value]) => console.log(key, value));
+    this.teamLeaderService.getHourWorkerTeamLeader(this.userService.currentUser.userId, this.project.projectId)
+      .subscribe(res => {
+        if (res == null || res.length == 0) {
+          this.messageEmpty = "no have data";
+          return;
+        }
 
-     this.barChartLabels.push( this.project.projectName);
-     
-      res.forEach(
-        (x)=>{
-         let g=new Graph();
-          g.data.push(x.data);
-           g.label=x.label; 
-           this.barChartData.push(g);
-           });
-    },
-    err=>{
-      this.messageEmpty="no have data";
-    });;
-    
-     this.barChartType = 'bar';
-     this.barChartLegend = true;
-  
+        this.barChartLabels.push(this.project.projectName);
+        res.forEach(
+          (x) => {
+            let g = new Graph();
+            g.data.push(x.data);
+            g.label = x.label;
+            this.barChartData.push(g);
+          });
+      },
+        err => {
+          this.messageEmpty = "no have data";
+        });;
+
+    this.barChartType = 'bar';
+    this.barChartLegend = true;
   }
 
 }

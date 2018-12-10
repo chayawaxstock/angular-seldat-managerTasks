@@ -18,7 +18,7 @@ export class ChangePasswordComponent implements OnInit{
   domain: any;
   requestId:number;
 
-  //-----------------constructor-------------------
+  //----------------CONSTRUCTOR------------------
   constructor(
     private userService: UserService,
     private router: Router,
@@ -36,7 +36,7 @@ export class ChangePasswordComponent implements OnInit{
     this.requestId =parseInt(this.route.snapshot.paramMap.get('requestId'));
   }
 
-  //-----------------functions-------------------
+  //----------------METHODS-------------------
 
   submitPassword() {
 
@@ -62,8 +62,7 @@ export class ChangePasswordComponent implements OnInit{
     this.router.navigate(['/home']);
       },
        err => {
-       //TODO:להדפיס שגיאות
-        alert("invalid");
+        alert(err.errors);
       });
   }
 

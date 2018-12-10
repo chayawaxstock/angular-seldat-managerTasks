@@ -46,7 +46,6 @@ export class WorkerProjectTemplateComponent {
     if (this.stopClick == true) {
       this.startTimer(projectId);
     }
-
     else this.stopTimer(projectId);
   }
 
@@ -57,7 +56,7 @@ export class WorkerProjectTemplateComponent {
     this.preccentDay.projectId = projectId;
 
     this.workerService.addPresentDay(this.preccentDay)
-      .subscribe(res => {
+      .subscribe(() => {
       swal({
         type: 'success',
         title: 'Start',
@@ -76,12 +75,12 @@ export class WorkerProjectTemplateComponent {
       })
   }
 
-  stopTimer(projectId: number) {
-   
+  stopTimer(projectId: number) { 
+
     this.preccentDay.timeEnd =new Date( this.intl.formatDate(new Date(), "d")) ;
 
     this.workerService.updateDayPressent(this.preccentDay)
-      .subscribe(res => {
+      .subscribe(() => {
         swal({
           type: 'success',
           title: 'Stop',
@@ -90,7 +89,6 @@ export class WorkerProjectTemplateComponent {
         });
 
         this.userService.subjectAllProjects.next("true");
-
       },
         err => {
           {

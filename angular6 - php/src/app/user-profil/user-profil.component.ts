@@ -9,8 +9,11 @@ import { UserService } from '../shared/services/user.service';
 })
 export class UserProfilComponent implements OnInit {
 
-  constructor(public userService: UserService) { }
   user: User;
+  
+  constructor(public userService: UserService) { }
+
+
   ngOnInit() {
     this.user = this.userService.currentUser;
   }

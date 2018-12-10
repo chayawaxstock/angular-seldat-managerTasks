@@ -31,7 +31,7 @@ export class SignInComponent {
       //check if do logout or enter firstTime
     if(this.userService.isFirst)
     {
-       this.signInWithIp();
+      this.signInWithIp();
       this.userService.isFirst=false;
     }
 
@@ -43,6 +43,8 @@ export class SignInComponent {
     };
     this.formGroup = new FormGroup(formGroupConfig);
   }
+
+
   //----------------METHODS-------------------
   signInWithIp()
   {
@@ -53,11 +55,9 @@ export class SignInComponent {
            .subscribe(x => {
         //save user in global prop
            this.userService.currentUser = x;
-
         //check promissing
         this.userService.checkDepartment();
-      }, err => {
-        //TODO:להדפיס את השגיאה
+      }, () => {
         //faild login
         this.router.navigate(['/home']);
       });
@@ -77,24 +77,23 @@ export class SignInComponent {
     //convert password to sha256
     sha256(user.password).then(p => {
       user.password = p;
-      console.log(user.password);
 
-      let ip = "";
       if (this.formGroup.controls["remember"].value == true) {
         //checked remember me save ip
-        this.userService.getIp().subscribe(res => {
+        this.userService.getIp()
+        .subscribe(res => {
           user.ip = res.ip;
           this.signIn(user, pass);
         });
       }
-
       else this.signIn(user, pass);
     });
   }
 
   signIn(user: LoginUser, lastPassword): any {
-    this.userService.signInUser(user).subscribe(data => {
-      debugger;
+
+    this.userService.signInUser(user)
+    .subscribe(data => {
       this.userService.currentUser = data;
 
       //check premmesion
@@ -104,15 +103,13 @@ export class SignInComponent {
       err => {
         user.password = lastPassword;
         //TODO:להדפיס שגיאות
-        alert("invalid");
-
+        alert(err.errors);
       });
   }
 
   forgetPassword() {
-    debugger;
     this.userService.forgetPassword(this.formGroup.controls['userName'].value)
-      .subscribe(res => {
+      .subscribe(() => {
       swal({
         type: 'success',
         title: 'We send you a email to change your password',
@@ -128,14 +125,6 @@ export class SignInComponent {
           text: 'Something went wrong!',
         })
       }
-
     });
-
   }
-
-
-
-
-  //TODO:על ידי שם מחשב
-
 }

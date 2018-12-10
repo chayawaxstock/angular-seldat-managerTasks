@@ -14,13 +14,18 @@ export class TasksOfWorkerComponent implements OnInit {
   isClick: boolean = false;
   isTimerStart: boolean = false;
   projects: ProjectWorker[] = [];
+
+
   //----------------CONSTRUCTOR------------------
   constructor(
     public workerService: WorkerService,
     public userService: UserService) { }
+
+
   //----------------METHODS-------------------
   ngOnInit() {
     this.getAllProjects();
+
     this.userService.subjectAllProjects
       .subscribe(
         v => {
@@ -29,13 +34,10 @@ export class TasksOfWorkerComponent implements OnInit {
   }
 
   getAllProjects() {
-    debugger;
     this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
       .subscribe(res => {
         this.projects = res;
-      },err=>{
-
-      });;
+      },()=>{ });;
   }
 
   clickWork() {

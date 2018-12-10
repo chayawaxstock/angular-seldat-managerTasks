@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./worker-details.component.css']
 })
 export class WorkerDetailsComponent  {
-@Input()workers:any;
 
+@Input()workers:any;
 }

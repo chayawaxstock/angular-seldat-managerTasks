@@ -14,6 +14,7 @@ import swal from 'sweetalert2'
   styleUrls: ['./update-user.component.css']
 })
 export class UpdateUserComponent  {
+
   //----------------PROPERTIRS-------------------
   departments: DepartmentUser[] = [];
   teamLeaders: User[] = [];
@@ -22,34 +23,38 @@ export class UpdateUserComponent  {
   managerName: string;
   obj: typeof Object = Object;
   errorList: string[];
+
   //----------------CONSTRUCTOR------------------
   constructor(public userService: UserService, public managerService: ManagerService, public router: Router) {
     this.user = this.managerService.userToEdit;
-    userService.getAllDepartments().subscribe(departments => {
+    userService.getAllDepartments()
+     .subscribe(departments => {
       this.departments = departments;
-      console.log(this.departments);
     });
-    this.managerService.getUsersByDepartment("teamLeader").subscribe(res => {
+
+    this.managerService.getUsersByDepartment("teamLeader")
+    .subscribe(res => {
       this.teamLeaders = res;
       this.managerName = this.teamLeaders.find(x => x.userId == this.user.managerId).userName;
-    }, err => {
-      console.log(err);
-    });
+    }, 
+    () => { });
 
     let emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
     let formGroupConfig = {
       userName: new FormControl(this.user.userName, createValidatorText("userName", 2, 15)),
       email: new FormControl(this.user.email, createValidatorText("email", 8, 30, emailPattern)),
-      numHoursWork: new FormControl(this.user.numHoursWork, createValidatorNumber("numHoursWork", 4, 9)),
+      numHoursWork: new FormControl(this.user.numHoursWork, createValidatorNumber("numHoursWork", 4, 10)),
       departmentId: new FormControl(this.user.departmentUser.department),
       idManager: new FormControl(this.user.manager.userName),
     };
     this.formGroup = new FormGroup(formGroupConfig);
 
   }
-    //----------------METHODS-------------------
+
+  //----------------METHODS-------------------
 
   saveChangeUser() {
+
     let managerId = this.user.managerId;
     this.user.email = this.formGroup.value.email;
     this.user.userName = this.formGroup.value.userName;
@@ -57,15 +62,17 @@ export class UpdateUserComponent  {
     this.user.userId = this.managerService.userToEdit.userId;
     this.user.departmentId = this.formGroup.value.departmentId;
     this.user.managerId = managerId;
-    this.managerService.updateUser(this.user).subscribe(res => {
+
+    this.managerService.updateUser(this.user)
+    .subscribe(() => {
       swal({
-        position: 'top-end',
         type: 'success',
         title: 'Success',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
       this.router.navigate(["/manager/allUsers"]);
+
     }, err => {
       swal({
         type: 'error',
@@ -75,5 +82,4 @@ export class UpdateUserComponent  {
       })
     })
   }
-
 }

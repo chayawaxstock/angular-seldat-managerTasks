@@ -10,33 +10,36 @@ import { Router } from '@angular/router';
   styleUrls: ['./project-details-template.component.css']
 })
 export class ProjectDetailsTemplateComponent implements OnInit {
-  ngOnInit(): void {
-    if(this.project)
-    {
-    this.teamleaderService.getSumStayByProjectAndDepartment(this.project.projectId)
-    .subscribe(res=>{
-      this.sumHoursStay=res;
-    });
-  }
-  }
 
+     //----------------PROPERTIRS-------------------
   @Input()
   project: Project;
   workersForProject: ProjectWorker[];
-  sumHoursStay:number[]=[];
-
-
-  constructor(public teamleaderService: TeamleaderService, public router: Router) {
-   
-   }
+  sumHoursStay: number[] = [];
   isAllDetails: boolean = false;
   toggle: boolean = false;
 
-  showMoreDetails(event) {
 
+  //----------------CONSTRUCTOR------------------
+  constructor(
+    public teamleaderService: TeamleaderService, 
+    public router: Router) {
+  }
+
+
+  ngOnInit(): void {
+    if (this.project) {
+      this.teamleaderService.getSumStayByProjectAndDepartment(this.project.projectId)
+        .subscribe(res => {
+          this.sumHoursStay = res;
+        });
+    }
+  }
+
+  showMoreDetails(event) {
     if (this.toggle == false) {
-      this.teamleaderService.getUserBelongProject(event).subscribe(res => {
-        debugger;
+      this.teamleaderService.getUserBelongProject(event)
+      .subscribe(res => {
         this.workersForProject = res;
         this.toggle = true
       });
@@ -51,8 +54,7 @@ export class ProjectDetailsTemplateComponent implements OnInit {
     this.router.navigate(['/teamLeader/graphStatusHoursProjects']);
   }
 
-  changeSumHoursStay(num:{ idDepartment: number, hours: number })
-  {
-      this.sumHoursStay[num.idDepartment-3]=num.hours;
+  changeSumHoursStay(num: { idDepartment: number, hours: number }) {
+    this.sumHoursStay[num.idDepartment - 3] = num.hours;
   }
 }

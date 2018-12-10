@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../shared/services/user.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -9,11 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./log-out.component.css']
 })
 export class LogOutComponent {
-  
+
+  //----------------CONSTRUCTOR------------------
   constructor(
     public userService: UserService
-    ,public router: Router) { }
+    , public router: Router) { }
 
+
+  //----------------METHODS-------------------
   logout() {
     swal({
       title: `Are you sure you want to log out ?`,
@@ -22,12 +25,13 @@ export class LogOutComponent {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes'
-    }).then((result) => {
-      if (result.value) {
-        this.userService.currentUser = null;
-        this.router.navigate(['/home']);
-      }
     })
+      .then((result) => {
+        if (result.value) {
+          this.userService.currentUser = null;
+          this.router.navigate(['/home']);
+        }
+      })
   }
 
 }

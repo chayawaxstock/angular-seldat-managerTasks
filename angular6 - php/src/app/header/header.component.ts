@@ -7,8 +7,11 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent  {
+  
  department:string;
+
   constructor(private userService:UserService) {
-   this.department=userService.currentUser.departmentUser.department;
+    
+   this.department=this.userService.currentUser.departmentUser.department;
   }
 }

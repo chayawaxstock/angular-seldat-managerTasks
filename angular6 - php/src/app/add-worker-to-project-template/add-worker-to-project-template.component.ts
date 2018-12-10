@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../shared/models/user';
 import { ProjectWorker } from '../shared/models/projectWorker';
-import { ManagerService } from '../shared/services/manager.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-worker-to-project-template',
@@ -19,9 +17,7 @@ export class AddWorkerToProjectTemplateComponent implements OnInit {
 
   @Output() numHours: EventEmitter<ProjectWorker> = new EventEmitter<ProjectWorker>();
 
-  constructor(
-    private managerService:ManagerService,
-    private router:Router) { 
+  constructor() { 
     this.workerProject=new ProjectWorker();
   }
 

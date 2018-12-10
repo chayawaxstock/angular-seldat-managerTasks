@@ -14,19 +14,21 @@ import { HourForDepartment } from '../shared/models/hourForDepartment';
 })
 export class AllProjectsComponent implements OnInit {
 
+  //----------------PROPERTIRS-------------------
   projects: Project[] = [];
   project: Project;
   departments: DepartmentUser[] = [];
 
+  //----------------CONSTRUCTOR------------------
   constructor(
     public managerService: ManagerService,
     public router: Router,
     private userService: UserService) { }
 
+
+  //----------------METHODS-------------------
   ngOnInit() {
-
     this.getAllProjects();
-
     //get all project after add ,delete 
     this.managerService.subjectProject.subscribe(v => {
       this.getAllProjects();

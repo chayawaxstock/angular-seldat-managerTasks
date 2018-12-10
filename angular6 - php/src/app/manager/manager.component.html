@@ -21,7 +21,7 @@
       </a>
     </li>
     <li class="has-subnav">
-      <a href="#">
+      <a href="javascrpt:void(0)">
         <i class="fa far fa-file fa-2x"></i>
         <a class="nav-text" [routerLink]="['/manager/reportsWorker']">reports worker</a>
       </a>
@@ -30,10 +30,5 @@
 </nav>
 
 <body style="margin-left:100px">
-<!-- <div>
-  <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-  <button (click)="ok()" >ok</button>
-  <button (click)="clear()" >clear</button>
-</div> -->
   <router-outlet></router-outlet>
 </body>

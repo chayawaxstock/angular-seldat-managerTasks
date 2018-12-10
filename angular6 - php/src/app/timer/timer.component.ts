@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PresentDay } from '../shared/models/pressentDay';
-import { Subscription } from 'rxjs';
 import { WorkerService } from '../shared/services/worker.service';
 import { UserService } from '../shared/services/user.service';
-import { Project } from '../shared/models/project';
 
 @Component({
     selector: 'app-timer',
@@ -11,17 +8,21 @@ import { Project } from '../shared/models/project';
     styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
+
     //----------------PROPERTIRS-------------------
     ticks = 0;
     @Input() isPlay: boolean;
+
     minutesDisplay: number = 0;
     hoursDisplay: number = 0;
     secondsDisplay: number = 0;
     timer: any;
+
     //----------------CONSTRUCTOR------------------
     constructor(
         public workerService: WorkerService,
         public userService: UserService) { }
+
 
     //----------------METHODS-------------------
     ngOnInit() {
@@ -37,7 +38,8 @@ export class TimerComponent implements OnInit {
         this.timer = setInterval(() => this.getTimer(), 1000);
     }
 
-    getTimer(): any {
+    getTimer() {
+
         this.ticks++;
         this.secondsDisplay = this.getSeconds(this.ticks);
         this.minutesDisplay = this.getMinutes(this.ticks);
@@ -45,6 +47,7 @@ export class TimerComponent implements OnInit {
     }
 
     stopTimer() {
+
         clearInterval(this.timer);
         this.ticks = -1;
         this.getTimer();

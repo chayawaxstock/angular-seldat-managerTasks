@@ -16,31 +16,32 @@ import { ReportWorker } from '../shared/models/reportWorker';
 })
 export class ReportWorkrtsComponent {
 
+    //----------------PROPERTIRS-------------------
     reportWorker: ReportWorker[] = [];
     public state: State = {
         skip: 0,
         take: 5,
-
     };
-    constructor(public excelServise: ExcelService, public managerService: ManagerService) {
+    public products: any[] = this.reportWorker;
+    public checked = false;
+    public filter: CompositeFilterDescriptor;
+    public gridData: any;
+
+    //----------------CONSTRUCTOR------------------
+    constructor(
+        public excelServise: ExcelService,
+        public managerService: ManagerService) {
 
         this.managerService.createReport(2).subscribe(res => {
-            console.log(res)
             this.reportWorker = res;
             this.gridData = this.reportWorker;
         });
     }
 
-
+    //----------------METHODS-------------------
     exportAsXLSX(): void {
         this.excelServise.exportAsExcelFile(this.reportWorker, 'reportProject');
     }
-
-
-    public products: any[] = this.reportWorker;
-    public checked = false;
-    public filter: CompositeFilterDescriptor;
-    public gridData: any;
 
     public filterChange(filter: CompositeFilterDescriptor): void {
         this.filter = filter;
@@ -48,7 +49,6 @@ export class ReportWorkrtsComponent {
     }
 
     public switchChange(checked: boolean): void {
-        debugger;
         const root = this.filter || { logic: 'and', filters: [] };
 
         const [filter] = flatten(root).filter(x => x.field === 'isFinish');
@@ -59,12 +59,14 @@ export class ReportWorkrtsComponent {
                 operator: 'eq',
                 value: checked
             });
-        } else {
+        }
+        else {
             filter.value = checked;
         }
         this.checked = checked;
         this.filterChange(root);
     }
+
     public allData(): ExcelExportData {
         debugger;
         const result: ExcelExportData = {
@@ -74,10 +76,10 @@ export class ReportWorkrtsComponent {
 
         return result;
     }
+
     public group: any[] = [{
         field: 'id'
     }];
-
 
     public dataStateChange(state: DataStateChangeEvent): void {
         this.state = state;

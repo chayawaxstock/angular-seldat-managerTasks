@@ -16,12 +16,13 @@ export class SendEmailComponent implements OnInit {
    //----------------PROPERTIRS-------------------
    formGroup: FormGroup;
 
-  //----------------CONSTRUCTOR------------------
 
+  //----------------CONSTRUCTOR------------------
   constructor(
     public workerService:WorkerService,
     public userService:UserService,
     public router:Router) {}
+
 
   //----------------METHODS-------------------
   ngOnInit() {
@@ -35,10 +36,10 @@ export class SendEmailComponent implements OnInit {
 
   sendEmail()
   {
-    this.workerService.sendEmail(this.formGroup.value,this.userService.currentUser.userId).subscribe(
-      res=>{
+    this.workerService.sendEmail(this.formGroup.value,this.userService.currentUser.userId)
+    .subscribe(
+      ()=>{
         swal({
-          position: 'top-end',
           type: 'success',
           title: 'The message has been sent',
           showConfirmButton: false,
@@ -55,5 +56,4 @@ export class SendEmailComponent implements OnInit {
       }
     );
   }
-
 }

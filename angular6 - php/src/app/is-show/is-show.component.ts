@@ -10,16 +10,23 @@ import { EditService } from '../shared/services/edit-service.service';
 })
 export class IsShowComponent implements OnInit {
 
-  constructor(private managerService: ManagerService, private editService: EditService) { }
+  //----------------PROPERTIRS-------------------
   isShow: number = 0;
-  ngOnInit() {
-    this.managerService.subjectIsShow.subscribe(v => {
-      this.isShow = Number(v);
-      Global.idProjectToGetWorker = this.isShow;
-      this.editService.data = [];
-      this.editService.read();
 
-    })
+  //----------------CONSTRUCTOR------------------
+  constructor(
+    private managerService: ManagerService,
+    private editService: EditService) { }
+
+  //----------------METHODS-------------------
+  ngOnInit() {
+    this.managerService.subjectIsShow
+      .subscribe(v => {
+        this.isShow = Number(v);
+        Global.idProjectToGetWorker = this.isShow;
+        this.editService.data = [];
+        this.editService.read();
+      })
   }
 
 }

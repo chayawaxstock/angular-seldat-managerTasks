@@ -10,46 +10,48 @@ import { ProjectWorker } from '../shared/models/projectWorker';
 })
 export class GraphStatusHourComponent implements OnInit {
 
+  //----------------PROPERTIRS-------------------
   barChartOptions: any;
-  barChartLabels: any[]=[];
+  barChartLabels: any[] = [];
   barChartType: any;
   barChartLegend: any;
-  barChartData: any[]=[];
-  projects:ProjectWorker[]=[];
+  barChartData: any[] = [];
+  projects: ProjectWorker[] = [];
 
+  //----------------CONSTRUCTOR------------------
   constructor(
     public workerService: WorkerService,
     public userService: UserService) { }
 
-  ngOnInit() {
 
+  //----------------METHODS-------------------
+  ngOnInit() {
     this.barChartData = [
-      {data: [], label: 'hours done'},
-      {data: [], label: 'Hours required'}
-     ];
+      { data: [], label: 'hours done' },
+      { data: [], label: 'Hours required' }
+    ];
 
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
     this.userService.getHoursForProjectsByUser(this.userService.currentUser.userId)
-    .subscribe(res => {
+      .subscribe(res => {
 
-      this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
-      
-      .subscribe(res=>{
-        if(res)
-        res.forEach((x)=>{
-           this.barChartLabels.push(x.project.projectName) ;
-           this.barChartData[0].data.push(x.sumHoursDone); 
-           this.barChartData[1].data.push(x.hoursForProject);
-      });
-      
-    });;
-  })
-     
-  this.barChartType = 'bar';
-  this.barChartLegend = true;
+        this.workerService.getTasksOfWorker(this.userService.currentUser.userId)
 
+          .subscribe(res => {
+            if (res)
+              res.forEach((x) => {
+                this.barChartLabels.push(x.project.projectName);
+                this.barChartData[0].data.push(x.sumHoursDone);
+                this.barChartData[1].data.push(x.hoursForProject);
+              });
+
+          });;
+      })
+
+    this.barChartType = 'bar';
+    this.barChartLegend = true;
   }
 }
