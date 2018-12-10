@@ -22,13 +22,10 @@ export class TeamleaderService {
     return this.httpClient.get<ProjectWorker[]>(Global.baseURLPHP+"/projectworker/getUsersBelongProject?projectId="+projectId);
   }
 
-  // getUserBelongTeamleader():Observable<ProjectWorker[]>
-  // {
-  //   return this.httpClient.get<ProjectWorker[]>(Global.baseURI+"Users/getUserBelongProject");
-  // }
+ 
 
   updateHours(worker:ProjectWorker): Observable<any> {   
-  return this.httpClient.put(Global.baseURI+"updateProjectHours",worker);
+  return this.httpClient.put(Global.baseURLPHP+"/projectworker/updateProjectHoursForUser",worker);
   } 
 
  getHourWorkerTeamLeader(userId: number,projectIdGraph:number): Observable<any[]>  {

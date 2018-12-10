@@ -5,12 +5,15 @@ import { User } from '../shared/models/user';
 import { Router } from '@angular/router';
 import { Global } from '../shared/services/global';
 
+
 @Component({
   selector: 'app-manager',
   templateUrl: './manager.component.html',
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent  {
+
+
 
      //----------------PROPERTIRS-------------------
   projects: Project[] = [];
@@ -31,5 +34,6 @@ export class ManagerComponent  {
     Global.idProjectToGetWorker = 0;
     this.managerService.subjectIsShow.next(0);
   }
+
  
 }

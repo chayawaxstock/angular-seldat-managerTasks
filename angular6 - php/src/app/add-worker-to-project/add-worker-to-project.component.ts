@@ -31,7 +31,7 @@ export class AddWorkerToProjectComponent implements OnInit {
           res.forEach(x=>
             {
               let worker=new ProjectWorker();
-              worker.projectId=this.project.projectId,
+              // worker.projectId=this.project.projectId,
               worker.userId=x.userId; 
               this.workersAddToProject.push(worker)
             });

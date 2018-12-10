@@ -50,7 +50,7 @@ export class ManagerService {
     
   addProject(project: Project): Observable<any> {
     return this.httpClient.post(Global.baseURLPHP+"/project/addProject",project);
-    //return this.httpClient.post(Global.baseURI+"Projects",project);
+
   }
 
   editProjct(project: Project): Observable<any> 
@@ -60,7 +60,7 @@ export class ManagerService {
   
   getAllProjects(): Observable<Project[]> {
 
-    //return this.httpClient.get<Project[]>(Global.baseURI+"getAllProjects");
+  
    return this.httpClient.get<Project[]>(Global.baseURLPHP+"/project/getAllProjects");
   }
 
@@ -71,7 +71,7 @@ export class ManagerService {
   addWorkersToProject(projectId:number,workers:ProjectWorker[]):Observable<any>
   {
     console.log(workers);
-  return this.httpClient.put(Global.baseURI+"addWorkersToProject/"+projectId,workers);
+  return this.httpClient.put(Global.baseURLPHP+"/projectworker/addWorkersToProject?projectId="+projectId,{"workers":workers});
   }
 
   getWorkerInProject(projectId:number): Observable<User[]> {

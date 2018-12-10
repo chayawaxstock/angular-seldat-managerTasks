@@ -9,14 +9,22 @@ import { UserService } from '../shared/services/user.service';
 import { HourForDepartment } from '../shared/models/hourForDepartment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { Pipe, PipeTransform } from '@angular/core'
+import * as moment from 'moment'
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.css']
 })
-export class EditProjectComponent implements OnInit {
+@Pipe({
+  name: 'formatDate'
+})
+export class EditProjectComponent implements OnInit, PipeTransform {
+  transform(date: any, args?: any): any {
+    let d = new Date(date)
+    return moment(d).format('DD/MM/YYYY')
 
+  }
   //----------------PROPERTIRS-------------------
   obj: typeof Object = Object;
   formGroup: any;
@@ -33,8 +41,6 @@ export class EditProjectComponent implements OnInit {
   public active = true;
   usersByDepartments: Array<{ text: string, value: number }> = [];
   x: any;
-  public dateBegin: Date = new Date(2000, 2, 10);
-  public dateEnd: Date = new Date(2000, 2, 10);
 
   //----------------CONSTRUCTOR------------------
   constructor(
@@ -121,6 +127,8 @@ export class EditProjectComponent implements OnInit {
 
       this.projectAdd = this.project;
       this.project = this.formGroup.value;
+      this.project.dateBegin=this.transform(this.project.dateBegin);
+      this.project.dateEnd=this.transform(this.project.dateEnd);
       this.project.hoursForDepartment = [];
       let numHour: HourForDepartment;
 

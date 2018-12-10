@@ -1,3 +1,4 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <div class="container">
     <div class="card card-container">
 
@@ -16,13 +17,16 @@
                 <p *ngFor="let err of obj.values(formGroup.controls['password'].errors)">{{err}}</p>
             </div>
 
+
             <div id="remember" class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me" formControlName="remember"> Remember me
                 </label>
             </div>
+            <div class="g-recaptcha" data-sitekey="6Lcu138UAAAAAD_L1R6JDBR8IVSBQH0OPIda_HsU"></div>
 
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" [disabled]="formGroup.invalid">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" [disabled]="formGroup.invalid">Sign
+                in</button>
 
         </form>
         <a href="javascript:void(0)" class="forgot-password" (click)="forgetPassword()">

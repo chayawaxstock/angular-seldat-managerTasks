@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import { createValidatorText } from '../shared/validators/user.validation';
@@ -14,7 +14,9 @@ import { User } from '../shared/models/user';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
-
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response ${captchaResponse}:`);
+}
   //-----------------properties-------------------
   formGroup: FormGroup;
   obj: typeof Object = Object;
@@ -38,7 +40,8 @@ export class SignInComponent {
     let formGroupConfig = {
       userName: new FormControl("", createValidatorText("userName", 2, 15)),
       password: new FormControl("", createValidatorText("password", 8, 20)),
-      remember: new FormControl(false)
+      remember: new FormControl(false),
+
 
     };
     this.formGroup = new FormGroup(formGroupConfig);
